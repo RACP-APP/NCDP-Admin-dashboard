@@ -1,12 +1,12 @@
 const express = require('express');
-const Login = express.Router();
+const Articles = express.Router();
 const bodyParser = require('body-parser');
 const path = require('path');
 
-Login.use(bodyParser.json());
-Login.use(bodyParser.urlencoded({ extended: true }));
+Articles.use(bodyParser.json());
+Articles.use(bodyParser.urlencoded({ extended: true }));
 
-Login.get('/login', (req, res) => {
+Articles.get('/Articles', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader(
@@ -23,7 +23,7 @@ Login.get('/login', (req, res) => {
     'Origin, X-Requested-With, Content-Type, Accept'
   );
 
-  res.send(' you are ologged in ');
+  res.send(' you are Articles in ');
 });
 
-module.exports = Login;
+module.exports = Articles;
