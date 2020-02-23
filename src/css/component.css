@@ -1,0 +1,26 @@
+.Centrlize {
+  background-color: bisque;
+  height: 60%;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 20%;
+  -webkit-box-shadow: 10px 10px 5px -8px rgba(140, 146, 161, 0.52);
+  -moz-box-shadow: 10px 10px 5px -8px rgba(140, 146, 161, 0.52);
+  box-shadow: 10px 10px 5px -8px rgba(140, 146, 161, 0.52);
+}
+
+.card {
+  background-image: url('https://www.ppt-backgrounds.net/thumbs/stylish-blue-powerpoint-template-backgrounds.jpg');
+}
+.card-title {
+  color: azure;
+  text-align: center;
+  margin-bottom: 50px;
+}
+.outerFrame {
+  background-color: bisque;
+  height: 60%;
+  width: 70%;
+  margin: 15px auto;
+  margin-top: 200px;
+}
