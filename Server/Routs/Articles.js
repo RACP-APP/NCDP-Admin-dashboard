@@ -1,12 +1,21 @@
+//------------------------------------------------------//
+//-------------include all necessary libraries ---------//
+//------------------------------------------------------//
 const express = require('express');
 const Articles = express.Router();
 const bodyParser = require('body-parser');
 const path = require('path');
 
+//------------------------------------------------------//
+//------------- use Wanted Libraries -------------------//
+//------------------------------------------------------//
 Articles.use(bodyParser.json());
 Articles.use(bodyParser.urlencoded({ extended: true }));
 
 Articles.get('/Articles', (req, res) => {
+  //------------------------------------------------------//
+  //------------- remove cors Origin Error ---------------//
+  //------------------------------------------------------//
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader(
@@ -23,6 +32,9 @@ Articles.get('/Articles', (req, res) => {
     'Origin, X-Requested-With, Content-Type, Accept'
   );
 
+  //----------------------------------------------------------//
+  //------------- send a response to the route ---------------//
+  //----------------------------------------------------------//
   res.send(' you are Articles in ');
 });
 

@@ -1,12 +1,21 @@
+//------------------------------------------------------//
+//-------------include all necessary libraries ---------//
+//------------------------------------------------------//
 const express = require('express');
 const Dashbord = express.Router();
 const bodyParser = require('body-parser');
 const path = require('path');
 
+//------------------------------------------------------//
+//------------- use Wanted Libraries -------------------//
+//------------------------------------------------------//
 Dashbord.use(bodyParser.json());
 Dashbord.use(bodyParser.urlencoded({ extended: true }));
 
 Dashbord.get('/Dashbord', (req, res) => {
+  //------------------------------------------------------//
+  //------------- remove cors Origin Error ---------------//
+  //------------------------------------------------------//
   res.setHeader('Access-Control-Allow-Origin', '*');
   // Request methods you wish to allow
   res.setHeader(
@@ -23,6 +32,9 @@ Dashbord.get('/Dashbord', (req, res) => {
     'Origin, X-Requested-With, Content-Type, Accept'
   );
 
+  //----------------------------------------------------------//
+  //------------- send a response to the route ---------------//
+  //----------------------------------------------------------//
   res.send(' you are Dashbord in ');
 });
 
