@@ -1,7 +1,7 @@
 .Centrlize {
   background-color: bisque;
   height: 60%;
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
   margin-top: 20%;
   -webkit-box-shadow: 10px 10px 5px -8px rgba(140, 146, 161, 0.52);
@@ -20,7 +20,7 @@
 .outerFrame {
   background-color: bisque;
   height: 60%;
-  width: 70%;
+  width: 60%;
   margin: 15px auto;
   margin-top: 200px;
 }

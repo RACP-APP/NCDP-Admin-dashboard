@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/component.css';
 
-class SignUp extends React.Component {
+class LogIn extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,20 +17,12 @@ class SignUp extends React.Component {
 
                 <form>
                   <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">
-                      User Name:
-                    </label>
+                    <label
+                      for="staticEmail"
+                      class="col-sm-2 col-form-label"
+                    ></label>
                     <br></br>
-                    <div class="col-sm-10">
-                      <input
-                        type="text"
-                        readonly
-                        class="form-control"
-                        id="staticEmail"
-                        placeholder="Insert Your User Name Here.."
-                        name="username"
-                      />
-                    </div>
+                    <div class="col-sm-10"></div>
                   </div>
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">
@@ -43,7 +35,7 @@ class SignUp extends React.Component {
                         readonly
                         class="form-control"
                         id="staticEmail"
-                        value="email@example.com"
+                        value="email@example.com Or UserName"
                         name="email"
                       />
                     </div>
@@ -66,7 +58,7 @@ class SignUp extends React.Component {
                     type="button"
                     class="btn btn-primary btn-lg btn-block"
                   >
-                    SignUp to NCDP
+                    LogIn to NCDP
                   </button>
                   <text name="errorHolder" id="errorHolder"></text>
                 </form>
@@ -79,4 +71,4 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+export default LogIn;
