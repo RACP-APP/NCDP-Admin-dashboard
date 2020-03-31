@@ -1,0 +1,52 @@
+[
+  {
+    "value": "H1",
+    "block": "header-one",
+    "icon": "fa fa-header"
+  },
+
+  {
+    "value": "H2",
+    "block": "header-two",
+    "icon": "fa fa-header"
+  },
+
+  {
+    "value": "H3",
+    "block": "header-three",
+    "icon": "fa fa-header"
+  },
+  {
+    "value": "H4",
+    "block": "header-four",
+    "icon": "fa fa-header"
+  },
+
+  {
+    "value": "H5",
+    "block": "header-five",
+    "icon": "fa fa-header"
+  },
+  {
+    "value": "H6",
+    "block": "header-six",
+    "icon": "fa fa-header"
+  },
+  {
+    "value": "UL",
+    "block": "unordered-list-item",
+    "icon": "fas fa-list-ul"
+  },
+
+  {
+    "value": "OL",
+    "block": "ordered-list-item",
+    "icon": "fas fa-list-ol"
+  },
+
+  {
+    "value": "code-block",
+    "block": "code-block",
+    "icon": "fa fa-code"
+  }
+]

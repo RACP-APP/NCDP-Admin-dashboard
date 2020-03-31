@@ -1,0 +1,264 @@
+[
+  {
+    "ModelID": 109,
+    "Title": "44",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/cordova_bot.png?alt=media&token=694cfb78-4dfa-4a96-a9ef-750e5c77cf71",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 54,
+        "ModelID": 109,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1584094716665-New Topic - 109",
+        "Article": [
+          {
+            "ArticleID": 112,
+            "TopicID": 54,
+            "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+            "Title": "new Article for Topicundefined1584189747422",
+            "UpdateDate": "2020-03-14T10:42:27.000Z",
+            "UpdateByUser": 1,
+            "CreatedByUser": 1,
+            "CreatedDate": "2020-03-14T10:42:27.000Z",
+            "TimesViewd": 0,
+            "Notes": "this a New Article ......",
+            "createBy": "nono",
+            "UpdatedBy": "nono",
+            "content": [
+              {
+                "contentID": 5,
+                "ArticleID": 112,
+                "text": [
+                  {
+                    "TextID": 10,
+                    "ContentID": 5,
+                    "ContentText": "<p><img alt=\"WooCommerce Ad\" src=\"https://res.cloudinary.com/css-tricks/image/upload/f_auto,q_auto/v1554737513/woocommerce_kqwhux.png\"/></p>\n<p><img alt=\"Chris Coyier Avatar\" height=\"80\" src=\"https://res.cloudinary.com/css-tricks/image/upload/f_auto,q_auto/v1544563294/chriscoyier_fmktwo.jpg\" width=\"80\"/><a href=\"https://woocommerce.com/?aff=8638\">WooCommerce is the most popular choice for building an online store. It's what we always use!</a></p>",
+                    "MediaOrder": 1,
+                    "MediaType": "Text"
+                  },
+                  {
+                    "TextID": 11,
+                    "ContentID": 5,
+                    "ContentText": "<p>171</p>\n<p>You can do this using the <a href=\"http://api.jquery.com/filter/\" rel=\"noreferrer\"><code>filter()</code></a> function:</p>\n<pre><code>$(\".a\").filter(\".b\")</code></pre>\n<p><a href=\"https://stackoverflow.com/a/1041364/12739296\" rel=\"nofollow\" title=\"short permalink to this answer\">share</a><a href=\"https://stackoverflow.com/posts/1041364/edit\" title=\"revise and improve this post\">edit</a></p>\n<p><a href=\"https://stackoverflow.com/posts/1041364/revisions\" title=\"show all edits to this post\">edited Jan 30 '17 at 13:56</a></p>\n<p><img height=\"32\" src=\"https://www.gravatar.com/avatar/b2756817b2660e3e37a87fcaf69ee1ef?s=32&amp;d=identicon&amp;r=PG\" width=\"32\"/></p>\n<p><a href=\"https://stackoverflow.com/users/80111/ben-everard\">Ben Everard</a></p>\n<p><strong>13k</strong>1111 gold badges5959 silver badges9595 bronze badges</p>\n<p>answered Jun 24 '09 at 22:34</p>\n<p><img height=\"32\" src=\"https://www.gravatar.com/avatar/d922847a753b563538bc8de1b60a0225?s=32&amp;d=identicon&amp;r=PG\" width=\"32\"/></p>\n<p><a href=\"https://stackoverflow.com/users/27308/jamie-love\">Jamie Love</a></p>\n<p><strong>4,902</strong>66 gold badges2525 silver badges3333 bronze badges</p>\n<ul>\n  <li>16What is the difference between this answer and the accepted one? –&nbsp;<a href=\"https://stackoverflow.com/users/238260/daniel-allen-langdon\" title=\"26,400 reputation\">Daniel Allen Langdon</a> <a href=\"https://stackoverflow.com/questions/1041344/how-can-i-select-an-element-with-multiple-classes-in-jquery#comment8352953_1041364\">Aug</a></li>\n</ul>",
+                    "MediaOrder": 2,
+                    "MediaType": "Text"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "TopicID": 77,
+        "ModelID": 109,
+        "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+        "Title": "New Topic for -109-1585241669815",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 110,
+    "Title": "me and u 2",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/1_6.jpg?alt=media&token=98246cc9-2c7c-4014-96be-2cbe28f675cb",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 78,
+        "ModelID": 110,
+        "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/8a60afa2ccef990ba823a14821b9347e_cute-panda-cartoon-png-clipart-image-gallery-yopriceville-_522-600.png?alt=media&token=c1aafd14-66f0-4330-8cbc-4b3361d61256  ",
+        "Title": "الامارات ",
+        "Article": [
+          {
+            "ArticleID": 134,
+            "TopicID": 78,
+            "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+            "Title": "New Article for Topic 78-1585259236529",
+            "UpdateDate": "2020-03-26T19:47:16.000Z",
+            "UpdateByUser": 1,
+            "CreatedByUser": 1,
+            "CreatedDate": "2020-03-26T19:47:16.000Z",
+            "TimesViewd": 0,
+            "Notes": "this a New Article ......",
+            "createBy": "nono",
+            "UpdatedBy": "nono",
+            "content": [
+              {
+                "contentID": 13,
+                "ArticleID": 134,
+                "text": [
+                  {
+                    "TextID": 12,
+                    "ContentID": 13,
+                    "ContentText": "<p><strong><em>الضغوط النفسية: </em></strong></p>\n\n<ul>\n\t<li>مجموعة من المواقف التي يتعرّض لها الشخص وتوجب عليه أن يتفاعل معها ويتكيّف بوجودها من خلال استخدام كافّة قدراته الشخصيّة والاجتماعيّة، وقد تكون هذه المواقف عبارة عن تغيّرات داخليّة أو خارجيّة حدثت له حتّى لو كانت تغيّرات إيجابيّة غير سلبيّة، ممّا يسبّب للشخص مجموعة من الاضطرابات النفسيّة أو الجسديّة، كالتوتّر الشديد ممّا يفقده اتّزانه ويؤثّر على سلوكه واتّجاهاته، ويختلف التأثر من شخص لآخر بحسب نوع شخصيّته ومدى تقبّله النفسيّ لها.</li>\n\t<li>مجموعة من الصعوبات التي يمكن أن يتعرّض إليها الإنسان بسبب خبرته في الحياة، ومدى فهمه لكافّة الأمور التي ستهدّده. ميكانيك 1978.</li>\n\t<li>مجموعة من التغيرات الداخليّة أو الخارجيّة والتي تثير الشخص وتسبّب استجابته وحدوث ردود فعل مختلفة. عبدالستار إبراهيم.</li>\n</ul>\n\n<p><em>تذكير:</em></p>\n\n<p>تختلف طريقة تعامل الفرد مع الضغط النفسي باختلاف شخصية الفرد وطريقة تفكيره والخبرات والظروف التي مر أو يمر بها. كما أن الهدف من إدارة الضغوط هو تخفيف حدتها وآثارها والسيطرة عليها وليس التخلص منها نهائياً لأنه لا يمكن التخلص من الضغوط بشكل نهائي.</p>\n\n<p><em>أسباب الضغط النفسي:</em></p>\n\n<p>&nbsp;</p>\n\n<table align=\"center\" border=\"3\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>خوف أو قلق من أمر ما</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>أسباب انفعالية</p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>أمور متعلقة بتربية الأولاد، العلاقات داخل الأسرة </em></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب عائلية</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>المناسبات الإجتماعية، ضغوطات المجتمع والعلاقات الإجتماعية. </em></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب اجتماعية</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>انتقال من المنزل، انجاب الأطفال، وظيفة جديدة. </em></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب متعلقة بتغير الأمور الحياتية</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>ضغوطات على الأداء، مدير صعب، مواعيد التسليم، عدم القدرة على الموازنة بين الحياة العملية و العائلية </em></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب متعلقة بالعمل</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>عدم النوم، قلة الأكل، الحمل،أعراض ما قبل الدورة الشهرية.</em></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب جسدية</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>النيكوتين، المهدئات، الكحول </em></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب كيميائية</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>مرض مفاجئ أو مزمن</em></p>\n\n\t\t\t<p>&nbsp;</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب مرضية</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p><em>ضجيج، تلوث، حرارة زائدة أو برودة زائدة</em></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><em>أسباب بيئية</em></p>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<p><em>تذكير:</em></p>\n\n<p>من المهم في كثير من الأحيان ان نتعامل مع الضغوط النفسية من خلال الرجوع للأسباب وحل المشكلة. ولكن بعض الظروف الحياتية يتوجب علينا التعامل معها وتجاوزها فلا بد لنا من التكيف معها والتخفيف من حدتها كالمرض أو الفقدان.</p>\n\n<p><em>الأعراض التي تصاحب الضغط النفسي: </em></p>\n\n<p>من المهم التنبه لأعراض الضغط النفسي حيث أن هذه الأعراض بمثابة جهاز إنذار ينبئنا بأننا في حالة يجب التنبه لها، فكلما كنا على وعي بما نمر به من ظروف كانت لدينا القدرة على السيطرة والتعامل معها.</p>\n\n<p>قد تختلف هذه الأعراض من شخص لآخر من حيث الشدة والمدة وايضاً طبيعة استجابة الفرد لهذه الأعراض<em>.</em></p>\n\n<p><em>الأفكار: أفكار لا عقلانية، مخاوف وتتوقعات غير منطقية، عدم القدرة على التركيز.</em></p>\n\n<p><em>الاعراض الجسدية: تعرق، رجفة، تسارع في نبضات القلب، التعب، </em></p>\n\n<p><em>السلوك: الانسحاب، التكسير، قضم الأظافر، صعوبة في الاسترخاء</em></p>\n\n<p><em>المشاعر: مشاعر خوف، قلق، توتر، عصبية</em></p>\n\n<p><em>الحلول: </em></p>\n\n<p>&quot;نختم بـ : من الامور التي تعين الفرد على ادارة الضغوط النفسية والتخفيف من حدة الانفعال السلبي :</p>\n\n<ul>\n\t<li>الاهتمام بالجانب الروحاني: قراءة القرآن، الذكر، التأمل والتفكر.</li>\n\t<li>الاهتمام بالجانب الصحي: ممارسة الرياضة، وتناول الغذاء الصحي، المشي.</li>\n\t<li>ممارسة الإسترخاء: التنفس العميق، التأمل و الإسترخاء العضلي.</li>\n\t<li>الإبتعاد عن الأشخاص السلبيين وقضاء الوقت مع اشخاص مرحين وايجابيين.</li>\n\t<li>الفضفضة والتعبير عن المشاعر باستخدام اساليب متنوعة تناسب كل شخصية.</li>\n\t<li>أعط نفسك راحة، اخرج في نزهة، أجِل الأعمال التي يمكن تأجيلها.</li>\n</ul>\n\n<p>حدد الموقف الضاغط</p>\n\n<p>واجه الضغوط ولا تهرب منها</p>\n\n<p>مارس الإسترخاء</p>\n\n<p><em>تذكير: </em></p>\n\n<p>مرورنا بمشاعر سلبية شيء طبيعي وأساسي لعملية النمو الانفعالي والعاطفي، ولكن في حال مررنا ببعض الصعوبات عند التعامل مع هذا الضغط وجربنا أن نتخلص منه أو نتقبله ونتعامل معه بكافة الطرق التي تناسبنا ولنم نستطيع ذلك، علينا التنبه لأنه من الممكن أن يكون قد تطور هذا الضغط ويحتاج الى تدخل أو مساعدة من المختصين، وهنا علينا الإشارة إلى بعض المعايير الأساسية<em>: </em></p>\n\n<ol>\n\t<li>التكرار: عدد مرات تكرار السلوك أو الشعور.</li>\n\t<li>المدة: استمرار هذا الشعور من اسبوعين الى شهر بشكل يومي واستخدام وسائل تكيف أو تفريغ انفعالي لكن دون جدوى.</li>\n\t<li>الشدة: مدى شدة السلوك أو الشعور.</li>\n\t<li>تعطيل الحياة اليومية : عدم القدرة على القيام بأنشطة الحياة اليومية لفترات طويلة.</li>\n\t<li>تشكيل خطروأذى على النفس أوعلى الاخرين.</li>\n</ol>\n\n<p><em><em>الوظيفة البيتية</em></em> : قومي بتسجيل 3 أساليب قمت باستخدامها كوسيلة تفريغ انفعالي أو تكيف .</p>",
+                    "MediaOrder": 2,
+                    "MediaType": "Text"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "TopicID": 86,
+        "ModelID": 110,
+        "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/1678285.png?alt=media&token=796616d9-6a13-4412-8e34-82b342f15317 ",
+        "Title": "فلسطين ",
+        "Article": []
+      },
+      {
+        "TopicID": 87,
+        "ModelID": 110,
+        "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005 ",
+        "Title": "البحرين ",
+        "Article": []
+      },
+      {
+        "TopicID": 88,
+        "ModelID": 110,
+        "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/8a60afa2ccef990ba823a14821b9347e_cute-panda-cartoon-png-clipart-image-gallery-yopriceville-_522-600.png?alt=media&token=d34f49da-3154-43cc-8f83-90e0bef7d31f ",
+        "Title": "مصر ",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 111,
+    "Title": "New Model1584113935680",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/heroku-5-569467.png?alt=media&token=e3119cfa-421f-4b39-b896-7b63c6f404ac",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 56,
+        "ModelID": 111,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1584113935691-New Topic - 111",
+        "Article": [
+          {
+            "ArticleID": 114,
+            "TopicID": 56,
+            "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+            "Title": "new Article for Topicundefined1584194288102",
+            "UpdateDate": "2020-03-14T11:58:08.000Z",
+            "UpdateByUser": 1,
+            "CreatedByUser": 1,
+            "CreatedDate": "2020-03-14T11:58:08.000Z",
+            "TimesViewd": 0,
+            "Notes": "this a New Article ......",
+            "createBy": "nono",
+            "UpdatedBy": "nono",
+            "content": [{ "contentID": 12, "ArticleID": 114, "text": [] }]
+          }
+        ]
+      },
+      {
+        "TopicID": 92,
+        "ModelID": 111,
+        "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+        "Title": "New Topic for -111-1585264443411",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 117,
+    "Title": "New Model1585219813094",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/panda-clipart-transparent-background-3.png?alt=media&token=844dcd0e-dbd2-4da4-8aab-3379b83e720c",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 71,
+        "ModelID": 117,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1585219813104-New Topic - 117",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 120,
+    "Title": "New Model1585230786587",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 74,
+        "ModelID": 120,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1585230786597-New Topic - 120",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 121,
+    "Title": "New Model1585230788840",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 75,
+        "ModelID": 121,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1585230788847-New Topic - 121",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 122,
+    "Title": "New Model1585230790448",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 76,
+        "ModelID": 122,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1585230790455-New Topic - 122",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 123,
+    "Title": "New Model1585258624047",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 89,
+        "ModelID": 123,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1585258624055-New Topic - 123",
+        "Article": []
+      }
+    ]
+  },
+  {
+    "ModelID": 124,
+    "Title": "New Model1585258625879",
+    "Icon": "https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005",
+    "CreatedBy": 1,
+    "userName": "nono",
+    "Topics": [
+      {
+        "TopicID": 90,
+        "ModelID": 124,
+        "Icon": " https://cdn.onlinewebfonts.com/svg/img_370232.png",
+        "Title": "1585258625886-New Topic - 124",
+        "Article": []
+      }
+    ]
+  }
+]

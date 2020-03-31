@@ -1,0 +1,25 @@
+[
+  {
+    "value": "Bold",
+    "style": "BOLD",
+    "icon": "fas fa-bold"
+  },
+
+  {
+    "value": "Ttalic",
+    "style": "ITALIC",
+    "icon": "fas fa-italic"
+  },
+
+  {
+    "value": "Underline",
+    "style": "UNDERLINE",
+    "icon": "fas fa-underline"
+  },
+
+  {
+    "value": "Strikethrough",
+    "style": "STRIKETHROUGH",
+    "icon": "fa fa-strikethrough"
+  }
+]

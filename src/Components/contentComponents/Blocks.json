@@ -1,0 +1,52 @@
+[
+  {
+    "value": "H1",
+    "block": "header-one",
+    "icon": "glyphicon glyphicon-header header6"
+  },
+
+  {
+    "value": "H2",
+    "block": "header-two",
+    "icon": "glyphicon glyphicon-header header5"
+  },
+
+  {
+    "value": "H3",
+    "block": "header-three",
+    "icon": "glyphicon glyphicon-header header4"
+  },
+  {
+    "value": "H4",
+    "block": "header-four",
+    "icon": "glyphicon glyphicon-header header3"
+  },
+
+  {
+    "value": "H5",
+    "block": "header-five",
+    "icon": "glyphicon glyphicon-header header2"
+  },
+  {
+    "value": "H6",
+    "block": "header-six",
+    "icon": "glyphicon glyphicon-header header1"
+  },
+  {
+    "value": "UL",
+    "block": "unordered-list-item",
+    "icon": "fas fa-list-ul"
+  },
+
+  {
+    "value": "OL",
+    "block": "ordered-list-item",
+    "icon": "fas fa-list-ol"
+  },
+
+  {
+    "value": "code-block",
+    "block": "code-block",
+    "icon": "fa fa-code"
+  }
+]

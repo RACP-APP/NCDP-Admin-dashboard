@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <head>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+
+    <!-- <script src="/__/firebase/7.10.0/firebase-storage.js"></script> -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-analytics.js"></script>
+
+
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@coreui/icons@1.0.0/css/free.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@coreui/icons@1.0.0/css/brand.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@coreui/icons@1.0.0/css/flag.min.css"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <title>NCDP Admin dashboard</title>
+  </head>
+  <body>
+    <div id="root">BODY SECTION</div>
+ 
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+    // This function is called when the page is first loaded, when the page is refreshed,
+      // and when returning to the page from another page using back/forward.
+      // Navigating to a different page with history.pushState and then going back
+      // will not trigger this event as the page is not actually reloaded.
+      window.onload = function () {
+        // You can distinguish a page load from a reload by checking performance.navigation.type.
+        if (window.performance && window.PerformanceNavigation) {
+          let type = performance.navigation.type;
+          if (type == PerformanceNavigation.TYPE_NAVIGATE) {
+            // The page was loaded.
+          } else if (type == PerformanceNavigation.TYPE_RELOAD) {
+            console.log("reloaded")
+            
+            // The page was reloaded.
+          } else if (type == PerformanceNavigation.TYPE_BACK_FORWARD) {
+            // The page was navigated to by going back or forward,
+            // though *not* from a history state you have set.
+          }
+        }
+
+        // Remember that the browser automatically sets the state to null on the
+        // first visit, so if you check for this and find it to be null, you know
+        // that the user hasn't been here yet.
+        if (history.state == null) {
+          // Do stuff on first load.
+        } else {
+          // Do stuff on refresh or on returning to this page from another page
+          // using back/forward. You may want to make the window.onpopstate function
+          // below a named function, and just call that function here.
+        }
+
+        // You can of course have code execute in all three cases. It would go here.
+
+        // You may also wish to set the history state at this time. This could go in the
+        // if..else statement above if you only want to replace the state in certain
+        // circumstances. One reason for setting the state right away would be if the user
+        // navigates to your page via a deep link.
+        // let state = ...; // There might not be much to set at this point since the page was
+        // just loaded, but if your page gets random content, or time-
+        // dependent content, you may want to save something here so it can
+        // be retrieved again later.
+        // let title = ...; // Since this isn't actually used by your browser yet, you can put
+        // anything you want here, though I would recommend setting it to
+        // null or to document.title for when browsers start actually doing
+        // something with it.
+        // let URL = ...;   // You probably don't want to change the URL just yet since the page
+        // has only just been loaded, in which case you shouldn't use this
+        // variable. One reason you might want to change the URL is if the
+        // user navigated to this page with a query string in the URL. After
+        // reading the query string, you can remove it by setting this
+        // variable to: location.origin + location.pathname
+        // history.replaceState(state, title, URL); // Since the page has just been loaded, you
+        // don't want to push a new state; you should
+        // just replace the current state.
+      }
+
+      // This function is called when navigating between states that you have set.
+      // Since the purpose of `history` is to allow dynamic content changes without
+      // reloading the page (ie contacting the server), the code in this function
+      // should be fairly simple. Just things like replacing text content and images.
+      window.onpopstate = function () {
+        // Do things with history.state here.
+      }
+
+      // This function is called right before the page is refreshed, and right
+      // before leaving the page (not counting history.replaceState). This is
+      // your last chance to set the page's history state before leaving.
+      window.onunload = function () {
+        // Finalize the history state here.
+      }
+    </script>
+  </body>
+</html>
