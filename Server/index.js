@@ -9,7 +9,7 @@ const path = require('path');
 const cors = require('cors');
 var multer = require('multer');
 const favicon = require('express-favicon');
-const db = fb.firestore();
+// const db = fb.firestore();
 
 const cssPath = path.join(__dirname, '../public');
 

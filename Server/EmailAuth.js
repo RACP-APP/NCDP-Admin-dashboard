@@ -153,7 +153,7 @@ var Mailling = (to, Subject, Html, Text) => {
       console.log(error);
     });
 };
-sendMail(8, pst);
+// sendMail(8, pst);
 
 module.exports = {
   Mailling: Mailling

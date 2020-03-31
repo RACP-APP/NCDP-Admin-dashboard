@@ -1,6 +1,6 @@
 [
   {
-    "server": "https://ncdp-dash.herokuapp.com/",
+    "server": "http://localhost:3005/",
     "logo": "logo.png"
   }
 ]
