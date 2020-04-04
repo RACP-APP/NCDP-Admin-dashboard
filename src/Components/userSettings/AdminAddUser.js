@@ -4,6 +4,7 @@ import '../../css/buttonStyles.css';
 // import config from '../config.json';
 import ManagUsers from './ManageUsers';
 import ChangePassword from './shangPassword';
+import SocialItems from './ManageSocialeIcons';
 
 class AdminSettings extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class AdminSettings extends React.Component {
               >
                 Shange Password
               </a>
-              {/* <a
+              <a
                 class="nav-item nav-link"
                 id="nav-contact-tab"
                 data-toggle="tab"
@@ -62,8 +63,8 @@ class AdminSettings extends React.Component {
                 aria-controls="nav-contact"
                 aria-selected="false"
               >
-                Contact
-              </a> */}
+                Social Items
+              </a>
             </div>
           </nav>
           <div class="tab-content" id="nav-tabContent">
@@ -104,22 +105,26 @@ class AdminSettings extends React.Component {
 
               <ChangePassword LogOut={this.LogOut.bind(this)}></ChangePassword>
             </div>
-            {/* <div
+
+            {/* --------------------------------------- Sosial items starts here ----------------------------- */}
+
+            <div
               class="tab-pane fade"
               id="nav-contact"
               role="tabpanel"
               aria-labelledby="nav-contact-tab"
             >
-              Et et consectetur ipsum labore excepteur est proident excepteur ad
-              velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt
-              anim aliqua enim pariatur veniam sunt est aute sit dolor anim.
-              Velit non irure adipisicing aliqua ullamco irure incididunt irure
-              non esse consectetur nostrud minim non minim occaecat. Amet duis
-              do nisi duis veniam non est eiusmod tempor incididunt tempor dolor
-              ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non
-              adipisicing reprehenderit do dolore. Duis reprehenderit occaecat
-              anim ullamco ad duis occaecat ex.
-            </div> */}
+              <br></br>
+              <br></br>
+              <p>
+                Welwcon : {JSON.parse(localStorage.getItem('user'))['userName']}{' '}
+                Fell Free to use NCDP Manage Accout to modify your Setting ,if
+                you changed Your Password it will be direclty send to your
+                Email.
+              </p>
+              <br></br>
+              <SocialItems></SocialItems>
+            </div>
           </div>
         </div>
       </div>
