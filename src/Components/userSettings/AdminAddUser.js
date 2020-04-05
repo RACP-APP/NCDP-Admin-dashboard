@@ -118,9 +118,9 @@ class AdminSettings extends React.Component {
               <br></br>
               <p>
                 Welwcon : {JSON.parse(localStorage.getItem('user'))['userName']}{' '}
-                Fell Free to use NCDP Manage Accout to modify your Setting ,if
-                you changed Your Password it will be direclty send to your
-                Email.
+                Fell Free to use NCDP Manage Account to modify your Settings ,if
+                you changed The Site Social Icons this Change Will be Reflected
+                on Your Website.
               </p>
               <br></br>
               <SocialItems></SocialItems>
