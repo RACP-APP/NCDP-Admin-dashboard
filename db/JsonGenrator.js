@@ -109,7 +109,7 @@ async function getData(cb) {
                                   ) {
                                     cc = false;
                                     await db.query(
-                                      '  SELECT Text.* from  `TEXT` Text  Where Text.ContentID =' +
+                                      '  SELECT Text.* from  `Text` Text  Where Text.ContentID =' +
                                         contents[medi]['contentID'],
                                       async (err, result) => {
                                         if (err) {
