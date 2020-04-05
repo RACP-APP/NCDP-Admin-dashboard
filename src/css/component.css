@@ -528,6 +528,9 @@ ul {
   margin: 0;
   padding: 0;
 }
+.header {
+  font-size: 12px !important;
+}
 
 .ItemInfo {
   color: #6a9cc9;

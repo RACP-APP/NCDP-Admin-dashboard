@@ -149,7 +149,7 @@ class ModuleList extends React.Component {
     if (!this.state.editMod) {
       return (
         <Card
-          style={{ maxWidth: '255px' }}
+          style={{ maxWidth: '210px' }}
           color="blue"
           key="ModelID"
           id={this.props.model['ModelID']}
@@ -214,7 +214,7 @@ class ModuleList extends React.Component {
       return (
         <Card
           color="blue"
-          style={{ maxWidth: '255px' }}
+          style={{ maxWidth: '210px' }}
           key="ModelID"
           id={this.props.model['ModelID']}
           onDoubleClick={this.goToTopics.bind(this)}
