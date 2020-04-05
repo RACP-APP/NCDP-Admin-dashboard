@@ -19,6 +19,7 @@
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "browserify-fs": "^1.0.0",
     "chart.js": "^2.9.3",
     "chartjs-plugin-lineheight-annotation": "^0.3.5",
     "chroma-js": "^2.1.0",

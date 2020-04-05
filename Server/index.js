@@ -9,6 +9,7 @@ const path = require('path');
 const cors = require('cors');
 var multer = require('multer');
 const favicon = require('express-favicon');
+const fs = require('fs');
 // const db = fb.firestore();
 
 const cssPath = path.join(__dirname, '../public');
@@ -28,6 +29,31 @@ app.get('/contactus', (req, res) => {
 app.use(require('./Routs/LogIn'));
 app.use(require('./Routs/Articles'));
 app.use(require('./Routs/Dashbord'));
+
+//---------------------------------------------------------------------------------------------------------//
+//--------------- arout to generat json file and send it to the mobile app --------------------------------//
+//--------------------------------------------------------------------------------------------------------//
+app.post('/WriteSocialIconsData', function(req, res) {
+  console.log('hiiiiiiiiiiiiiiiiiiiiii');
+  var data = req.body.data;
+  fs.writeFile(
+    'src/Components/userSettings/FooterData.json',
+    JSON.stringify(data),
+    error => {
+      if (error) {
+        res
+          .status(500)
+          .send(error)
+          .end();
+      } else {
+        res
+          .status(200)
+          .send('done')
+          .end();
+      }
+    }
+  );
+});
 
 //---------------------------------------------------------------------------------------------------------//
 //--------------- arout to generat json file and send it to the mobile app --------------------------------//
