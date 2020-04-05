@@ -1,14 +1,16 @@
 // import { promises as fs } from 'fs';
 const db = require('./db');
 const fs = require('fs');
+// const path = require('path');
 var modules = [];
 var cc = false;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 async function writeotfile(object) {
+  var file = path.join(__dirname, './phraseFreqs.json');
   try {
-    await fs.writeFileSync('./phraseFreqs.json', JSON.stringify(object));
+    await fs.writeFileSync(file, JSON.stringify(object));
     console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiii2');
   } catch {
     console.log('errrrrrrrrrrrrrrror');

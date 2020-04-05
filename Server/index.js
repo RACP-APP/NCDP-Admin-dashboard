@@ -34,25 +34,26 @@ app.use(require('./Routs/Dashbord'));
 //--------------- arout to generat json file and send it to the mobile app --------------------------------//
 //--------------------------------------------------------------------------------------------------------//
 app.post('/WriteSocialIconsData', function(req, res) {
+  var file = path.join(
+    __dirname,
+    '../src/Components/userSettings/FooterData.json'
+  );
   console.log('hiiiiiiiiiiiiiiiiiiiiii');
   var data = req.body.data;
-  fs.writeFile(
-    'src/Components/userSettings/FooterData.json',
-    JSON.stringify(data),
-    error => {
-      if (error) {
-        res
-          .status(500)
-          .send(error)
-          .end();
-      } else {
-        res
-          .status(200)
-          .send('done')
-          .end();
-      }
+  fs.writeFile(file, JSON.stringify(data), error => {
+    if (error) {
+      console.log(error);
+      res
+        .status(500)
+        .send('An Error Occurred During Processing')
+        .end();
+    } else {
+      res
+        .status(200)
+        .send('done')
+        .end();
     }
-  );
+  });
 });
 
 //---------------------------------------------------------------------------------------------------------//
@@ -60,8 +61,6 @@ app.post('/WriteSocialIconsData', function(req, res) {
 //--------------------------------------------------------------------------------------------------------//
 app.get('/JSONFile', async function(req, res) {
   const CreatJSON = await require('../db/JsonGenrator').creatJson();
-
-  console.log('dddddddddddddddd');
 
   res.sendFile(path.join(__dirname, '../', 'phraseFreqs.json'));
 });

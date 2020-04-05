@@ -71,7 +71,7 @@ export default class ManageSocialIcons extends React.Component {
         });
       })
       .catch(error => {
-        console.log('Error');
+        console.log('Error', error);
 
         this.setState({
           error: true,
