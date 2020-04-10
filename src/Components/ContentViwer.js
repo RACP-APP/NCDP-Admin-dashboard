@@ -30,7 +30,7 @@ class ContentViwer extends React.Component {
       TextContent: this.props.data['Text'],
       MediaContent: [
         ...this.props.data['Media'],
-        ...this.props.data['Text'] // sorting the Media Array to get right order
+        ...this.props.data['Text'], // sorting the Media Array to get right order
       ].sort((a, b) => {
         return a.MediaOrder - b.MediaOrder;
       }),
@@ -40,7 +40,7 @@ class ContentViwer extends React.Component {
       loading: false,
       vedioURL: '',
       audioURL: '',
-      ImageUrl: ''
+      ImageUrl: '',
     };
     this.closeEditor = this.closeEditor.bind(this);
     this.OpenEditor = this.OpenEditor.bind(this);
@@ -63,13 +63,13 @@ class ContentViwer extends React.Component {
       .child('Vedios')
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ vedioURL: url, loading: false }, () => {
           this.onVedioSucsessHandler();
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -83,13 +83,13 @@ class ContentViwer extends React.Component {
       .child('Audio')
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ audioURL: url, loading: false }, () => {
           this.onClickHandlerForAudio();
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -103,13 +103,13 @@ class ContentViwer extends React.Component {
       .child('images')
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ ImageUrl: url, loading: false }, () => {
           this.onClickHandlerForImages();
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -117,9 +117,9 @@ class ContentViwer extends React.Component {
   getAllMedia() {
     axios
       .post(config[0].server + 'Articles/GetAllMedia', {
-        ContentID: this.props.data['contentID']
+        ContentID: this.props.data['contentID'],
       })
-      .then(result => {
+      .then((result) => {
         this.setState({
           MediaContent: [...result.data, ...this.state.TextContent].sort(
             (a, b) => {
@@ -129,12 +129,12 @@ class ContentViwer extends React.Component {
           loading: false,
           ImageUrl: '',
           audioURL: '',
-          vedioURL: ''
+          vedioURL: '',
         });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          errorMessage: error[0]
+          errorMessage: error[0],
         });
       });
   }
@@ -145,18 +145,18 @@ class ContentViwer extends React.Component {
       axios
         .post(config[0].server + 'Articles/UpdateTex', {
           TextID: this.state.currentTextID,
-          ContentText: HTMLdata
+          ContentText: HTMLdata,
         })
-        .then(result => {
+        .then((result) => {
           this.getAllContentText();
           console.log('done');
           // this.setState({ currentText: '', currentTextID: });
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({
             errorMessage: error,
             currentText: '',
-            currentTextID: null
+            currentTextID: null,
           });
         });
     }
@@ -171,14 +171,14 @@ class ContentViwer extends React.Component {
         .post(config[0].server + 'Articles/InsertText', {
           ContentID: this.props.data['contentID'],
           ContentText: HTMLdata,
-          MediaOrder: parseInt(count)
+          MediaOrder: parseInt(count),
         })
-        .then(result => {
+        .then((result) => {
           this.getAllContentText();
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({
-            errorMessage: error
+            errorMessage: error,
           });
         });
     }
@@ -187,12 +187,12 @@ class ContentViwer extends React.Component {
   getAllContentText() {
     axios
       .post(config[0].server + 'Articles/gettText', {
-        contentID: this.props.data['contentID']
+        contentID: this.props.data['contentID'],
       })
-      .then(result => {
+      .then((result) => {
         this.setState(
           {
-            TextContent: result.data
+            TextContent: result.data,
           },
           () => {
             this.getAllMedia();
@@ -200,9 +200,9 @@ class ContentViwer extends React.Component {
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          errorMessage: error
+          errorMessage: error,
         });
       });
   }
@@ -210,7 +210,7 @@ class ContentViwer extends React.Component {
   OpenEditor() {
     this.setState(
       {
-        currentText: null
+        currentText: null,
       },
       () => {
         $('.editor').css('width', '100%');
@@ -229,13 +229,13 @@ class ContentViwer extends React.Component {
     console.log(e.target.id);
     axios
       .post(config[0].server + 'Articles/DeletetTexts', {
-        TextIDs: [e.target.id]
+        TextIDs: [e.target.id],
       })
-      .then(result => {
+      .then((result) => {
         console.log(result);
         this.getAllContentText();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -245,23 +245,17 @@ class ContentViwer extends React.Component {
     var deletTextIDS = [];
     for (var i = 0; i < idarray.length; i++) {
       console.log($(idarray[i]).attr('id'));
-      deletTextIDS.push(
-        parseInt(
-          $(idarray[i])
-            .attr('id')
-            .substr(2)
-        )
-      );
+      deletTextIDS.push(parseInt($(idarray[i]).attr('id').substr(2)));
     }
 
     axios
       .post(config[0].server + 'Articles/DeletetTexts', {
-        TextIDs: deletTextIDS
+        TextIDs: deletTextIDS,
       })
-      .then(result => {
+      .then((result) => {
         this.getAllContentText();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -273,21 +267,21 @@ class ContentViwer extends React.Component {
     if (e.target.value === 'non') {
       this.setState({
         type: e.target.value,
-        disabled: true
+        disabled: true,
       });
     } else {
       this.setState({ type: e.target.value, disabled: false });
     }
   }
-  onChangeHandler = event => {
+  onChangeHandler = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
-      loaded: 0
+      loaded: 0,
     });
   };
   onClickHandlerForAudio = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
 
     var path = this.state.audioURL;
@@ -299,21 +293,21 @@ class ContentViwer extends React.Component {
         ContentID: this.props.data['contentID'],
         MediaLink: this.state.audioURL,
         MediaOrder: order,
-        MediaType: 'audio'
+        MediaType: 'audio',
       })
-      .then(reslt => {
+      .then((reslt) => {
         this.getAllMedia();
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          errorMessage: error
+          errorMessage: error,
         });
       });
   };
 
-  onClickHandlerForImages = e => {
+  onClickHandlerForImages = (e) => {
     this.setState({
-      loading: true
+      loading: true,
     });
 
     console.log("this.props.data['ContentID']", this.props.data['contentID']);
@@ -327,15 +321,15 @@ class ContentViwer extends React.Component {
         MediaLink: path,
         MediaOrder:
           this.props.data['Media'].length + this.props.data['Text'].length + 1,
-        MediaType: 'Image'
+        MediaType: 'Image',
       })
-      .then(reslt => {
+      .then((reslt) => {
         this.getAllMedia();
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
           errorMessage: error,
-          ImageUrl: ''
+          ImageUrl: '',
         });
       });
   };
@@ -351,15 +345,15 @@ class ContentViwer extends React.Component {
         ContentID: this.props.data['contentID'],
         MediaLink: path,
         MediaOrder: order,
-        MediaType: 'vedio'
+        MediaType: 'vedio',
       })
-      .then(reslt => {
+      .then((reslt) => {
         this.getAllMedia();
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
           errorMessage: error,
-          loading: false
+          loading: false,
         });
       });
   };
@@ -373,7 +367,7 @@ class ContentViwer extends React.Component {
         currentText: this.state.TextContent[parseInt(e.target.id)][
           'ContentText'
         ],
-        currentTextID: this.state.TextContent[parseInt(e.target.id)]['TextID']
+        currentTextID: this.state.TextContent[parseInt(e.target.id)]['TextID'],
       },
       () => {
         $('.editor').css('width', '100%');
@@ -383,76 +377,85 @@ class ContentViwer extends React.Component {
 
   render() {
     return (
-      <Grid style={{ width: '100%' }}>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <Segment raised>
-              <div className="row">
-                <Button
-                  circular
-                  icon="step backward"
-                  onClick={e => {
-                    this.props.convertToTopic();
-                  }}
-                />
-              </div>
-            </Segment>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column width={4}>
-            <div className=" editor">
-              <Editor
-                data={this.state.currentText}
-                closeEditor={this.closeEditor.bind(this)}
-                saveTextContent={this.saveTextContent.bind(this)}
-                UpdateTextContent={this.UpdateTextContent.bind(this)}
-                handlePastedText={() => true}
-              ></Editor>
-            </div>
-
-            <div
-              className="accordion"
-              id="accordionExample"
-              style={{ width: '100%' }}
-            >
-              <div className="card">
-                <div className="card-header" id="headingOne">
-                  <h2 className="mb-0">
-                    <button
-                      className="btn btn-link accordianTitle"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseOne"
-                      aria-expanded="true"
-                      aria-controls="collapseOne"
-                    >
-                      Text Content
-                    </button>
-                  </h2>
+      <div style={{ maxHeight: '700px' }}>
+        <LoadingScreen
+          style={{ maxHeight: '700px' }}
+          loading={this.state.loading}
+          spinnerColor="#9ee5f8"
+          textColor="#676767"
+          logoSrc={process.env.PUBLIC_URL + '/' + config[0].logo}
+          text="Plaease wait tell Uploading is Complete "
+        ></LoadingScreen>
+        <Grid style={{ width: '100%' }}>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Segment raised>
+                <div className="row">
+                  <Button
+                    circular
+                    icon="step backward"
+                    onClick={(e) => {
+                      this.props.convertToTopic();
+                    }}
+                  />
                 </div>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={4}>
+              <div className=" editor">
+                <Editor
+                  data={this.state.currentText}
+                  closeEditor={this.closeEditor.bind(this)}
+                  saveTextContent={this.saveTextContent.bind(this)}
+                  UpdateTextContent={this.UpdateTextContent.bind(this)}
+                  handlePastedText={() => true}
+                ></Editor>
+              </div>
 
-                <div
-                  id="collapseOne"
-                  className="collapse show"
-                  aria-labelledby="headingOne"
-                  data-parent="#accordionExample"
-                >
-                  <div className="container">
-                    <div className="row ">
-                      <Button.Group basic vertical style={{ width: '100%' }}>
-                        <Button
-                          icon="add circle"
-                          content="Add new "
-                          onClick={this.OpenEditor.bind(this)}
-                        />
-                        <Button
-                          icon="delete"
-                          content="Delete All "
-                          onClick={this.DeleteTextAll.bind(this)}
-                        />
-                      </Button.Group>
-                      {/* <button
+              <div
+                className="accordion"
+                id="accordionExample"
+                style={{ width: '100%' }}
+              >
+                <div className="card">
+                  <div className="card-header" id="headingOne">
+                    <h2 className="mb-0">
+                      <button
+                        className="btn btn-link accordianTitle"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                      >
+                        Text Content
+                      </button>
+                    </h2>
+                  </div>
+
+                  <div
+                    id="collapseOne"
+                    className="collapse show"
+                    aria-labelledby="headingOne"
+                    data-parent="#accordionExample"
+                  >
+                    <div className="container">
+                      <div className="row ">
+                        <Button.Group basic vertical style={{ width: '100%' }}>
+                          <Button
+                            icon="add circle"
+                            content="Add new "
+                            onClick={this.OpenEditor.bind(this)}
+                          />
+                          <Button
+                            icon="delete"
+                            content="Delete All "
+                            onClick={this.DeleteTextAll.bind(this)}
+                          />
+                        </Button.Group>
+                        {/* <button
                         className="btn btn-primary"
                         onClick={this.OpenEditor.bind(this)}
                       >
@@ -464,61 +467,61 @@ class ContentViwer extends React.Component {
                       >
                         Delete All
                       </button> */}
-                      <span className="note_add	" />
-                      <Wordconverter
-                        getAllContentText={this.getAllContentText.bind(this)}
-                        contentID={this.props.data['contentID']}
-                        MediaOrder={
-                          this.props.data['Text'].length +
-                          this.props.data['Media'].length +
-                          1
-                        }
-                      />
-                    </div>
+                        <span className="note_add	" />
+                        <Wordconverter
+                          getAllContentText={this.getAllContentText.bind(this)}
+                          contentID={this.props.data['contentID']}
+                          MediaOrder={
+                            this.props.data['Text'].length +
+                            this.props.data['Media'].length +
+                            1
+                          }
+                        />
+                      </div>
 
-                    {this.state.TextContent.map((TextItemData, index) => {
-                      //////////////////////////////////////////////TEXT /////////////////////////////////////////////////
-                      return (
-                        <div id={TextItemData['TextID']}>
-                          <Table color="blue">
-                            <Table.Body>
-                              <Table.Row>
-                                <Table.Cell>
-                                  <span
-                                    id={index}
-                                    className="glyphicon glyphicon-pencil ItemIcons"
-                                    onClick={this.EditText2.bind(this)}
-                                  ></span>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <span
-                                    id={TextItemData['TextID']}
-                                    key={TextItemData['TextID']}
-                                    className="glyphicon glyphicon-remove ItemIcons"
-                                    onClick={this.DeleteText.bind(this)}
-                                  ></span>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <input
-                                    className="ItemIcons"
-                                    type="checkbox"
-                                    name="deletChekBox"
-                                    id={'d-' + TextItemData['TextID']}
-                                  />
-                                </Table.Cell>
-                              </Table.Row>
-                            </Table.Body>
-                            <Table.Footer fullWidth>
-                              <Table.Row>
-                                <Table.HeaderCell colSpan="3">
-                                  <TextItem data={TextItemData}></TextItem>
-                                </Table.HeaderCell>
-                              </Table.Row>
-                            </Table.Footer>
-                          </Table>
+                      {this.state.TextContent.map((TextItemData, index) => {
+                        //////////////////////////////////////////////TEXT /////////////////////////////////////////////////
+                        return (
+                          <div id={TextItemData['TextID']}>
+                            <Table color="blue">
+                              <Table.Body>
+                                <Table.Row>
+                                  <Table.Cell>
+                                    <span
+                                      id={index}
+                                      className="glyphicon glyphicon-pencil ItemIcons"
+                                      onClick={this.EditText2.bind(this)}
+                                    ></span>
+                                  </Table.Cell>
+                                  <Table.Cell>
+                                    <span
+                                      id={TextItemData['TextID']}
+                                      key={TextItemData['TextID']}
+                                      className="glyphicon glyphicon-remove ItemIcons"
+                                      onClick={this.DeleteText.bind(this)}
+                                    ></span>
+                                  </Table.Cell>
+                                  <Table.Cell>
+                                    <input
+                                      className="ItemIcons"
+                                      type="checkbox"
+                                      name="deletChekBox"
+                                      id={'d-' + TextItemData['TextID']}
+                                    />
+                                  </Table.Cell>
+                                </Table.Row>
+                              </Table.Body>
+                              <Table.Footer fullWidth>
+                                <Table.Row>
+                                  <Table.HeaderCell colSpan="3">
+                                    <TextItem data={TextItemData}></TextItem>
+                                  </Table.HeaderCell>
+                                </Table.Row>
+                              </Table.Footer>
+                            </Table>
 
-                          <div className="row">
-                            {/* <span
+                            <div className="row">
+                              {/* <span
                               id={index}
                               className="glyphicon glyphicon-pencil ItemIcons"
                               onClick={this.EditText2.bind(this)}
@@ -535,183 +538,180 @@ class ContentViwer extends React.Component {
                               name="deletChekBox"
                               id={'d-' + TextItemData['TextID']}
                             /> */}
+                            </div>
+                            <div className="row unclickibl">
+                              {/* <TextItem data={TextItemData}></TextItem> */}
+                            </div>
                           </div>
-                          <div className="row unclickibl">
-                            {/* <TextItem data={TextItemData}></TextItem> */}
-                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="card">
+                  <div className="card-header" id="headingTwo">
+                    <h2 className="mb-0">
+                      <button
+                        className="btn btn-link collapsed accordianTitle"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="collapseTwo"
+                      >
+                        Vedio Content
+                      </button>
+                    </h2>
+                  </div>
+                  <div
+                    id="collapseTwo"
+                    className="collapse"
+                    aria-labelledby="headingTwo"
+                    data-parent="#accordionExample"
+                  >
+                    <div className="card-body">
+                      <form method="post" action="#" id="#" className="border ">
+                        <div className="form-group files">
+                          <label>
+                            <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
+                            <FileUploader
+                              hidden
+                              accept=".WEBM, .MPG, .MPEG,  .MPV, .OGG, .MP4 ,.M4P, .M4V ,.MOV,.AVCHD "
+                              name="image"
+                              storageRef={firebase
+                                .storage()
+                                .ref()
+                                .child('Vedios')}
+                              onUploadStart={this.handelloadStart.bind(this)}
+                              onUploadSuccess={this.handelSucces.bind(this)}
+                            ></FileUploader>
+                          </label>
                         </div>
-                      );
-                    })}
+                      </form>
+                      {/* ///////////////////////////////// /vEDIO //////////////////////////////////////// */}
+                      <div className="row">
+                        <VedioConmponent
+                          getAllMedia={this.getAllMedia.bind(this)}
+                          link={this.state.MediaContent}
+                        ></VedioConmponent>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+                <div className="card">
+                  <div className="card-header" id="headingThree">
+                    <h2 className="mb-0">
+                      <button
+                        className="btn btn-link collapsed accordianTitle"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseThree"
+                        aria-expanded="false"
+                        aria-controls="collapseThree"
+                      >
+                        Audio Content
+                      </button>
+                    </h2>
+                  </div>
+                  <div
+                    id="collapseThree"
+                    className="collapse"
+                    aria-labelledby="headingThree"
+                    data-parent="#accordionExample"
+                  >
+                    <div className="card-body">
+                      <form method="post" action="#" id="#" className="border ">
+                        <div className="form-group files">
+                          <label>
+                            <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
+                            <FileUploader
+                              hidden
+                              accept=".WAV, .MP4, .MP3 ,  .m4a, .3gp, .aa ,.aac, .aax , .act,.aiff ,.amr,.webm, .vox,.ra,.opus,.wma ,.mpc ,.ogg, .oga, .mogg,.raw,.sln,.voc,.vox,.8svx "
+                              name="image"
+                              storageRef={firebase
+                                .storage()
+                                .ref()
+                                .child('Audio')}
+                              onUploadStart={this.handelloadStart.bind(this)}
+                              onUploadSuccess={this.AudiohandelSucces.bind(
+                                this
+                              )}
+                            ></FileUploader>
+                          </label>
+                        </div>
+                      </form>
+                      <div>
+                        <AudioPlayerContent
+                          getAllMedia={this.getAllMedia.bind(this)}
+                          link={this.state.MediaContent}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-              <div className="card">
-                <div className="card-header" id="headingTwo">
-                  <h2 className="mb-0">
-                    <button
-                      className="btn btn-link collapsed accordianTitle"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseTwo"
-                      aria-expanded="false"
-                      aria-controls="collapseTwo"
-                    >
-                      Vedio Content
-                    </button>
-                  </h2>
-                </div>
-                <div
-                  id="collapseTwo"
-                  className="collapse"
-                  aria-labelledby="headingTwo"
-                  data-parent="#accordionExample"
-                >
-                  <div className="card-body">
-                    <form method="post" action="#" id="#" className="border ">
-                      <div className="form-group files">
-                        <label>
-                          <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
-                          <FileUploader
-                            hidden
-                            accept=".WEBM, .MPG, .MPEG,  .MPV, .OGG, .MP4 ,.M4P, .M4V ,.MOV,.AVCHD "
-                            name="image"
-                            storageRef={firebase
-                              .storage()
-                              .ref()
-                              .child('Vedios')}
-                            onUploadStart={this.handelloadStart.bind(this)}
-                            onUploadSuccess={this.handelSucces.bind(this)}
-                          ></FileUploader>
-                        </label>
+                <div className="card">
+                  <div className="card-header" id="headingTFour">
+                    <h2 className="mb-0">
+                      <button
+                        className="btn btn-link collapsed accordianTitle"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseFour"
+                        aria-expanded="false"
+                        aria-controls="collapseFour"
+                      >
+                        Image Content
+                      </button>
+                    </h2>
+                  </div>
+                  <div
+                    id="collapseFour"
+                    className="collapse"
+                    aria-labelledby="headingFour"
+                    data-parent="#accordionExample"
+                  >
+                    <div className="card-body">
+                      <form method="post" action="#" id="#" className="border ">
+                        <div className="form-group files">
+                          <label>
+                            <span className=" glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
+                            <FileUploader
+                              hidden
+                              accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
+                              name="image"
+                              storageRef={firebase
+                                .storage()
+                                .ref()
+                                .child('images')}
+                              onUploadStart={this.handelloadStart.bind(this)}
+                              onUploadSuccess={this.ImageshandelSucces.bind(
+                                this
+                              )}
+                            ></FileUploader>
+                          </label>
+                        </div>
+                      </form>
+                      {/* -------------------------- IMAGE S Component are here ---------------------- */}
+                      <div>
+                        <ImageConten
+                          getAllMedia={this.getAllMedia.bind(this)}
+                          link={this.state.MediaContent}
+                        />
                       </div>
-                    </form>
-                    {/* ///////////////////////////////// /vEDIO //////////////////////////////////////// */}
-                    <div className="row">
-                      <VedioConmponent
-                        getAllMedia={this.getAllMedia.bind(this)}
-                        link={this.state.MediaContent}
-                      ></VedioConmponent>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="card">
-                <div className="card-header" id="headingThree">
-                  <h2 className="mb-0">
-                    <button
-                      className="btn btn-link collapsed accordianTitle"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseThree"
-                      aria-expanded="false"
-                      aria-controls="collapseThree"
-                    >
-                      Audio Content
-                    </button>
-                  </h2>
-                </div>
-                <div
-                  id="collapseThree"
-                  className="collapse"
-                  aria-labelledby="headingThree"
-                  data-parent="#accordionExample"
-                >
-                  <div className="card-body">
-                    <form method="post" action="#" id="#" className="border ">
-                      <div className="form-group files">
-                        <label>
-                          <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
-                          <FileUploader
-                            hidden
-                            accept=".WAV, .MP4, .MP3 ,  .m4a, .3gp, .aa ,.aac, .aax , .act,.aiff ,.amr,.webm, .vox,.ra,.opus,.wma ,.mpc ,.ogg, .oga, .mogg,.raw,.sln,.voc,.vox,.8svx "
-                            name="image"
-                            storageRef={firebase
-                              .storage()
-                              .ref()
-                              .child('Audio')}
-                            onUploadStart={this.handelloadStart.bind(this)}
-                            onUploadSuccess={this.AudiohandelSucces.bind(this)}
-                          ></FileUploader>
-                        </label>
-                      </div>
-                    </form>
-                    <div>
-                      <AudioPlayerContent
-                        getAllMedia={this.getAllMedia.bind(this)}
-                        link={this.state.MediaContent}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="card">
-                <div className="card-header" id="headingTFour">
-                  <h2 className="mb-0">
-                    <button
-                      className="btn btn-link collapsed accordianTitle"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseFour"
-                      aria-expanded="false"
-                      aria-controls="collapseFour"
-                    >
-                      Image Content
-                    </button>
-                  </h2>
-                </div>
-                <div
-                  id="collapseFour"
-                  className="collapse"
-                  aria-labelledby="headingFour"
-                  data-parent="#accordionExample"
-                >
-                  <div className="card-body">
-                    <form method="post" action="#" id="#" className="border ">
-                      <div className="form-group files">
-                        <label>
-                          <span className=" glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
-                          <FileUploader
-                            hidden
-                            accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
-                            name="image"
-                            storageRef={firebase
-                              .storage()
-                              .ref()
-                              .child('images')}
-                            onUploadStart={this.handelloadStart.bind(this)}
-                            onUploadSuccess={this.ImageshandelSucces.bind(this)}
-                          ></FileUploader>
-                        </label>
-                      </div>
-                    </form>
-                    {/* -------------------------- IMAGE S Component are here ---------------------- */}
-                    <div>
-                      <ImageConten
-                        getAllMedia={this.getAllMedia.bind(this)}
-                        link={this.state.MediaContent}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Grid.Column>
-          <Grid.Column width={12}>
-            <ContentViweing data={this.state.MediaContent}></ContentViweing>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <LoadingScreen
-            loading={this.state.loading}
-            spinnerColor="#9ee5f8"
-            textColor="#676767"
-            logoSrc={process.env.PUBLIC_URL + '/' + config[0].logo}
-            text="Plaease wait tell Uploading is Complete "
-          ></LoadingScreen>
-        </Grid.Row>
-      </Grid>
+            </Grid.Column>
+            <Grid.Column width={12}>
+              <ContentViweing data={this.state.MediaContent}></ContentViweing>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row></Grid.Row>
+        </Grid>
+      </div>
       // <div className="row">
       //   <div className="row  ">
       //     <Segment raised style={{ width: '100%' }}>
