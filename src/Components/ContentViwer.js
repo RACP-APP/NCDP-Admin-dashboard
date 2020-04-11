@@ -113,6 +113,7 @@ class ContentViwer extends React.Component {
         console.log(error);
       });
   }
+
   //-----------------------------------------------Get all Media agine ------------------------------------------//
   getAllMedia() {
     axios
@@ -706,7 +707,11 @@ class ContentViwer extends React.Component {
               </div>
             </Grid.Column>
             <Grid.Column width={12}>
-              <ContentViweing data={this.state.MediaContent}></ContentViweing>
+              <ContentViweing
+                data={this.state.MediaContent}
+                contentID={this.state.contentID}
+                // getAllContent={this.getAllContent.bind(this)}
+              ></ContentViweing>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row></Grid.Row>

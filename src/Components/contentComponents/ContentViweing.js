@@ -1,6 +1,8 @@
 import React from 'react';
 import '../../css/component.css';
 import $ from 'jquery';
+import axios from 'axios';
+import config from '../../config.json';
 import OrderingContent from './OrderContents';
 import AudioPlayer from 'react-h5-audio-player';
 import '../../../node_modules/react-h5-audio-player/lib/styles.css';
@@ -13,13 +15,19 @@ class AllToghterConmponent extends React.Component {
       data: this.props.data,
       items: [],
       open: false,
+      Update: false,
+      contentID: this.props.contentID,
     };
 
     this.mapContents = this.mapContents.bind(this);
   }
 
   //---------------------------------------------------------------------------------------------------------------------------//
-  handleClose = () => this.setState({ open: false });
+  closePortal = () =>
+    this.setState({ Update: false, open: false }, () => {
+      console.log(this.state.Update, 'Update');
+    });
+  handleClose = () => this.setState({ Update: true });
   handleOpen = () => this.setState({ open: true });
   //---------------------------------------------------------------------------------------------------------------------------//
   //--------------------------------------------Map the Contents in the Dom -----------------------------------------------------//
@@ -43,38 +51,97 @@ class AllToghterConmponent extends React.Component {
       }
     );
   }
+  // -------------------------------------------- Update After re-Order ------------------------------------------//
+  getAllContent() {
+    axios
+      .post(config[0].server + 'Articles/GetAllMedia', {
+        ContentID: this.state.contentID,
+      })
+      .then((result) => {
+        this.setState(
+          {
+            data: [...result.data].sort((a, b) => {
+              return a.MediaOrder - b.MediaOrder;
+            }),
+          },
+          () => {
+            //------------------------//
+
+            axios
+              .post(config[0].server + 'Articles/gettText', {
+                contentID: this.state.contentID,
+              })
+              .then((result) => {
+                this.setState(
+                  {
+                    data: [...this.state.data, ...result.data].sort((a, b) => {
+                      return a.MediaOrder - b.MediaOrder;
+                    }),
+                  },
+                  () => {
+                    console.log(this.state.data, 'result');
+
+                    this.mapContents();
+                  }
+                );
+              })
+              .catch((error) => {
+                console.log('errrrrrrrrrrrrrror');
+                // this.setState({
+                //   errorMessage: error[0],
+                // });
+              });
+          }
+        );
+      })
+      .catch((error) => {
+        console.log('errrrrrrrrrrrrrror');
+
+        // this.setState({
+        //   errorMessage: error[0],
+        // });
+      });
+  }
 
   mapContents() {
+    // console.log('ttttttttttttttttttttt', this.state.data);
     var myComponents = [];
-    //------------------------------------------- remove all previouse elements -----------------------------------------------------//
-    $('#items').empty();
+    this.setState({ items: [] }, () => {
+      //------------------------------------------- remove all previouse elements -----------------------------------------------------//
 
-    for (var i = 0; i < this.state.data.length; i++) {
-      //------------------------------------------------- if the content is an image ------------------------------------------------//
-      if (this.state.data[i]['MediaType'] === 'Image') {
-        myComponents[i] = <ImagViweing data={this.state.data[i]} />;
+      for (var i = 0; i < this.state.data.length; i++) {
+        //------------------------------------------------- if the content is an image ------------------------------------------------//
+        if (this.state.data[i]['MediaType'] === 'Image') {
+          myComponents[i] = <ImagViweing data={this.state.data[i]} />;
+        }
+        //------------------------------------------------ if the content is an Text ---------------------------------------------------//
+
+        if (this.state.data[i]['MediaType'] === 'Text') {
+          myComponents[i] = <TextViweing data={this.state.data[i]} />;
+        }
+
+        //------------------------------------------ if the content is an audio ---------------------------------------------------------//
+
+        if (this.state.data[i]['MediaType'] === 'vedio') {
+          myComponents[i] = <VedioViewing data={this.state.data[i]} />;
+        }
+
+        //---------------------------------------------- if the content is an vedio ------------------------------------------------------//
+
+        if (this.state.data[i]['MediaType'] === 'audio') {
+          myComponents[i] = <AudioViewing data={this.state.data[i]} />;
+        }
       }
-      //------------------------------------------------ if the content is an Text ---------------------------------------------------//
 
-      if (this.state.data[i]['MediaType'] === 'Text') {
-        myComponents[i] = <TextViweing data={this.state.data[i]} />;
-      }
-
-      //------------------------------------------ if the content is an audio ---------------------------------------------------------//
-
-      if (this.state.data[i]['MediaType'] === 'vedio') {
-        myComponents[i] = <VedioViewing data={this.state.data[i]} />;
-      }
-
-      //---------------------------------------------- if the content is an vedio ------------------------------------------------------//
-
-      if (this.state.data[i]['MediaType'] === 'audio') {
-        myComponents[i] = <AudioViewing data={this.state.data[i]} />;
-      }
-      this.setState({
-        items: myComponents,
-      });
-    }
+      this.setState(
+        {
+          items: myComponents,
+        },
+        () => {
+          console.log(this.state.items);
+        }
+      );
+    });
   }
   render() {
     return (
@@ -101,9 +168,14 @@ class AllToghterConmponent extends React.Component {
                   zIndex: 1000,
                 }}
               >
-                <OrderingContent data={this.state.data} />
+                <OrderingContent
+                  data={this.state.data}
+                  Update={this.state.Update}
+                  closePortal={this.closePortal.bind(this)}
+                  getAllContent={this.getAllContent.bind(this)}
+                />
                 <Button
-                  content="Close Portal"
+                  content="Close and Save"
                   negative
                   onClick={this.handleClose.bind(this)}
                 />

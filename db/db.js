@@ -15,10 +15,16 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   user: 'root',
   password: '1111',
-  database: 'ncdp'
+  database: 'ncdp',
+});
+var pool = mysql.createPool({
+  // connectionLimit=10 by default
+  user: 'root',
+  password: '1111',
+  database: 'ncdp',
 });
 
-connection.connect(error => {
+connection.connect((error) => {
   if (error) {
     console.log(error);
   } else {

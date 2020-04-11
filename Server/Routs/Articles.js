@@ -20,7 +20,7 @@ Articles.use(bodyParser.urlencoded({ extended: true }));
 
 //--------------------------------------------- ahelper function to convert the Dom to a regular String ---------------------------------------//
 
-convertDomToHtmlString = HTMLContent => {
+convertDomToHtmlString = (HTMLContent) => {
   return HTMLContent.toString()
     .replace(/\\/g, '\\\\')
     .replace(/"/g, '\\"')
@@ -108,15 +108,8 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
     req.body.UpdateByUser,
     (eror, result) => {
       if (eror) {
-        res
-          .status(500)
-          .send('error in database')
-          .end();
-      } else
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(500).send('error in database').end();
+      } else res.status(200).send(result).end();
     }
   );
 });
@@ -144,7 +137,7 @@ Articles.post('/Articles/convertPDF', (req, res) => {
   );
 
   //--------------------------------------- a function that takes the files from the dataform and upload it to the server---------------------------//
-  upload(req, res, function(err) {
+  upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
       return res.status(500).json(err);
     } else if (err) {
@@ -154,7 +147,7 @@ Articles.post('/Articles/convertPDF', (req, res) => {
       let dataBuffer = fs.readFileSync('./public/uploads/' + req.file.filename);
       console.log(req.body.contentID, 'contentID -----------------------');
       pdf(dataBuffer)
-        .then(function(data) {
+        .then(function (data) {
           var d = data['text'];
           var ContentText = convertDomToHtmlString(d);
 
@@ -165,25 +158,16 @@ Articles.post('/Articles/convertPDF', (req, res) => {
 
             (error, result) => {
               if (error) {
-                res
-                  .status(500)
-                  .send("Can't Convert the PDF .....")
-                  .end();
+                res.status(500).send("Can't Convert the PDF .....").end();
               } else {
-                return res
-                  .status(200)
-                  .send({ path: req.file.filename })
-                  .end();
+                return res.status(200).send({ path: req.file.filename }).end();
               }
             }
           );
           //---------------------------------------------  Convert the Text After Uploading  ------------------------------------------------------------------------//
         })
-        .catch(error => {
-          res
-            .status(500)
-            .send("Can't Convert the PDF .....")
-            .end();
+        .catch((error) => {
+          res.status(500).send("Can't Convert the PDF .....").end();
         });
     }
   });
@@ -229,15 +213,8 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
     req.body.UpdateByUser,
     (eror, result) => {
       if (eror) {
-        res
-          .status(500)
-          .send('error in database')
-          .end();
-      } else
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(500).send('error in database').end();
+      } else res.status(200).send(result).end();
     }
   );
 });
@@ -266,15 +243,9 @@ Articles.post('/Articles/DeleteArticle', (req, res) => {
   );
   db.deleteArticle(req.body.ID, (err, result) => {
     if (err) {
-      res
-        .status(500)
-        .send('Error in Processing Data')
-        .end();
+      res.status(500).send('Error in Processing Data').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -303,15 +274,9 @@ Articles.post('/Articles/InsertArticles', (req, res) => {
   db.addArticle(req.body.data, (err, result) => {
     console.log(req.body.data);
     if (err) {
-      res
-        .status(500)
-        .send(err)
-        .end();
+      res.status(500).send(err).end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -340,16 +305,10 @@ Articles.post('/Articles/getContentID', (req, res) => {
   db.createContentID(req.body.ArticleID, (err, result) => {
     if (err) {
       console.log(err, 'error');
-      res
-        .status(500)
-        .send(err)
-        .end();
+      res.status(500).send(err).end();
     } else {
-      console.log(result, 'result from server articles / getContentID');
-      res
-        .status(200)
-        .send(result)
-        .end();
+      // console.log(result, 'result from server articles / getContentID');
+      res.status(200).send(result).end();
     }
   });
 });
@@ -383,15 +342,9 @@ Articles.post('/Articles/InsertText', (req, res) => {
     req.body.MediaOrder,
     (error, result) => {
       if (error) {
-        res
-          .status(500)
-          .send('The Operation Failed ')
-          .end();
+        res.status(500).send('The Operation Failed ').end();
       } else {
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(200).send(result).end();
       }
     }
   );
@@ -422,15 +375,9 @@ Articles.post('/Articles/gettText', (req, res) => {
   db.GetAllTextsForaContent(req.body.contentID, (error, result) => {
     if (error) {
       console.log(error);
-      res
-        .status(500)
-        .send('SQL ERROR')
-        .end();
+      res.status(500).send('SQL ERROR').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -439,15 +386,9 @@ Articles.post('/Articles/gettText', (req, res) => {
 Articles.post('/Articles/DeletetTexts', (req, res) => {
   db.DeleteTextByID(req.body.TextIDs, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('SQL ERROR')
-        .end();
+      res.status(500).send('SQL ERROR').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -461,15 +402,9 @@ Articles.post('/Articles/InsertMedia', (req, res) => {
     req.body.MediaType,
     (error, result) => {
       if (error) {
-        res
-          .status(500)
-          .send(' SQL Error')
-          .end();
+        res.status(500).send(' SQL Error').end();
       } else {
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(200).send(result).end();
       }
     }
   );
@@ -478,15 +413,9 @@ Articles.post('/Articles/InsertMedia', (req, res) => {
 Articles.post('/Articles/DeleteMedia', (req, res) => {
   db.DeleteFromMedia(req.body.MediaID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('SQL Error')
-        .end();
+      res.status(500).send('SQL Error').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -494,15 +423,9 @@ Articles.post('/Articles/DeleteMedia', (req, res) => {
 Articles.post('/Articles/GetAllMedia', (req, res) => {
   db.getAllMedia(req.body.ContentID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('SQL Error')
-        .end();
+      res.status(500).send('SQL Error').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -512,15 +435,28 @@ Articles.post('/Articles/UpdateTex', (req, res) => {
   db.UpdateTexConten(req.body.TextID, req.body.ContentText, (error, result) => {
     if (error) {
       console.log(error);
-      res
-        .status(500)
-        .send('SQL Error')
-        .end();
+      res.status(500).send('SQL Error').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
+    }
+  });
+});
+
+//---------------------------------- ReOrder All Contents ----------------------------------------//
+Articles.post('/Articles/ReOrder', (req, res) => {
+  // console.log('data ', req.body.data);
+  /// ---------------------------------loop throw our Object to Update Order-------------------------//
+  // console.log(req.body.data.length, '11111111111111111111111111');
+
+  // console.log(req.body.data[i]['data'], '11111111111111111111111111');
+  //----------------------------------- if the Content is An Image ----------------------------------//
+  db.ReorderContent(req.body.data, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send(error).end();
+    } else {
+      console.log(result);
+      res.status(200).send('done').end();
     }
   });
 });

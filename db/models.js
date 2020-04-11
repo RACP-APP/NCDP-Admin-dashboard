@@ -1,9 +1,10 @@
 var db = require('./db');
+var async = require('async');
 
 //------------------------------------------------------------------------------------//
 //-------------------------------- A function to get all users -----------------------//
 //------------------------------------------------------------------------------------//
-var GetUsers = cb => {
+var GetUsers = (cb) => {
   console.log('44444444444444444444444444444444444444444444444444444444');
   db.query('select * from `USERS`', (error, rsult, fields) => {
     if (error) {
@@ -39,7 +40,7 @@ var GetUserByUserName = (Email, cb) => {
 //----------------------------------------------------------------------------------------//
 //------------------------ a Function to get all Modules ---------------------------------//
 //----------------------------------------------------------------------------------------//
-var getAllModules = cb => {
+var getAllModules = (cb) => {
   db.query(
     'SELECT  MODELS.* ,USERS.userName USERS FROM MODELS INNER JOIN USERS ON MODELS.CreatedBy =USERS.userID ',
     (error, result, fields) => {
@@ -832,7 +833,7 @@ var UpdateTexConten = (TextID, ContentText, cb) => {
   );
 };
 
-var getAllUsers = cb => {
+var getAllUsers = (cb) => {
   db.query(
     'Select * from `USERS` Where userName != "admin"',
     (error, result) => {
@@ -843,6 +844,54 @@ var getAllUsers = cb => {
       }
     }
   );
+};
+
+//-------------------------------------------------- Update Order -------------------------------------------------//
+var ReorderContent = (data, cb) => {
+  let count = 0;
+  async
+    .forEachOf(data, (element, i, callback) => {
+      if (element['data']['MediaType'] === 'Text') {
+        console.log('ddd-', i);
+        db.query(
+          ' UPDATE Text SET MediaOrder=' +
+            (i + 1) +
+            ' WHERE  TextID=' +
+            element['data']['TextID'],
+          (error, result) => {
+            if (error) {
+              callback(error);
+              return;
+            } else {
+              // ++count;
+              callback();
+            }
+          }
+        );
+      } else {
+        console.log('ttt-', i);
+        db.query(
+          'UPDATE Media SET MediaOrder =' +
+            (i + 1) +
+            ' WHERE  MediaID=' +
+            element['data']['MediaID'],
+          (error, result) => {
+            if (error) {
+              callback(error);
+              return;
+            } else {
+              callback();
+            }
+          }
+        );
+      }
+    })
+    .then(() => {
+      cb(null, 'done');
+    })
+    .catch((error) => {
+      cb(error, null);
+    });
 };
 
 var updateUser = (userName, Email, Image, password, userID, cb) => {
@@ -896,6 +945,7 @@ var updateUser = (userName, Email, Image, password, userID, cb) => {
 //   db.query
 // }
 module.exports = {
+  ReorderContent: ReorderContent,
   addUser: addUser,
   updateUser: updateUser,
   getAllUsers: getAllUsers,
@@ -923,5 +973,5 @@ module.exports = {
   UpdateArticle: UpdateArticle,
   deleteArticle: deleteArticle,
   addArticle: addArticle,
-  addModule: addModule
+  addModule: addModule,
 };
