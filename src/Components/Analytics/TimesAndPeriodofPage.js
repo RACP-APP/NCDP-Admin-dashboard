@@ -67,8 +67,6 @@ export default class TimesRevied extends React.Component {
     var backgroundColor = [];
     var data = {};
     axios.get(config[0].server + 'GetChart').then((result) => {
-      console.log(result.data['TimeReviwed'], 'TimeReviwed');
-
       for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
         if (
           result.data['TimeReviwed'][i]['ModelTitle'] +

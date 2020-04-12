@@ -2,12 +2,13 @@ import React from 'react';
 import '../../css/component.css';
 import '../../css/buttonStyles.css';
 import { Line } from 'react-chartjs-2';
+import axios from 'axios';
+import config from '../../config.json';
 
 import { Grid, Segment, Dropdown, Label, Table } from 'semantic-ui-react';
 
-const AppDwonLoad = require('../../ChartData.json')['appDownload'];
+// const AppDwonLoad = require('../../ChartData.json')['appDownload'];
 
-console.log(AppDwonLoad);
 class MainAnalytic extends React.Component {
   constructor(props) {
     super(props);
@@ -53,28 +54,45 @@ class MainAnalytic extends React.Component {
     var labels = [];
     var dataSet = [];
     var count = 1;
-    for (var week in AppDwonLoad[value]) {
-      for (var i = 0; i < AppDwonLoad[value][week]['days'].length; i++) {
-        //-------------------- create Lables and data Array to the data Set ---------------------------------------//
-        labels.push(value + '-' + count);
-        dataSet.push(AppDwonLoad[value][week]['days'][i]);
-        count++;
-      }
-    }
 
-    var data = {
-      labels: labels,
-      datasets: [
-        { data: dataSet, label: value, backgroundColor: this.random_rgba() },
-      ],
-      options: {
-        title: { text: 'App Downloads ' + value, display: true, fontSize: 25 },
-        responsive: true,
-      },
-    };
-    this.setState({
-      selectedValue: e.target.textContent,
-      data: data,
+    axios.get(config[0].server + 'GetChart').then((result) => {
+      for (var week in result.data['appDownload'][value]) {
+        for (
+          var i = 0;
+          i < result.data['appDownload'][value][week]['days'].length;
+          i++
+        ) {
+          //-------------------- create Lables and data Array to the data Set ---------------------------------------//
+          labels.push(value + '-' + count);
+          dataSet.push(result.data['appDownload'][value][week]['days'][i]);
+          count++;
+        }
+      }
+
+      //--------------------------------------------------------------------------------------------------------------//
+      var data = {
+        labels: labels,
+        datasets: [
+          {
+            data: dataSet,
+            label: value,
+            backgroundColor: this.random_rgba(),
+          },
+        ],
+        options: {
+          title: {
+            text: 'App Downloads ' + value,
+            display: true,
+            fontSize: 25,
+          },
+          responsive: true,
+        },
+      };
+      console.log(value, e.target);
+      //---------------------------------------------------------------------------------------------------------------------------//
+      this.setState({
+        data: data,
+      });
     });
   }
   //--------------------------- do the intial value for the dataset ------------------------------//
@@ -82,23 +100,30 @@ class MainAnalytic extends React.Component {
     var labels = [];
     var datasets = [];
     let count = 0;
-    for (var month in AppDwonLoad) {
-      var data = [];
-      for (var week in AppDwonLoad[month]) {
-        labels = Object.keys(AppDwonLoad[month]);
-        data.push(AppDwonLoad[month][week]['tatal']);
-      }
-      datasets[count] = {
-        data: data,
-        label: month,
-        backgroundColor: this.random_rgba(),
-      };
 
-      count++;
-    }
-    return (data = {
-      labels: labels,
-      datasets: datasets,
+    //--------------- get the data -----------------------//
+    axios.get(config[0].server + 'GetChart').then((result) => {
+      for (var month in result.data['appDownload']) {
+        var data = [];
+        for (var week in result.data['appDownload'][month]) {
+          labels = Object.keys(result.data['appDownload'][month]);
+          data.push(result.data['appDownload'][month][week]['tatal']);
+        }
+        datasets[count] = {
+          data: data,
+          label: month,
+          backgroundColor: this.random_rgba(),
+        };
+
+        count++;
+      }
+
+      this.setState({
+        data: {
+          labels: labels,
+          datasets: datasets,
+        },
+      });
     });
   }
 
@@ -106,14 +131,25 @@ class MainAnalytic extends React.Component {
 
   componentDidMount() {
     // this.initialValueForChart();
+
     var dropDownVluesTemp = [{ key: 'Totals', text: '2020', value: 'Totals' }];
-    for (var Month in AppDwonLoad) {
-      dropDownVluesTemp.push({ key: Month, text: Month, value: Month });
-    }
-    this.setState({
-      dropDownVlues: dropDownVluesTemp,
-      data: this.initialValueForChart(),
+    this.initialValueForChart();
+    //---------------------------------------------------------------------------------------------------------//
+    //--------------- get the data -----------------------//
+    axios.get(config[0].server + 'GetChart').then((result) => {
+      //---------------------------------------------------------------------------------------------------------//
+      for (var Month in result.data['appDownload']) {
+        dropDownVluesTemp.push({
+          key: Month,
+          text: Month,
+          value: Month,
+        });
+      }
+      this.setState({
+        dropDownVlues: dropDownVluesTemp,
+      });
     });
+    console.log(this.state.data, 'labels');
   }
 
   render() {
