@@ -6,6 +6,7 @@
     "node": "12.13.0"
   },
   "dependencies": {
+    "jsonfile": "file:./data/ChartData",
     "@ckeditor/ckeditor5-build-classic": "^17.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "@coreui/icons": "^1.0.1",

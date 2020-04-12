@@ -3,9 +3,12 @@ import '../../css/component.css';
 import '../../css/buttonStyles.css';
 import { Pie } from 'react-chartjs-2';
 import { Dropdown, Input } from 'semantic-ui-react';
+import axios from 'axios';
+import config from '../../config.json';
+
 import { Grid, Segment, Header, Label, Table } from 'semantic-ui-react';
 
-const TimeReviwed = require('./ChartData.json')['TimeReviwed'];
+// const TimeReviwed = require('../../ChartData.json')['TimeReviwed'];
 
 export default class TimesRevied extends React.Component {
   constructor(props) {
@@ -17,11 +20,11 @@ export default class TimesRevied extends React.Component {
       data: {
         datasets: [
           {
-            data: [10, 20, 30]
-          }
+            data: [10, 20, 30],
+          },
         ],
-        labels: ['Red', 'Yellow', 'Blue']
-      }
+        labels: ['Red', 'Yellow', 'Blue'],
+      },
     };
   }
   //-------------------------------------------------------------------------------//
@@ -49,10 +52,9 @@ export default class TimesRevied extends React.Component {
   //--------------------------------------------------------------------------------------------------------------------//
   getChartForEachModuleTopics(e, { value }) {
     console.log(value);
-
+    this.ChangeDataSet(value);
     this.setState({
       selectedValue: e.target.textContent,
-      data: this.ChangeDataSet(value)
     });
   }
 
@@ -64,28 +66,45 @@ export default class TimesRevied extends React.Component {
     var labels = [];
     var backgroundColor = [];
     var data = {};
-    for (var i = 0; i < TimeReviwed.length; i++) {
-      if (
-        TimeReviwed[i]['ModelTitle'] + '-' + TimeReviwed[i]['TopicTiele'] ===
-        value
-      ) {
-        for (var j = 0; j < TimeReviwed[i]['Articles'].length; j++) {
-          console.log(TimeReviwed[i]['Articles'][j]['ArticlTitle']);
-          labels.push(TimeReviwed[i]['Articles'][j]['ArticlTitle']);
-          datasets.push(TimeReviwed[i]['Articles'][j][this.props.filter]);
-          backgroundColor.push(this.random_rgba());
-        }
+    axios.get(config[0].server + 'GetChart').then((result) => {
+      console.log(result.data['TimeReviwed'], 'TimeReviwed');
 
-        break;
+      for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
+        if (
+          result.data['TimeReviwed'][i]['ModelTitle'] +
+            '-' +
+            result.data['TimeReviwed'][i]['TopicTiele'] ===
+          value
+        ) {
+          for (
+            var j = 0;
+            j < result.data['TimeReviwed'][i]['Articles'].length;
+            j++
+          ) {
+            console.log(
+              result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
+            );
+            labels.push(
+              result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
+            );
+            datasets.push(
+              result.data['TimeReviwed'][i]['Articles'][j][this.props.filter]
+            );
+            backgroundColor.push(this.random_rgba());
+          }
+
+          break;
+        }
       }
-    }
-    this.setState({
-      color: backgroundColor
+
+      this.setState({
+        color: backgroundColor,
+        data: {
+          datasets: [{ data: datasets, backgroundColor: backgroundColor }],
+          labels: labels,
+        },
+      });
     });
-    return {
-      datasets: [{ data: datasets, backgroundColor: backgroundColor }],
-      labels: labels
-    };
 
     //----------------- Implement the functionality and then set the state here --------------------------------------//
   }
@@ -107,7 +126,7 @@ export default class TimesRevied extends React.Component {
                     minWidth: '60px',
                     width: '100%',
                     backgroundColor:
-                      this.state.color[index] || 'rgba(195,75,198)'
+                      this.state.color[index] || 'rgba(195,75,198)',
                   }}
                 ></div>
 
@@ -126,26 +145,37 @@ export default class TimesRevied extends React.Component {
   }
   //------------------------------- Initalize Our States -------------------------//
   componentDidMount() {
-    console.log('SecreenReviwes', this.props.filter);
     //-------------------- fill our drop downlist with values -------------------//
     var dropDownVluesTemp = [];
-    for (var i = 0; i < TimeReviwed.length; i++) {
-      dropDownVluesTemp.push({
-        key: TimeReviwed[i]['ModelTitle'] + '-' + TimeReviwed[i]['TopicTiele'],
-        text: TimeReviwed[i]['ModelTitle'] + '-' + TimeReviwed[i]['TopicTiele'],
-        value: TimeReviwed[i]['ModelTitle'] + '-' + TimeReviwed[i]['TopicTiele']
-      });
-    }
-
-    this.setState(
-      {
-        dropDownVlues: dropDownVluesTemp,
-        data: this.ChangeDataSet(dropDownVluesTemp[0]['key'])
-      },
-      () => {
-        console.log(this.createInfoData());
+    axios.get(config[0].server + 'GetChart').then((result) => {
+      for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
+        dropDownVluesTemp.push({
+          key:
+            result.data['TimeReviwed'][i]['ModelTitle'] +
+            '-' +
+            result.data['TimeReviwed'][i]['TopicTiele'],
+          text:
+            result.data['TimeReviwed'][i]['ModelTitle'] +
+            '-' +
+            result.data['TimeReviwed'][i]['TopicTiele'],
+          value:
+            result.data['TimeReviwed'][i]['ModelTitle'] +
+            '-' +
+            result.data['TimeReviwed'][i]['TopicTiele'],
+        });
       }
-    );
+
+      this.ChangeDataSet(dropDownVluesTemp[0]['key']);
+
+      this.setState(
+        {
+          dropDownVlues: dropDownVluesTemp,
+        },
+        () => {
+          console.log(this.createInfoData());
+        }
+      );
+    });
   }
 
   render() {

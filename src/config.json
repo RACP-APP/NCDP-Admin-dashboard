@@ -1,6 +1,7 @@
 [
   {
     "server": "http://localhost:3005/",
-    "logo": "logo.png"
+    "logo": "logo.png",
+    "chartjs": "../ChartData.json"
   }
 ]

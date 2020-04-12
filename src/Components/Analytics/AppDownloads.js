@@ -5,7 +5,7 @@ import { Line } from 'react-chartjs-2';
 
 import { Grid, Segment, Dropdown, Label, Table } from 'semantic-ui-react';
 
-const AppDwonLoad = require('./ChartData.json')['appDownload'];
+const AppDwonLoad = require('../../ChartData.json')['appDownload'];
 
 console.log(AppDwonLoad);
 class MainAnalytic extends React.Component {
@@ -14,7 +14,7 @@ class MainAnalytic extends React.Component {
     this.state = {
       dropDownVlues: [],
       selectedValue: '2020',
-      data: {}
+      data: {},
     };
   }
 
@@ -41,7 +41,7 @@ class MainAnalytic extends React.Component {
     console.log(value);
     if (value === 'Totals') {
       this.setState({
-        data: this.initialValueForChart()
+        data: this.initialValueForChart(),
       });
     } else {
       this.getChartForEachMonth(e, value);
@@ -65,16 +65,16 @@ class MainAnalytic extends React.Component {
     var data = {
       labels: labels,
       datasets: [
-        { data: dataSet, label: value, backgroundColor: this.random_rgba() }
+        { data: dataSet, label: value, backgroundColor: this.random_rgba() },
       ],
       options: {
         title: { text: 'App Downloads ' + value, display: true, fontSize: 25 },
-        responsive: true
-      }
+        responsive: true,
+      },
     };
     this.setState({
       selectedValue: e.target.textContent,
-      data: data
+      data: data,
     });
   }
   //--------------------------- do the intial value for the dataset ------------------------------//
@@ -91,14 +91,14 @@ class MainAnalytic extends React.Component {
       datasets[count] = {
         data: data,
         label: month,
-        backgroundColor: this.random_rgba()
+        backgroundColor: this.random_rgba(),
       };
 
       count++;
     }
     return (data = {
       labels: labels,
-      datasets: datasets
+      datasets: datasets,
     });
   }
 
@@ -112,7 +112,7 @@ class MainAnalytic extends React.Component {
     }
     this.setState({
       dropDownVlues: dropDownVluesTemp,
-      data: this.initialValueForChart()
+      data: this.initialValueForChart(),
     });
   }
 
@@ -137,7 +137,7 @@ class MainAnalytic extends React.Component {
             </div>
             <div className="row">
               <Line
-                onElementsClick={element => {
+                onElementsClick={(element) => {
                   console.log(element[0], 'yyyyyyyyyyyyy');
                 }}
                 data={this.state.data}
