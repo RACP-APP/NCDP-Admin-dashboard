@@ -1,6 +1,6 @@
-//------------------------------------------------------//
-//-------------include all necessary libraries ---------//
-//------------------------------------------------------//
+//-------------------------------------------------------------------------------------------------------------//
+//--------------------------------------include all necessary libraries ---------------------------------------//
+//-------------------------------------------------------------------------------------------------------------//
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -10,7 +10,6 @@ const cors = require('cors');
 var multer = require('multer');
 const favicon = require('express-favicon');
 const fs = require('fs');
-// const db = fb.firestore();
 
 const cssPath = path.join(__dirname, '../public');
 
@@ -20,25 +19,24 @@ app.use('/public', express.static(cssPath));
 app.use(express.static(path.join(__dirname, '../build')));
 app.use(favicon(__dirname + '../build/favicon.ico'));
 
-app.get('/contactus', (req, res) => {
-  // res.render(path.join(__dirname, '../public/views/contact'));
-});
-//------------------------------------------------------//
-//-------------Using all routes for our Server ---------//
-//------------------------------------------------------//
+// app.get('/contactus', (req, res) => {
+//   // res.render(path.join(__dirname, '../public/views/contact'));
+// });
+//---------------------------------------------------------------------------------------------------------//
+//-------------------------------Using all routes for our Server ------------------------------------------//
+//---------------------------------------------------------------------------------------------------------//
 app.use(require('./Routs/LogIn'));
 app.use(require('./Routs/Articles'));
 app.use(require('./Routs/Dashbord'));
 
 //---------------------------------------------------------------------------------------------------------//
 //--------------- arout to generat json file and send it to the mobile app --------------------------------//
-//--------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------//
 app.post('/WriteSocialIconsData', function (req, res) {
   var file = path.join(
     __dirname,
     '../src/Components/userSettings/FooterData.json'
   );
-  console.log('hiiiiiiiiiiiiiiiiiiiiii');
   var data = req.body.data;
   fs.writeFile(file, JSON.stringify(data), (error) => {
     if (error) {
@@ -52,7 +50,7 @@ app.post('/WriteSocialIconsData', function (req, res) {
 
 //---------------------------------------------------------------------------------------------------------//
 //--------------------- arout to generat json file and to View Charts -------------------------------------//
-//--------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------//
 app.post('/Chart', function (req, res) {
   //----------------------------------------- get the file position ---------------------------------------//
   var file = path.join(__dirname, '../data', 'ChartData.json');
@@ -63,7 +61,7 @@ app.post('/Chart', function (req, res) {
       console.log(error);
       res.status(500).send('An Error Occurred During Processing').end();
     } else {
-      //------------------------------------------ get json from file -----------------------------------------//
+      //------------------------------------------ get json from file -------------------------------------//
       res.status(200).send('done').end();
     }
   });
@@ -94,9 +92,9 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
-//------------------------------------------------------//
-//-------------Listen to our Port Number ---------------//
-//------------------------------------------------------//
+//-----------------------------------------------------------------------------------------------------------//
+//-----------------------------------Listen to our Port Number ----------------------------------------------//
+//-----------------------------------------------------------------------------------------------------------//
 app.listen(PORT, function () {
   console.log('Server is running at PORT:', PORT);
 });
