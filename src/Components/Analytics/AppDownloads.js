@@ -41,10 +41,8 @@ class MainAnalytic extends React.Component {
   ChangeDataSet(e, { value }) {
     console.log(value);
     if (value === 'Totals') {
-      console.log('hiiiiiiiiiiiiiiiii');
       this.initialValueForChart();
     } else {
-      console.log('hiiiiiiiiiiiiiiiii2222222222222222');
       this.getChartForEachMonth(e, value);
     }
   }
@@ -100,7 +98,7 @@ class MainAnalytic extends React.Component {
     var labels = [];
     var datasets = [];
     let count = 0;
-    console.log('inside the initialValueForChart ');
+
     //--------------- get the data -----------------------//
     axios.get(config[0].server + 'GetChart').then((result) => {
       console.log(result.data, 'result');
@@ -131,8 +129,6 @@ class MainAnalytic extends React.Component {
   //--------------------------------------------------------------------------------------------------------//
 
   componentDidMount() {
-    // this.initialValueForChart();
-
     var dropDownVluesTemp = [{ key: 'Totals', text: '2020', value: 'Totals' }];
     this.initialValueForChart();
     //---------------------------------------------------------------------------------------------------------//

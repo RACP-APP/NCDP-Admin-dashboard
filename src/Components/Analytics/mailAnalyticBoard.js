@@ -27,7 +27,7 @@ class MainAnalytic extends React.Component {
                 <AppDownload />
               </Segment>
             </Grid.Column>
-            {/* <Grid.Column width={8}>
+            <Grid.Column width={8}>
               <Segment raised>
                 <Label as="a" color="red" ribbon>
                   Reviwes
@@ -44,7 +44,7 @@ class MainAnalytic extends React.Component {
                 </Label>
                 <SecreenReviwes filter="TimeSpendOnArticle" />
               </Segment>
-            </Grid.Column> */}
+            </Grid.Column>
           </Grid.Row>
         </Grid>
       </div>
