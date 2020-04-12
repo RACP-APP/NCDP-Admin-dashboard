@@ -54,46 +54,44 @@ app.post('/WriteSocialIconsData', function (req, res) {
 //--------------------- arout to generat json file and to View Charts -------------------------------------//
 //--------------------------------------------------------------------------------------------------------//
 app.post('/Chart', function (req, res) {
-  var file = path.join(__dirname, '../src', 'ChartData.json');
+  //----------------------------------------- get the file position ---------------------------------------//
+  var file = path.join(__dirname, '../data', 'ChartData.json');
   var data = req.body.data;
+  //----------------------------------------- read file from server ---------------------------------------//
   fs.writeFile(file, JSON.stringify(data), (error) => {
     if (error) {
       console.log(error);
       res.status(500).send('An Error Occurred During Processing').end();
     } else {
+      //------------------------------------------ get json from file -----------------------------------------//
       res.status(200).send('done').end();
     }
   });
-  // res.sendFile(path.join(__dirname, '../src', 'ChartData.json'));
 });
 
 //---------------------------------------------------------------------------------------------------------//
 //--------------------- arout to generat json file and to View Charts -------------------------------------//
-//--------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------//
 app.get('/GetChart', function (req, res) {
+  //----------------------------------------- get the file position ---------------------------------------//
   var file = path.join(__dirname, '../data', 'ChartData.json');
+  //----------------------------------------- read file from server ---------------------------------------//
   var json = fs.readFileSync(file);
-  console.log(JSON.parse(json));
-  res.send(JSON.parse(json));
+  //------------------------------------------ get json from file -----------------------------------------//
+  res.status(200).send(JSON.parse(json)).end();
 });
 
 //---------------------------------------------------------------------------------------------------------//
 //--------------- arout to generat json file and send it to the mobile app --------------------------------//
-//--------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------//
 app.get('/JSONFile', async function (req, res) {
   const CreatJSON = await require('../db/JsonGenrator').creatJson();
-
   res.sendFile(path.join(__dirname, '../', 'phraseFreqs.json'));
 });
 
+//------------------------------------- for any other request ----------------------------------------------//
 app.get('*', function (req, res) {
-  console.log('ddddddddddddddddddd');
   res.sendFile(path.join(__dirname, '../build', 'index.html'));
-});
-
-app.post('/Chart', (req, res) => {
-  console.log(req.body.data);
-  res.status(200).send(' recived sucssifully').end();
 });
 
 //------------------------------------------------------//
