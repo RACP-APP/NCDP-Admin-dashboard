@@ -11,7 +11,7 @@ class LogIn extends React.Component {
       password: '',
       isValidEmail: false,
       HasError: false,
-      ErrorMessage: ''
+      ErrorMessage: '',
     };
     this.validateEmaile = this.validateEmaile.bind(this);
     this.LoginFun = this.LoginFun.bind(this);
@@ -33,7 +33,7 @@ class LogIn extends React.Component {
     if (!this.validate(e.target.value)) {
       this.setState({
         HasError: true,
-        ErrorMessage: 'Invalid Email Address'
+        ErrorMessage: 'عنوان البريد الإلكتروني غير صالح',
       });
     } //-------------------- if the Email is Valid then Save the email in the state --------------------//
     else {
@@ -41,7 +41,7 @@ class LogIn extends React.Component {
         Email: e.target.value,
         isValidEmail: true,
         ErrorMessage: '',
-        HasError: false
+        HasError: false,
       });
     }
   }
@@ -58,14 +58,14 @@ class LogIn extends React.Component {
       axios
         .post(config[0].server + 'User/Login', {
           Email: this.state.Email,
-          password: this.state.password
+          password: this.state.password,
         })
-        .then(result => {
+        .then((result) => {
           if (result.data.length === 0) {
             this.setState({
               ErrorMessage:
-                'User Name or Password is not correctn please try again ',
-              HasError: true
+                'اسم المستخدم أو كلمة المرور غير صحيحة ، يرجى المحاولة مرة أخرى',
+              HasError: true,
             });
           } else {
             console.log(result, 'result.data[0]');
@@ -74,10 +74,10 @@ class LogIn extends React.Component {
             this.props.LogeedIn();
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.setState({
             ErrorMessage: error,
-            error: true
+            error: true,
           });
           console.log(error);
         });
@@ -85,7 +85,11 @@ class LogIn extends React.Component {
       //---------- if there is no Errors in the page make a request ----------//
       console.log('no Errors');
     } else {
-      console.log('Errors');
+      this.setState({
+        ErrorMessage:
+          'اسم المستخدم أو كلمة المرور غير صحيحة ، يرجى المحاولة مرة أخرى',
+        HasError: true,
+      });
     }
   }
 
@@ -115,9 +119,7 @@ class LogIn extends React.Component {
               <div>
                 <div className=" ">
                   <div className="card-body">
-                    <h5 className="card-title">
-                      Welcome to NCDP Admin dashboard
-                    </h5>
+                    <h5 className="card-title">مرحبًا بك في لوحة تحكم NCDP</h5>
 
                     <div className="form-group row">
                       <label for="staticEmail" className="col-sm-5 "></label>
@@ -128,7 +130,7 @@ class LogIn extends React.Component {
                         for="staticEmail"
                         className="col-sm-4 col-form-label"
                       >
-                        Email :
+                        البريد الإلكتروني :
                       </label>
                       <br></br>
                       <div className="col-sm">
@@ -147,7 +149,7 @@ class LogIn extends React.Component {
                         for="inputPassword"
                         className="col-sm-4 col-form-label"
                       >
-                        Password :
+                        الرمز الإلكتروني :
                       </label>
                       <div className="col-sm">
                         <input
@@ -156,9 +158,9 @@ class LogIn extends React.Component {
                           id="inputPassword"
                           placeholder="Password"
                           name="password"
-                          onChange={e => {
+                          onChange={(e) => {
                             this.setState({
-                              password: e.target.value
+                              password: e.target.value,
                             });
                           }}
                         />
@@ -170,7 +172,7 @@ class LogIn extends React.Component {
                             className="btn btn-primary btn-lg btn-block col-sm-9"
                             onClick={this.LoginFun.bind(this)}
                           >
-                            LogIn to NCDP
+                            قم بتسجيل الدخول إلى CDP
                           </button>
                         </div>
                       </div>

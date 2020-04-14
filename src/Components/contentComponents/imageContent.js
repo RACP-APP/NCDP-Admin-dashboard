@@ -11,7 +11,7 @@ class ImageConten extends React.Component {
     this.state = {
       linklist: this.props.link,
       ErrorMessage: '',
-      Error: false
+      Error: false,
     };
   }
 
@@ -26,7 +26,7 @@ class ImageConten extends React.Component {
       .then(() => {
         console.log('deleted');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         // this.setState(
         //   {
@@ -44,13 +44,13 @@ class ImageConten extends React.Component {
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {
-        MediaID: mediaID
+        MediaID: mediaID,
       })
-      .then(result => {
+      .then((result) => {
         this.setState(
           {
             ErrorMessage: '',
-            Error: false
+            Error: false,
           },
           () => {
             $('#' + mediaID + 'ErrorMessage').css('alert alert-danger hide ');
@@ -58,13 +58,13 @@ class ImageConten extends React.Component {
         );
         this.props.getAllMedia();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.setState(
           {
             ErrorMessage:
-              'Cannot delete this item right now please try again later ..',
-            Error: true
+              'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
+            Error: true,
           },
           () => {
             $('#' + mediaID + 'ErrorMessage').css('alert alert-danger show ');
@@ -76,7 +76,7 @@ class ImageConten extends React.Component {
   render() {
     return (
       <div>
-        {this.props.link.map(link => {
+        {this.props.link.map((link) => {
           if (link['MediaType'] === 'Image') {
             return (
               <Table color="blue" id={link['MediaLink']}>

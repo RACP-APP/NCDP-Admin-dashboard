@@ -22,7 +22,7 @@ class ArticlesItem extends React.Component {
       Notes: '',
       imagePreviewUrl: null,
       Wrnining: false,
-      loading: 0
+      loading: 0,
     };
     this.EditArticle = this.EditArticle.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
@@ -30,9 +30,7 @@ class ArticlesItem extends React.Component {
   }
   //-----------------------function to handel uploading to firbase ----------------//
 
-  handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
-  }
+  handelloadStart(e) {}
   handelSucces(e) {
     console.log(firebase.storage);
     firebase
@@ -40,11 +38,11 @@ class ArticlesItem extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ url: url });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -60,21 +58,21 @@ class ArticlesItem extends React.Component {
     var that = this;
     axios
       .post(config[0].server + 'Articles/DeleteArticle', {
-        ID: this.props.data['ArticleID']
+        ID: this.props.data['ArticleID'],
       })
-      .then(result => {
+      .then((result) => {
         console.log(result);
         this.setState(
           {
             editMode: false,
-            Wrnining: false
+            Wrnining: false,
           },
           () => {
             that.props.updateFromChild();
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -84,10 +82,7 @@ class ArticlesItem extends React.Component {
 
     /////////////////////////////////////////////////
 
-    var nowDate = new Date()
-      .toISOString()
-      .slice(0, 19)
-      .replace('T', ' ');
+    var nowDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
     axios2
       .post(config[0].server + 'Articles/UpdateArticle', {
@@ -99,18 +94,18 @@ class ArticlesItem extends React.Component {
           this.props.data['Icon'] ||
           'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005',
         UpdateDate: nowDate,
-        UpdateByUser: JSON.parse(localStorage.getItem('user'))['userID']
+        UpdateByUser: JSON.parse(localStorage.getItem('user'))['userID'],
       })
-      .then(result => {
+      .then((result) => {
         console.log('setting the state ---------12----------------------');
         this.setState({ editMode: false });
         this.props.updateFromChild();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         console.log('setting the state -----------------33--------------');
         this.setState({
-          editMode: false
+          editMode: false,
         });
         //--------------------error Message Here ---------------------//
       });
@@ -120,7 +115,7 @@ class ArticlesItem extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       editMode: false,
-      data: this.props.data
+      data: this.props.data,
     });
   }
 
@@ -132,7 +127,7 @@ class ArticlesItem extends React.Component {
   componentDidMount() {
     this.setState({
       editMode: false,
-      data: this.props.data
+      data: this.props.data,
     });
   }
   //------------------------------get the content of the Article --------------------//
@@ -141,13 +136,12 @@ class ArticlesItem extends React.Component {
     localStorage.setItem('selectedArticle', this.props.data['ArticleID']);
     axios
       .post(config[0].server + 'Articles/getContentID', {
-        ArticleID: this.props.data['ArticleID']
+        ArticleID: this.props.data['ArticleID'],
       })
-      .then(result => {
-        console.log(result.data, 'iiiiiiiiiiiiiiiiiiiiiiiii');
+      .then((result) => {
         this.props.leaveTpicToContent(result.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -157,7 +151,7 @@ class ArticlesItem extends React.Component {
       $imagePreview = <img src={this.state.imagePreviewUrl} />;
     } else {
       $imagePreview = (
-        <div className="previewText">Please select an Image for Preview</div>
+        <div className="previewText">يرجى تحديد صورة للمعاينة</div>
       );
     }
 
@@ -173,7 +167,7 @@ class ArticlesItem extends React.Component {
             <div
               className="col-2"
               style={{
-                margin: 'auto'
+                margin: 'auto',
               }}
             >
               <img
@@ -203,9 +197,9 @@ class ArticlesItem extends React.Component {
                     type="text"
                     class="form-control"
                     placeholder={this.props.data['Title']}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({
-                        title: e.target.value
+                        title: e.target.value,
                       });
                       console.log(e.target.value);
                     }}
@@ -222,9 +216,9 @@ class ArticlesItem extends React.Component {
                   placeholder={this.props.data['Notes']}
                   aria-label="Large"
                   aria-describedby="inputGroup-sizing-sm"
-                  onChange={e => {
+                  onChange={(e) => {
                     this.setState({
-                      Notes: e.target.value
+                      Notes: e.target.value,
                     });
                   }}
                 />
@@ -247,9 +241,9 @@ class ArticlesItem extends React.Component {
                 {/* <span class="glyphicon glyphicon-ok"></span> */}
                 <span
                   class="glyphicon glyphicon-remove-circle"
-                  onClick={e => {
+                  onClick={(e) => {
                     this.setState({
-                      editMode: false
+                      editMode: false,
                     });
                   }}
                 ></span>
@@ -261,7 +255,7 @@ class ArticlesItem extends React.Component {
 
           //   edit mod Endes Here
 
-          <div className="row">
+          <div className="row" dir="rtl">
             <div className="col-2 unclickibl">
               <input
                 type="image"
@@ -273,25 +267,23 @@ class ArticlesItem extends React.Component {
             <div className="col-8 unclickibl">
               <div className="ItemTitle">{this.props.data.Title}</div>
               <div className="ItemInfo">
-                Update Date :
+                تاريخ التحديث :
                 {new Date(this.props.data.UpdateDate).toLocaleString()}
               </div>
               <div className="ItemInfo">
-                Update by :{this.props.data.createBy}
+                تحديث بواسطة :{this.props.data.createBy}
               </div>
               <div className="ItemInfo">
-                Created by :{this.props.data.UpdatedBy}
+                انشأ من قبل :{this.props.data.UpdatedBy}
               </div>
               <div className="ItemInfo">
-                Created Date :
+                انشأ من قبل :
                 {new Date(this.props.data.CreatedDate).toLocaleDateString()}
               </div>
               <div className="ItemInfo">
-                Times Viewd :{this.props.data.TimesViewd}
+                عدد المشاهدات:{this.props.data.TimesViewd}
               </div>
-              <div className="ItemInfo">
-                Notes Viewd :{this.props.data.Notes}
-              </div>
+              <div className="ItemInfo">الملاحظات :{this.props.data.Notes}</div>
             </div>
             <div className="col-1" style={{ marginTop: '22px' }}>
               <Button.Group vertical basic size="small">
@@ -324,8 +316,8 @@ class ArticlesItem extends React.Component {
               <div className=" container">
                 <div className=" row">
                   <div className=" col-7 ItemParagraph">
-                    this Operation will couase to Delete all refrence of the
-                    Article . Are you sure you want to delete it ?
+                    ستؤدي هذه العملية إلى حذف كل مرجع للمادة. هل أنت متأكد أنك
+                    تريد حذف ذلك ؟
                   </div>
                 </div>
 
@@ -336,7 +328,7 @@ class ArticlesItem extends React.Component {
                         class="btn btn-outline-danger btn-sm btn-sm-cust "
                         onClick={this.DeleteArticle.bind(this)}
                       >
-                        OK
+                        تأكيد
                       </button>
                     </div>
                   </div>
@@ -345,11 +337,11 @@ class ArticlesItem extends React.Component {
                     <div className="row">
                       <button
                         class="btn btn-outline-primary btn-sm btn-sm-cust"
-                        onClick={e => {
+                        onClick={(e) => {
                           this.setState({ Wrnining: !this.state.Wrnining });
                         }}
                       >
-                        Cancel
+                        تراجع
                       </button>
                     </div>
                   </div>

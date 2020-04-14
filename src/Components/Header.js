@@ -8,7 +8,7 @@ class Header extends React.Component {
     super(props);
     this.state = {
       LoggetIn: false,
-      UserImage: ''
+      UserImage: '',
     };
     // this.openNav = this.openNav.bind(this);
   }
@@ -33,19 +33,19 @@ class Header extends React.Component {
     if (localStorage.getItem('user')) {
       this.setState({
         LoggetIn: true,
-        UserImage: JSON.parse(localStorage.getItem('user'))['Image']
+        UserImage: JSON.parse(localStorage.getItem('user'))['Image'],
       });
     } else {
       this.setState({
         LoggetIn: false,
-        UserImage: ''
+        UserImage: '',
       });
     }
   }
 
   render() {
     return (
-      <div className="navnar  transparentBackground">
+      <div className="navnar  transparentBackground" dir="rtl">
         <div id="mySidenav" class="sidenav ">
           <div>
             <div className="row UserSection">
@@ -57,7 +57,7 @@ class Header extends React.Component {
             </div>
             <div className="row ">
               <span className="sidparUserInfo">
-                Welcome : {JSON.parse(localStorage.getItem('user'))['userName']}
+                {JSON.parse(localStorage.getItem('user'))['userName']}: مرحبا
               </span>
             </div>
           </div>
@@ -65,7 +65,7 @@ class Header extends React.Component {
             <a
               href="javascript:void(0)"
               className="closebtn"
-              onClick={e => {
+              onClick={(e) => {
                 $('#mySidenav').css('width', '0px');
               }}
             >
@@ -73,16 +73,16 @@ class Header extends React.Component {
             </a>
           </div>
           <div className="sidepareItem borderTop">
-            <a href={config[0].server}>Home</a>
+            <a href={config[0].server}>الصفحة الرئيسيه</a>
           </div>
           <div className="sidepareItem borderTop">
             <a
               href=""
-              onClick={e => {
+              onClick={(e) => {
                 this.props.logOut();
               }}
             >
-              LogOut
+              تسجيل الخروج
             </a>
           </div>
           {}
@@ -93,7 +93,7 @@ class Header extends React.Component {
                 this.props.redirect('userSetting');
               }}
             >
-              Setting
+              الضبط
             </a>
           </div>
           <div className="sidepareItem borderTop ">
@@ -102,7 +102,7 @@ class Header extends React.Component {
                 this.props.redirect('Analytics');
               }}
             >
-              Analytics
+              إحصائيات
             </a>
           </div>
         </div>
@@ -110,7 +110,7 @@ class Header extends React.Component {
         <div className="  infoi transparentBackground">
           <div
             className="navbar-light  main_menu transparentBackground"
-            onClick={e => {
+            onClick={(e) => {
               $('.sidenav').css('width', '250px');
             }}
           >

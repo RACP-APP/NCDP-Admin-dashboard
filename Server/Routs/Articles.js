@@ -49,7 +49,7 @@ Articles.get('/Articles', (req, res) => {
   //----------------------------------------------------------//
   //------------- send a response to the route ---------------//
   //----------------------------------------------------------//
-  res.send(' you are Articles in ');
+  res.send(' انت الآن بالمقالات ');
 });
 
 Articles.post('/Articles/upload', (req, res) => {
@@ -75,7 +75,7 @@ Articles.post('/Articles/upload', (req, res) => {
 });
 
 Articles.post('/Articles/UpdateArticle', (req, res) => {
-  console.log('in the articals update');
+  // console.log('in the articals update');
   //------------------------------------------------------//
   //------------- remove cors Origin Error ---------------//
   //------------------------------------------------------//
@@ -108,7 +108,7 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
     req.body.UpdateByUser,
     (eror, result) => {
       if (eror) {
-        res.status(500).send('error in database').end();
+        res.status(500).send('خطأ بمعالجة البيانات').end();
       } else res.status(200).send(result).end();
     }
   );
@@ -116,7 +116,7 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
 
 //----------------------------------------------------------------- PDF Converter -------------------------------------------------------------------------//
 Articles.post('/Articles/convertPDF', (req, res) => {
-  console.log('in the convertPDF upload');
+  // console.log('in the convertPDF upload');
   //------------------------------------------------------//
   //------------- remove cors Origin Error ---------------//
   //------------------------------------------------------//
@@ -158,7 +158,7 @@ Articles.post('/Articles/convertPDF', (req, res) => {
 
             (error, result) => {
               if (error) {
-                res.status(500).send("Can't Convert the PDF .....").end();
+                res.status(500).send('لا يمكن تحويل ملف ال pdf').end();
               } else {
                 return res.status(200).send({ path: req.file.filename }).end();
               }
@@ -213,7 +213,7 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
     req.body.UpdateByUser,
     (eror, result) => {
       if (eror) {
-        res.status(500).send('error in database').end();
+        res.status(500).send('خطأ بمعالجة البيانات').end();
       } else res.status(200).send(result).end();
     }
   );
@@ -243,7 +243,7 @@ Articles.post('/Articles/DeleteArticle', (req, res) => {
   );
   db.deleteArticle(req.body.ID, (err, result) => {
     if (err) {
-      res.status(500).send('Error in Processing Data').end();
+      res.status(500).send('خطأ بمعالجة البانات').end();
     } else {
       res.status(200).send(result).end();
     }
@@ -342,7 +342,7 @@ Articles.post('/Articles/InsertText', (req, res) => {
     req.body.MediaOrder,
     (error, result) => {
       if (error) {
-        res.status(500).send('The Operation Failed ').end();
+        res.status(500).send('فشل العمليه').end();
       } else {
         res.status(200).send(result).end();
       }
@@ -375,7 +375,7 @@ Articles.post('/Articles/gettText', (req, res) => {
   db.GetAllTextsForaContent(req.body.contentID, (error, result) => {
     if (error) {
       console.log(error);
-      res.status(500).send('SQL ERROR').end();
+      res.status(500).send('خطأ في معالجة البيانات').end();
     } else {
       res.status(200).send(result).end();
     }
@@ -386,7 +386,7 @@ Articles.post('/Articles/gettText', (req, res) => {
 Articles.post('/Articles/DeletetTexts', (req, res) => {
   db.DeleteTextByID(req.body.TextIDs, (error, result) => {
     if (error) {
-      res.status(500).send('SQL ERROR').end();
+      res.status(500).send('خطأ في معالجة البيانات').end();
     } else {
       res.status(200).send(result).end();
     }
@@ -402,7 +402,7 @@ Articles.post('/Articles/InsertMedia', (req, res) => {
     req.body.MediaType,
     (error, result) => {
       if (error) {
-        res.status(500).send(' SQL Error').end();
+        res.status(500).send(' خطأ في معالجة البيانات').end();
       } else {
         res.status(200).send(result).end();
       }
@@ -413,7 +413,7 @@ Articles.post('/Articles/InsertMedia', (req, res) => {
 Articles.post('/Articles/DeleteMedia', (req, res) => {
   db.DeleteFromMedia(req.body.MediaID, (error, result) => {
     if (error) {
-      res.status(500).send('SQL Error').end();
+      res.status(500).send('خطأ في معالجة البيانات ').end();
     } else {
       res.status(200).send(result).end();
     }
@@ -423,7 +423,7 @@ Articles.post('/Articles/DeleteMedia', (req, res) => {
 Articles.post('/Articles/GetAllMedia', (req, res) => {
   db.getAllMedia(req.body.ContentID, (error, result) => {
     if (error) {
-      res.status(500).send('SQL Error').end();
+      res.status(500).send('خطأ في معالجة البيانات ').end();
     } else {
       res.status(200).send(result).end();
     }
@@ -435,7 +435,7 @@ Articles.post('/Articles/UpdateTex', (req, res) => {
   db.UpdateTexConten(req.body.TextID, req.body.ContentText, (error, result) => {
     if (error) {
       console.log(error);
-      res.status(500).send('SQL Error').end();
+      res.status(500).send('خطأ في معالجة البيانات').end();
     } else {
       res.status(200).send(result).end();
     }
@@ -456,7 +456,7 @@ Articles.post('/Articles/ReOrder', (req, res) => {
       res.status(500).send(error).end();
     } else {
       console.log(result);
-      res.status(200).send('done').end();
+      res.status(200).send('تم ').end();
     }
   });
 });

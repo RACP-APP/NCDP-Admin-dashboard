@@ -22,7 +22,7 @@ class ModuleList extends React.Component {
       WrniningMessage: '',
       UpdateWarning: false,
       url: '',
-      loading: 0
+      loading: 0,
     };
     this.goToTopics = this.goToTopics.bind(this);
     this.deletMode = this.deletMode.bind(this);
@@ -32,13 +32,13 @@ class ModuleList extends React.Component {
   //------------------------Handel Firbase Uploading ------------------------//
   handelloadStart(e) {
     this.setState({
-      loading: 0
+      loading: 0,
     });
   }
 
   inPrograss(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
   handelSucces(e) {
@@ -48,7 +48,7 @@ class ModuleList extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         this.setState({ url: url, loading: 0 });
       });
   }
@@ -84,9 +84,9 @@ class ModuleList extends React.Component {
     console.log(this.props.model['ModelID'], 'the id ');
     axios
       .post(config[0].server + 'Dashbord/DeleteModule', {
-        ID: this.props.model['ModelID']
+        ID: this.props.model['ModelID'],
       })
-      .then(result => {
+      .then((result) => {
         this.setState({
           modelData: this.props.model,
           editMod: false,
@@ -94,11 +94,11 @@ class ModuleList extends React.Component {
           UpdateIcon: '',
           Wrnining: false,
           WrniningMessage: '',
-          UpdateWarning: false
+          UpdateWarning: false,
         });
         that.props.UpdateListafterDelete();
       })
-      .catch(error => {});
+      .catch((error) => {});
   }
 
   //--------------------------------------------------------------------------//
@@ -106,7 +106,7 @@ class ModuleList extends React.Component {
   //--------------------------------------------------------------------------//
   editModel(e) {
     this.setState({
-      editMod: true
+      editMod: true,
     });
 
     this.props.UpdateListafterDelete();
@@ -123,24 +123,24 @@ class ModuleList extends React.Component {
       .post(config[0].server + 'Dashbord/UpdateModule', {
         ID: this.state.modelData['ModelID'],
         Title: this.state.UpdateTitle || this.props.model['Title'],
-        image: image
+        image: image,
       })
-      .then(result => {
+      .then((result) => {
         this.setState({
           editMod: false,
           UpdateWarning: false,
           WrniningMessage: '',
-          url: ''
+          url: '',
         });
         that.props.UpdateListafterDelete();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('update is not commited', error);
         this.setState({
           editMod: true,
           UpdateWarning: true,
           WrniningMessage: 'Duplicate Items is not Allowed',
-          UpdateTitle: ''
+          UpdateTitle: '',
         });
       });
   }
@@ -159,7 +159,7 @@ class ModuleList extends React.Component {
           <Card.Content>
             <Image floated="right" size="mini" src={this.props.model['Icon']} />
             <Card.Header> {this.props.model['Title']}</Card.Header>
-            <Card.Meta> Created By : {this.props.model['USERS']}</Card.Meta>
+            <Card.Meta> انشأ من قبل : {this.props.model['USERS']}</Card.Meta>
           </Card.Content>
 
           <Card.Content extra>
@@ -171,7 +171,7 @@ class ModuleList extends React.Component {
               />
               <Button
                 icon="delete"
-                onClick={e => {
+                onClick={(e) => {
                   this.setState({ Wrnining: !this.state.Wrnining });
                 }}
               />
@@ -183,9 +183,8 @@ class ModuleList extends React.Component {
               <div>
                 <div className=" row">
                   <div className="ItemParagraph">
-                    this Operation will couase to Delete all refrence of the
-                    module.
-                    <br></br> Are you sure you want to delete it ?
+                    ستؤدي هذه العملية إلى حذف كل مرجع للوحدة النمطية.
+                    <br></br> هل أنت متأكد أنك تريد حذف ذلك ؟
                   </div>
                 </div>
 
@@ -194,15 +193,15 @@ class ModuleList extends React.Component {
                     class="btn btn-outline-danger btn-sm btn-sm-cust "
                     onClick={this.deletMode.bind(this)}
                   >
-                    OK
+                    تأكيد
                   </button>
                   <button
                     class="btn btn-outline-primary btn-sm btn-sm-cust"
-                    onClick={e => {
+                    onClick={(e) => {
                       this.setState({ Wrnining: !this.state.Wrnining });
                     }}
                   >
-                    Cancel
+                    تراجع
                   </button>
                 </div>
               </div>
@@ -253,16 +252,16 @@ class ModuleList extends React.Component {
                 placeholder={
                   this.state.UpdateTitle || this.state.modelData['Title']
                 }
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({
-                    UpdateTitle: e.target.value
+                    UpdateTitle: e.target.value,
                   });
                 }}
               />
             </Card.Header>
 
             <Card.Description>
-              Created By : {this.props.model['USERS']}
+              انشأ من قبل : {this.props.model['USERS']}
             </Card.Description>
           </Card.Content>
 

@@ -13,19 +13,18 @@ class AdminSettings extends React.Component {
       addUser: false,
       loading: 0,
       HasError: '',
-      ErrorMessage: ''
+      ErrorMessage: '',
     };
   }
 
   LogOut() {
-    console.log('fffffffffffffffffffff');
     this.props.LogOut();
   }
 
   render() {
     return (
-      <div className="container">
-        <div className="row" style={{ justifyContent: 'left' }}>
+      <div className="container" dir="rtl">
+        <div className="row" style={{ justifyContent: 'right' }}>
           <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
               {JSON.parse(localStorage.getItem('user'))[
@@ -40,7 +39,7 @@ class AdminSettings extends React.Component {
                   aria-controls="nav-home"
                   aria-selected="true"
                 >
-                  Manage Users
+                  ادارة المستخدمين
                 </a>
               ) : null}
               <a
@@ -52,7 +51,7 @@ class AdminSettings extends React.Component {
                 aria-controls="nav-profile"
                 aria-selected="false"
               >
-                Shange Password
+                تغيير كلمة المرور
               </a>
               <a
                 class="nav-item nav-link"
@@ -63,12 +62,13 @@ class AdminSettings extends React.Component {
                 aria-controls="nav-contact"
                 aria-selected="false"
               >
-                Social Items
+                العناصر الاجتماعية
               </a>
             </div>
           </nav>
           <div class="tab-content" id="nav-tabContent">
             <div
+              dir="rtl"
               class="tab-pane fade show active in"
               id="nav-home"
               role="tabpanel"
@@ -78,9 +78,9 @@ class AdminSettings extends React.Component {
               <br></br>
               <br></br>
               <p>
-                Dear Admin Note that if you changed the setting of the users
-                they will have no longer be able to sign in to the dash bord
-                tell you send them an email will all required information
+                لاحظ المشرف الأعزاء أنه إذا قمت بتغيير إعداد المستخدمين لن
+                يتمكنوا بعد الآن من تسجيل الدخول إلى لوحة الشرطة اقول لكم ارسال
+                بريد الكتروني لهم كل المعلومات المطلوبة
               </p>
               <br></br>
 
@@ -88,6 +88,7 @@ class AdminSettings extends React.Component {
               <ManagUsers></ManagUsers>
             </div>
             <div
+              dir="rtl"
               class="tab-pane fade"
               id="nav-profile"
               role="tabpanel"
@@ -96,10 +97,10 @@ class AdminSettings extends React.Component {
               <br></br>
               <br></br>
               <p>
-                Welwcon : {JSON.parse(localStorage.getItem('user'))['userName']}{' '}
-                Fell Free to use NCDP Manage Accout to modify your Setting ,if
-                you changed Your Password it will be direclty send to your
-                Email.
+                أهلا : {JSON.parse(localStorage.getItem('user'))['userName']} لا
+                تتردد في استخدام NCDP Manage Account لتعديل إعدادك ، إذا قمت
+                بتغيير كلمة المرور الخاصة بك ، فسيتم إرسالها مباشرة إلى بريدك
+                الإلكتروني.
               </p>
               <br></br>
 
@@ -109,6 +110,7 @@ class AdminSettings extends React.Component {
             {/* --------------------------------------- Sosial items starts here ----------------------------- */}
 
             <div
+              dir="rtl"
               class="tab-pane fade"
               id="nav-contact"
               role="tabpanel"
@@ -117,10 +119,10 @@ class AdminSettings extends React.Component {
               <br></br>
               <br></br>
               <p>
-                Welwcon : {JSON.parse(localStorage.getItem('user'))['userName']}{' '}
-                Fell Free to use NCDP Manage Account to modify your Settings ,if
-                you changed The Site Social Icons this Change Will be Reflected
-                on Your Website.
+                اهلا : {JSON.parse(localStorage.getItem('user'))['userName']} لا
+                تتردد في استخدام حساب إدارة NCDP لتعديل الإعدادات ، إذا لقد قمت
+                بتغيير أيقونات الموقع الاجتماعية سوف ينعكس هذا التغيير على موقع
+                الويب الخاص بك.
               </p>
               <br></br>
               <SocialItems></SocialItems>

@@ -11,7 +11,7 @@ class TextItem extends React.Component {
     super(props);
     this.state = {
       data: this.props.data,
-      thml: <div></div>
+      thml: <div></div>,
     };
   }
 
@@ -32,7 +32,7 @@ class TextItem extends React.Component {
       console.log(nextporos.data, '5555555555555555555');
       this.setState(
         {
-          data: nextporos.data
+          data: nextporos.data,
         },
         () => {
           // $('#text' + this.state.data['TextID']).empty();
@@ -59,7 +59,7 @@ class TextItem extends React.Component {
   render() {
     return (
       <div style={{ width: '100%' }} id={'text' + this.state.data['TextID']}>
-        <span>{'     Text Number - ' + this.state.data['MediaOrder']}</span>
+        <span>{'    نص رقم  - ' + this.state.data['MediaOrder']}</span>
       </div>
     );
   }

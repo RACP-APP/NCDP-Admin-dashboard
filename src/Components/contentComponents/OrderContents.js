@@ -1,25 +1,71 @@
 import '../../css/component.css';
 import axios from 'axios';
 import config from '../../config.json';
-
 import React, { Component } from 'react';
-
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import ImageContent from './imageContent';
+import { Table } from 'semantic-ui-react';
 
-// fake data generator
+// ---------------------------------------------- fake data generator -----------------------------------------------//
 const getItems = (count, data) => {
   var d = [];
   for (var i = 0; i < data.length; i++) {
     d[i] = {
       id: `item-${i}`,
-      content: `item ${data[i]['MediaType']} ${data[i]['MediaOrder']}`,
+      content: CreaContent(data[i]),
+      // content: `item ${data[i]['MediaType']} ${data[i]['MediaOrder']}`,
       data: data[i],
     };
   }
   return d;
 };
 
-// a little function to help us with reordering the result
+//----------------------------------- Create Ouer Content For Viweing -------------------------------------------------//
+const CreaContent = (data) => {
+  // return `item ${data['MediaType']} ${data['MediaOrder']}`;
+
+  //--------------------------------------------    Image Conten  ------------------------------//
+
+  return (
+    <Table color="blue" id={data['MediaLink']}>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>
+            <span className="ItemIcons">{data['MediaOrder']}</span>
+          </Table.Cell>
+          <Table.Cell>
+            <span className="ItemIcons">{data['MediaType']}</span>
+          </Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table>
+  );
+
+  // //-------------------------------------------- Audio Conten  ----------------------------------//
+  // if (data['MediaType'] === 'audio') {
+  //   return (
+  //     <div class="row">
+  //       <div class="row shawBackground border">{data['MediaOrder']}</div>
+  //       <div class="row">
+  //         <video
+  //           controls
+  //           type="video/*"
+  //           src={data['MediaLink']}
+  //           width="100%"
+  //           height="100%"
+  //         >
+  //           <source src="video.wmv" />
+  //           Your browser doesnt support video, you may download the video
+  //           instead: <a href="video.ogv">Ogg</a>
+  //         </video>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+  // return `item ${data['MediaType']} ${data['MediaOrder']}`;
+};
+//--------------------------- a little function to help us with reordering the result----------------------------------//
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -31,22 +77,23 @@ const reorder = (list, startIndex, endIndex) => {
 const grid = 8;
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
+  // --------------------------------- some basic styles to make the items look a bit nicer ------------------------------//
   userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
+  padding: grid * 1,
+  margin: `0 0 ${2}px 0`,
 
-  // change background colour if dragging
+  //--------------------------------------- change background colour if dragging -----------------------------------------//
   background: isDragging ? 'lightgreen' : ' #ffffff',
 
-  // styles we need to apply on draggables
+  //--------------------------------------- styles we need to apply on draggables -----------------------------------------//
   ...draggableStyle,
 });
 
 const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  minWidth: '160px',
+  background: isDraggingOver ? 'lightblue' : '#fffffff',
   padding: grid,
-  width: 250,
+  width: '100%',
 });
 
 class OrderContents extends Component {
@@ -61,7 +108,7 @@ class OrderContents extends Component {
   }
 
   onDragEnd(result) {
-    // dropped outside the list
+    //--------------------------------------- dropped outside the list ------------------------------------------------//
     if (!result.destination) {
       return;
     }
@@ -94,10 +141,9 @@ class OrderContents extends Component {
         });
     }
   }
-  // Normally you would want to split things out into separate components.
-  // But in this example everything is just done in one place for simplicity
+  // -------------------------Normally you would want to split things out into separate components.---------------------------//
+  //-------------------------- But in this example everything is just done in one place for simplicity------------------------//
   render() {
-    // console.log(this.props.data);
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="droppable">
@@ -124,7 +170,7 @@ class OrderContents extends Component {
                   )}
                 </Draggable>
               ))}
-              {provided.placeholder}
+              <Table.Row>{provided.placeholder}</Table.Row>
             </div>
           )}
         </Droppable>
@@ -132,8 +178,5 @@ class OrderContents extends Component {
     );
   }
 }
-
-// Put the thing into the DOM!
-// ReactDOM.render(<App />, document.getElementById('root'));
 
 export default OrderContents;

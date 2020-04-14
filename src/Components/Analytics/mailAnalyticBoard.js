@@ -1,11 +1,8 @@
 import React from 'react';
 import '../../css/component.css';
 import '../../css/buttonStyles.css';
-// import axios from 'axios';
 import AppDownload from './AppDownloads';
 import SecreenReviwes from './TimesAndPeriodofPage';
-import config from '../../config.json';
-import { error } from 'mammoth/lib/results';
 import { Grid, Label, Segment } from 'semantic-ui-react';
 
 class MainAnalytic extends React.Component {
@@ -21,7 +18,7 @@ class MainAnalytic extends React.Component {
             <Grid.Column width={8}>
               <Segment raised>
                 <Label as="a" color="red" ribbon>
-                  App Download
+                  عدد مرات تنزيل التطبيق
                 </Label>
 
                 <AppDownload />
@@ -30,7 +27,7 @@ class MainAnalytic extends React.Component {
             <Grid.Column width={8}>
               <Segment raised>
                 <Label as="a" color="red" ribbon>
-                  Reviwes
+                  المراجعات
                 </Label>
                 <SecreenReviwes filter="TimeViewed" />
               </Segment>
@@ -40,7 +37,7 @@ class MainAnalytic extends React.Component {
             <Grid.Column width={8}>
               <Segment raised>
                 <Label as="a" color="red" ribbon>
-                  Time Spend On Screen in min
+                  الوقت المنقضي على الشاشة بالدقائق
                 </Label>
                 <SecreenReviwes filter="TimeSpendOnArticle" />
               </Segment>

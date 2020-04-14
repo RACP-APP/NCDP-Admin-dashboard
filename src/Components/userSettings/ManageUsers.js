@@ -19,7 +19,7 @@ class ManagUsers extends React.Component {
       aEmail: '',
       url: '',
       loading: 0,
-      HasError: ''
+      HasError: '',
     };
     this.getallUsers = this.getallUsers.bind(this);
     this.showError = this.showError.bind(this);
@@ -29,14 +29,14 @@ class ManagUsers extends React.Component {
   //-------------------------------------close the add User Dialog -----------------------------------------//
   closeAdd() {
     this.setState({
-      addUser: false
+      addUser: false,
     });
   }
   //------------------------------------ show the Error from child Item ------------------------------------//
   showError(ErrorMessage) {
     this.setState({
       error: true,
-      ErrorMessage: ErrorMessage
+      ErrorMessage: ErrorMessage,
     });
   }
 
@@ -44,14 +44,14 @@ class ManagUsers extends React.Component {
   getallUsers() {
     axios
       .post(config[0].server + 'User/getAllUsers')
-      .then(result => {
+      .then((result) => {
         console.log(result.data);
         this.setState({
           Users: result.data,
-          addUser: false
+          addUser: false,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -64,11 +64,11 @@ class ManagUsers extends React.Component {
         <span
           onClick={() => {
             this.setState({
-              addUser: true
+              addUser: true,
             });
           }}
         >
-          to Add a User Click here Please
+          لإضافة مستخدم انقر هنا من فضلك
         </span>
         {this.state.error ? (
           <div className="row">{this.state.ErrorMessage}</div>
@@ -84,10 +84,10 @@ class ManagUsers extends React.Component {
         <table class="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Nanme</th>
-              <th scope="col">Email</th>
-              <th scope="col">Password</th>
-              <th scope="col">Image</th>
+              <th scope="col">الإسم</th>
+              <th scope="col">الإيميل</th>
+              <th scope="col">كلمة المرور</th>
+              <th scope="col">الصوره</th>
               <th scope="col"></th>
               <th scope="col"></th>
               <th scope="col"></th>
@@ -95,7 +95,7 @@ class ManagUsers extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.Users.map(user => {
+            {this.state.Users.map((user) => {
               return (
                 <User
                   showError={this.showError.bind(this)}

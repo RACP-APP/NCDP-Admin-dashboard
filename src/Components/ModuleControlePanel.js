@@ -20,19 +20,17 @@ class ModuleControlPanel extends React.Component {
       type: 0,
       disabled: true,
       loading: 0,
-      url: ''
+      url: '',
     };
     this.addNewModule = this.addNewModule.bind(this);
   }
 
   //------------------- Handel firbase upload ---------------------------------------//
-  handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
-  }
+  handelloadStart(e) {}
 
   inPrograss(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
   handelSucces(e) {
@@ -42,7 +40,7 @@ class ModuleControlPanel extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ url: url });
       });
@@ -51,7 +49,7 @@ class ModuleControlPanel extends React.Component {
   //-------------------------navigate the between addion and nonaddion ------------------------//
   addNewModule() {
     this.setState({
-      addtionMode: true
+      addtionMode: true,
     });
     $('.ui .circular .icon .button').attr(
       'class',
@@ -62,10 +60,7 @@ class ModuleControlPanel extends React.Component {
   onClickHandler = () => {
     //------------------------------saving data in database -----------------------//
 
-    var nowDate = new Date()
-      .toISOString()
-      .slice(0, 19)
-      .replace('T', ' ');
+    var nowDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
     var CreatedBy = JSON.parse(localStorage.getItem('user'))['userID'];
 
     var that = this;
@@ -80,14 +75,14 @@ class ModuleControlPanel extends React.Component {
         Icon:
           this.state.url ||
           'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005',
-        CreatedBy: CreatedBy
+        CreatedBy: CreatedBy,
       })
-      .then(result => {
+      .then((result) => {
         this.setState(
           {
             addtionMode: false,
             warinig: false,
-            warningMessage: ' Duplicate Titles'
+            warningMessage: 'عناوين مكررة',
           },
           () => {
             that.props.mapModels();
@@ -95,10 +90,10 @@ class ModuleControlPanel extends React.Component {
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         that.setState({
           warinig: true,
-          warningMessage: ' Duplicate Titles'
+          warningMessage: 'عناوين مكررة',
         });
         console.log(error);
       });
@@ -111,7 +106,7 @@ class ModuleControlPanel extends React.Component {
     );
     if (localStorage.getItem('CurrentTpic') !== null) {
       this.setState({
-        addtionMode: true
+        addtionMode: true,
       });
       $('.ui .circular .icon .button').attr(
         'class',
@@ -121,7 +116,7 @@ class ModuleControlPanel extends React.Component {
       this.setState({
         addtionMode: false,
         url: '',
-        loading: 0
+        loading: 0,
       });
     }
   }
@@ -156,12 +151,10 @@ class ModuleControlPanel extends React.Component {
                 <Grid.Column width={13}>
                   <input
                     type="text"
-                    placeholder={
-                      'Insert The Title of the Module - Needed Field'
-                    }
-                    onChange={e => {
+                    placeholder=" أدخل عنوان الحقل - الوحدة المطلوبة"
+                    onChange={(e) => {
                       this.setState({
-                        Title: e.target.value
+                        Title: e.target.value,
                       });
                       console.log(e.target.value);
                     }}
@@ -182,6 +175,7 @@ class ModuleControlPanel extends React.Component {
                       onUploadStart={this.handelloadStart.bind(this)}
                       onUploadSuccess={this.handelSucces.bind(this)}
                       onProgress={this.inPrograss.bind(this)}
+                      maxWidth={150}
                     ></FileUploader>
                   </label>
                   {this.state.warinig ? (
@@ -194,11 +188,11 @@ class ModuleControlPanel extends React.Component {
                   <Button.Group basic size="small">
                     <Button
                       icon="cancel"
-                      onClick={e => {
+                      onClick={(e) => {
                         this.setState({
                           addtionMode: false,
                           warinig: false,
-                          warningMessage: ''
+                          warningMessage: '',
                         });
                         $('.glyphicon-plus').attr(
                           'class',

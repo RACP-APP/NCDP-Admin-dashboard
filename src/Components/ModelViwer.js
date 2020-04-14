@@ -28,7 +28,7 @@ class MainDashBoard extends React.Component {
       isTpics: false,
       isContent: false,
       ViwerTitle: <a></a>,
-      currentModel: 0
+      currentModel: 0,
     };
 
     this.goToTopicsViwer = this.goToTopicsViwer.bind(this);
@@ -45,7 +45,7 @@ class MainDashBoard extends React.Component {
       isModule: true,
       isTpics: false,
       articales: [],
-      id: null
+      id: null,
     });
     localStorage.removeItem('CurrentTpic');
     this.getAllModules();
@@ -53,12 +53,6 @@ class MainDashBoard extends React.Component {
 
   //------------------------ afunction to get all articels of a cliked Artcile ----------//
   ArticleOfTopic(e) {
-    console.log(
-      e.currentTarget.id.substr(3),
-      'Topic id -------------------------------------',
-      $('#' + e.currentTarget.id).find('div#' + e.currentTarget.id.substr(3))
-    );
-
     if (localStorage.getItem('CurrentTpic') !== null) {
       $('#art' + localStorage.getItem('CurrentTpic'))
         .find('div#' + localStorage.getItem('CurrentTpic'))
@@ -70,9 +64,8 @@ class MainDashBoard extends React.Component {
 
     var id = e.currentTarget.id;
     this.setState({
-      id: parseInt(e.currentTarget.id.substr(3))
+      id: parseInt(e.currentTarget.id.substr(3)),
     });
-    console.log(' e.currentTarget.id.substr(3)', e.currentTarget.id.substr(3));
     localStorage.setItem('CurrentTpic', e.currentTarget.id.substr(3));
   }
 
@@ -86,9 +79,9 @@ class MainDashBoard extends React.Component {
       isModule: false,
       isTpics: false,
       isContent: true,
-      ViwerTitle: <div className="accordianTitle">Content Viwer</div>,
+      ViwerTitle: <div className="accordianTitle">عارض المحتوى</div>,
       Updated: false,
-      Contents: Contents
+      Contents: Contents,
     });
     console.log(
       'in got to content ,',
@@ -107,20 +100,20 @@ class MainDashBoard extends React.Component {
       isTpics: true,
       isContent: false,
       currentModel: parseInt(localStorage.getItem('selectedModel')),
-      ViwerTitle: <a className="accordianTitle"> Topic Viewr </a>,
-      Updated: false
+      ViwerTitle: <a className="accordianTitle">عارض الموضوع</a>,
+      Updated: false,
     });
 
     axios
       .get(
         '/Dashbord/getModuleTopics?ID=' + localStorage.getItem('selectedModel')
       )
-      .then(result => {
+      .then((result) => {
         this.setState({
-          module: result.data
+          module: result.data,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -130,7 +123,7 @@ class MainDashBoard extends React.Component {
   //-------------------------------------------------------------------------------------//
   UpdateListafterDelete() {
     this.setState({
-      Updated: true
+      Updated: true,
     });
     this.getAllModules();
   }
@@ -138,16 +131,16 @@ class MainDashBoard extends React.Component {
   getAllModules() {
     axios
       .get(config[0].server + 'Dashbord/getAllModules')
-      .then(result => {
+      .then((result) => {
         this.setState({
           module: result.data,
-          ViwerTitle: <div className="accordianTitle">Model Viwer</div>
+          ViwerTitle: <div className="accordianTitle">عارض النماذج</div>,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.setState({
-          error: true
+          error: true,
         });
       });
   }
@@ -158,7 +151,7 @@ class MainDashBoard extends React.Component {
 
   //-------------------------------------------Get All the Modules ---------------------------------------//
   mapModels() {
-    var ArrayModules = this.state.module.map(model => {
+    var ArrayModules = this.state.module.map((model) => {
       return (
         <ModuleList
           model={model}
@@ -173,7 +166,7 @@ class MainDashBoard extends React.Component {
 
   //--------------------------- a function to get all Topic for a particulier Module ----------------------//
   mapTopics() {
-    var ArrayModules = this.state.module.map(model => {
+    var ArrayModules = this.state.module.map((model) => {
       return (
         <Grid.Row
           key={model['TopicID']}
@@ -261,7 +254,7 @@ class MainDashBoard extends React.Component {
                   style={{ right: 0, left: 0, margin: 'auto' }}
                 >
                   {ArrayModules.length === 0 && !this.state.isContent
-                    ? 'No Data Founded '
+                    ? 'لم يتم العثور على بيانات '
                     : ArrayModules}
                   {this.state.isTpics && !this.state.isContent ? (
                     <div className="col">

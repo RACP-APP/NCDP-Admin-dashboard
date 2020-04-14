@@ -20,18 +20,16 @@ class ChangePassword extends React.Component {
       loading: 0,
       ErrorMessage: '',
       oldPasswordHasChanged: false,
-      error: false
+      error: false,
     };
   }
 
   //-------------------------------- Handeling the uploading Operation for Firbase ----------------------------//
-  handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
-  }
+  handelloadStart(e) {}
 
   onProgress(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
   handelSucces(e) {
@@ -40,7 +38,7 @@ class ChangePassword extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ url: url });
       });
@@ -55,7 +53,7 @@ class ChangePassword extends React.Component {
           'userName'
         ].toString(),
         aEmail: JSON.parse(localStorage.getItem('user'))['Email'],
-        url: JSON.parse(localStorage.getItem('user'))['Image']
+        url: JSON.parse(localStorage.getItem('user'))['Image'],
       },
       () => {
         console.log(
@@ -86,7 +84,7 @@ class ChangePassword extends React.Component {
     //------------- if old password field is empty or the email field is empty then do not update-----------//
     if (this.state.oldPassword === '' || this.state.aEmail === '') {
       this.setState({
-        ErrorMessage: 'Please Insert Yor Password ..'
+        ErrorMessage: 'من فضلك أدخل كلمة مرورك ..',
       });
     } else {
       if (this.checkConfirmingPassword()) {
@@ -96,20 +94,20 @@ class ChangePassword extends React.Component {
 
         axios
           .post(config[0].server + 'User/ChangePassword', obj)
-          .then(result => {
+          .then((result) => {
             this.setState(
               {
-                ErrorMessage: ''
+                ErrorMessage: '',
               },
               () => {
                 this.props.LogOut();
               }
             );
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error.response.data);
             this.setState({
-              ErrorMessage: error.response.data
+              ErrorMessage: error.response.data,
             });
           });
       }
@@ -127,7 +125,7 @@ class ChangePassword extends React.Component {
     ) {
       this.setState({
         error: true,
-        ErrorMessage: 'Password dose Not Match'
+        ErrorMessage: 'كلمة السر غير متطابقة',
       });
       return false;
       //------------------ if password dose not match then return false and show error ------------------//
@@ -137,13 +135,13 @@ class ChangePassword extends React.Component {
     if (this.state.Newpassword === '' && this.state.confirmPassword === '') {
       this.setState({
         error: true,
-        ErrorMessage: 'Insert a Valied Password'
+        ErrorMessage: 'أدخل كلمة مرور صالحة',
       });
       return false;
     }
     this.setState({
       error: false,
-      ErrorMessage: ''
+      ErrorMessage: '',
     });
     return true;
   }
@@ -191,10 +189,10 @@ class ChangePassword extends React.Component {
                         type="text"
                         placeholder={this.state.userName}
                         value={this.state.userName}
-                        onChange={e => {
+                        onChange={(e) => {
                           console.log(e.target.value);
                           this.setState({
-                            userName: e.target.value
+                            userName: e.target.value,
                           });
                         }}
                       />
@@ -211,7 +209,6 @@ class ChangePassword extends React.Component {
                       <span
                         class="glyphicon glyphicon-ok ItemIcons"
                         onClick={this.saveUser.bind(this)}
-                        //   onClick={this.onClickHandler.bind(this)}
                       ></span>
                     </div>
                   </div>
@@ -225,7 +222,7 @@ class ChangePassword extends React.Component {
             <div className="row" align="right">
               <br></br>
               <div className="col-3">
-                <span>Email :</span>
+                <span>الأيميل :</span>
               </div>
               <div className="col-8">
                 <input
@@ -235,10 +232,10 @@ class ChangePassword extends React.Component {
                   disabled
                   placeholder={this.state.aEmail}
                   value={this.state.aEmail}
-                  onChange={e => {
+                  onChange={(e) => {
                     console.log(e.target.value);
                     this.setState({
-                      aEmail: e.target.value
+                      aEmail: e.target.value,
                     });
                   }}
                 ></input>
@@ -247,7 +244,7 @@ class ChangePassword extends React.Component {
             <div className="row" align="right">
               <br></br>
               <div className="col-3">
-                <span>old Password :</span>
+                <span>كلمة المرور القديمه :</span>
               </div>
               <div className="col-8">
                 <input
@@ -255,11 +252,11 @@ class ChangePassword extends React.Component {
                   id="oldpassword"
                   type="password"
                   placeholder={this.state.oldPassword}
-                  onChange={e => {
+                  onChange={(e) => {
                     console.log(this.state.oldPassword);
                     this.setState({
                       oldPassword: e.target.value,
-                      oldPasswordHasChanged: true
+                      oldPasswordHasChanged: true,
                     });
                   }}
                 ></input>
@@ -269,17 +266,17 @@ class ChangePassword extends React.Component {
             <br></br>
             <div className="row" align="right">
               <div className="col-3">
-                <span>new Password :</span>
+                <span>كلمة المرور الجديده :</span>
               </div>
               <div className="col-8">
                 <input
                   class="w3-input"
                   id="newPASSWORD"
                   type="password"
-                  placeholder="NEW Password"
-                  onChange={e => {
+                  placeholder="كلمة المرور الجديده"
+                  onChange={(e) => {
                     this.setState({
-                      Newpassword: e.target.value
+                      Newpassword: e.target.value,
                     });
                   }}
                 ></input>
@@ -288,17 +285,17 @@ class ChangePassword extends React.Component {
             <br></br>
             <div className="row" align="right">
               <div className="col-3">
-                <span>Confirm Password : </span>
+                <span>تأكيد كلمة المرور : </span>
               </div>
               <div className="col-8">
                 <input
                   class="w3-input"
                   id="ConfirmPassword"
                   type="password"
-                  placeholder="Confirm Your Password"
-                  onChange={e => {
+                  placeholder="تأكيد كلمة المرور"
+                  onChange={(e) => {
                     this.setState({
-                      confirmPassword: e.target.value
+                      confirmPassword: e.target.value,
                     });
                   }}
                 ></input>

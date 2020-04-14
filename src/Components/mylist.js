@@ -13,7 +13,7 @@ class MyList extends React.Component {
     this.state = {
       id: this.props.id,
       data: [],
-      updatedFromChild: false
+      updatedFromChild: false,
     };
     this.getData = this.getData.bind(this);
     this.updateFromChild = this.updateFromChild.bind(this);
@@ -24,7 +24,7 @@ class MyList extends React.Component {
   backToModules() {
     this.setState({
       data: [],
-      id: null
+      id: null,
     });
 
     this.props.backToModules();
@@ -33,14 +33,14 @@ class MyList extends React.Component {
   getData(TopicID) {
     axios
       .post(config[0].server + 'Dashbord/ArticleOfTopic', {
-        ID: parseInt(TopicID)
+        ID: parseInt(TopicID),
       })
-      .then(result => {
+      .then((result) => {
         this.setState({
-          data: result.data
+          data: result.data,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -51,7 +51,7 @@ class MyList extends React.Component {
     if (nextProps.id !== this.props.id) {
       var TopicID = nextProps.id;
       this.setState({
-        id: nextProps.id
+        id: nextProps.id,
       });
       this.getData(TopicID);
     }
@@ -80,7 +80,7 @@ class MyList extends React.Component {
               width: '100%',
               marginTop: '22px',
               marginRight: '15px',
-              marginLeft: '15px'
+              marginLeft: '15px',
             }}
           >
             <ArticlesControlPanel
@@ -90,10 +90,10 @@ class MyList extends React.Component {
           </Segment>
         </div>
         {this.state.data.length === 0 ? (
-          <div className="row ItemTitle">No data Founded</div>
+          <div className="row ItemTitle">لم يتم العثور على بيانات</div>
         ) : (
           <div className="row">
-            {this.state.data.map(item => {
+            {this.state.data.map((item) => {
               return (
                 <ArticlesItem
                   data={item}

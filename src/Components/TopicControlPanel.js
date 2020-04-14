@@ -18,13 +18,11 @@ class TopicControlPanel extends React.Component {
       url: '',
       loading: 0,
       error: false,
-      errorMessage: ''
+      errorMessage: '',
     };
   }
 
-  handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
-  }
+  handelloadStart(e) {}
   handelSucces(e) {
     console.log(firebase.storage);
     firebase
@@ -32,7 +30,7 @@ class TopicControlPanel extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ url: url });
       });
@@ -41,7 +39,7 @@ class TopicControlPanel extends React.Component {
   //-------------------------- the percentege of upl-loading ---------------------//
   inPrograss(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
 
@@ -60,14 +58,14 @@ class TopicControlPanel extends React.Component {
 
     axios
       .post(config[0].server + 'Dashbord/addTopicToAmodel', object)
-      .then(result => {
+      .then((result) => {
         this.setState({
           addMode: false,
           Title: '',
           url: '',
           loading: 0,
           error: false,
-          errorMessage: ''
+          errorMessage: '',
         });
         this.props.updateFromChild();
 
@@ -76,10 +74,10 @@ class TopicControlPanel extends React.Component {
           'glyphicon glyphicon-plus ControlePanel-col  '
         );
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
           error: true,
-          errorMessage: error.response.data
+          errorMessage: error.response.data,
         });
       });
   };
@@ -94,9 +92,9 @@ class TopicControlPanel extends React.Component {
             <Button
               circular
               icon="add circle"
-              onClick={e => {
+              onClick={(e) => {
                 this.setState({
-                  addMode: true
+                  addMode: true,
                   //---------------//
                 });
               }}
@@ -125,10 +123,10 @@ class TopicControlPanel extends React.Component {
                   iconPosition="left"
                   style={{ maxWidth: '120px' }}
                   type="text"
-                  placeholder="add Title here ...."
-                  onChange={e => {
+                  placeholder="أضف العنوان هنا ...."
+                  onChange={(e) => {
                     this.setState({
-                      Title: e.target.value
+                      Title: e.target.value,
                     });
                   }}
                 />
@@ -155,9 +153,9 @@ class TopicControlPanel extends React.Component {
                 <Button.Group basic size="small">
                   <Button
                     icon="cancel"
-                    onClick={e => {
+                    onClick={(e) => {
                       this.setState({
-                        addMode: false
+                        addMode: false,
                       });
                       $('.glyphicon-plus').attr(
                         'class',

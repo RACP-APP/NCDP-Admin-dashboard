@@ -5,7 +5,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import config from '../config.json';
 import Axios from 'axios';
-import FileUploader from 'react-firebase-file-uploader';
+import FileUploader from '../Components/uploadimage';
 import firebase from 'firebase';
 import { Input, Image, Button } from 'semantic-ui-react';
 
@@ -24,46 +24,46 @@ class ArticlesList extends React.Component {
       Wrnining: false,
       WrniningMessage: '',
       url: '',
-      loading: 0
+      loading: 0,
     };
     this.editTopic = this.editTopic.bind(this);
     this.DeleteTopic = this.DeleteTopic.bind(this);
     this.UpdateTopic = this.UpdateTopic.bind(this);
   }
 
-  handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
-  }
+  handelloadStart(e) {}
   handelSucces(e) {
-    firebase
-      .storage()
-      .ref()
-      .child(e)
-      .getDownloadURL()
-      .then(url => {
-        console.log(url);
-        this.setState({ url: url });
-      });
+    console.log(e, 'yyyyyyyyyyyyyyyyyyyyy');
+    this.setState({ url: e });
+    // firebase
+    //   .storage()
+    //   .ref()
+    //   .child(e)
+    //   .getDownloadURL()
+    //   .then((url) => {
+    //     console.log(url);
+    //     this.setState({ url: url });
+    //   });
   }
 
   inPrograss(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
   //----------------------------------- When the user Confirm Deletion Operation ----------------------------------//
   oktoDeleteTopic(e) {
     axios
       .post(config[0].server + 'Dashbord/DeleteTopic', {
-        TopicID: this.state.data['TopicID']
+        TopicID: this.state.data['TopicID'],
       })
-      .then(result => {
+      .then((result) => {
         this.setState({
-          Wrnining: false
+          Wrnining: false,
         });
         this.props.goToTopicsViwer();
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -75,20 +75,20 @@ class ArticlesList extends React.Component {
     axios
       .post(config[0].server + 'Dashbord/getTopic', {
         ModuleID: this.state.currentModule,
-        TopicID: this.state.data['TopicID']
+        TopicID: this.state.data['TopicID'],
       })
-      .then(result => {
+      .then((result) => {
         this.setState({
-          data: result.data[0]
+          data: result.data[0],
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
   editTopic() {
     this.setState({
-      editionMode: true
+      editionMode: true,
     });
   }
 
@@ -106,9 +106,9 @@ class ArticlesList extends React.Component {
       .post(config[0].server + 'Dashbord/UpdatTopic', {
         Title: Title || 'New Topic ',
         Icon: Icon,
-        TopicID: this.state.data['TopicID']
+        TopicID: this.state.data['TopicID'],
       })
-      .then(result => {
+      .then((result) => {
         this.UpdateTopic();
         this.setState({
           editionMode: false,
@@ -117,22 +117,22 @@ class ArticlesList extends React.Component {
           imagePreviewUrl: null,
           Wrnining: false,
           url: '',
-          loading: 0
+          loading: 0,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         //----------------------------------------- vew the Error Message ------------------------------------//
         console.log(error);
         this.setState({
           Wrnining: true,
-          WrniningMessage: error.response.data
+          WrniningMessage: error.response.data,
         });
       });
   };
 
   DeleteTopic() {
     this.setState({
-      Wrnining: true
+      Wrnining: true,
     });
   }
 
@@ -144,21 +144,19 @@ class ArticlesList extends React.Component {
           <tr>
             <td>
               <div>
-                <Image src={this.state.data['Icon']} size="mini" rounded />
-                <label>
-                  <span className=" glyphicon glyphicon-pencil   imageUploadingSpan"></span>
+                <Image
+                  src={this.state.url || this.state.data['Icon']}
+                  size="mini"
+                  rounded
+                />
 
-                  <FileUploader
-                    hidden
-                    accept="image/*"
-                    name="image"
-                    storageRef={firebase.storage().ref()}
-                    onUploadStart={this.handelloadStart.bind(this)}
-                    onUploadSuccess={this.handelSucces.bind(this)}
-                    onProgress={this.inPrograss.bind(this)}
-                  ></FileUploader>
-                  {this.state.loading ? this.state.loading : null}
-                </label>
+                <FileUploader
+                  accept="image/*"
+                  name="image"
+                  onUploadStart={this.handelloadStart.bind(this)}
+                  onUploadSuccess={this.handelSucces.bind(this)}
+                  onProgress={this.inPrograss.bind(this)}
+                ></FileUploader>
               </div>
             </td>
             <td className="margin">
@@ -168,9 +166,9 @@ class ArticlesList extends React.Component {
                 style={{ maxWidth: '140px' }}
                 type="text"
                 placeholder={this.state.data['Title']}
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({
-                    Title: e.target.value
+                    Title: e.target.value,
                   });
                 }}
               />
@@ -200,9 +198,9 @@ class ArticlesList extends React.Component {
                 <Button.Group basic size="small">
                   <Button
                     icon="cancel"
-                    onClick={e => {
+                    onClick={(e) => {
                       this.setState({
-                        editionMode: false
+                        editionMode: false,
                       });
                     }}
                   />
@@ -235,9 +233,9 @@ class ArticlesList extends React.Component {
                 <Button.Group basic size="small">
                   <Button
                     icon="delete"
-                    onClick={e => {
+                    onClick={(e) => {
                       this.setState({
-                        Wrnining: true
+                        Wrnining: true,
                       });
                     }}
                   />
@@ -260,16 +258,16 @@ class ArticlesList extends React.Component {
                       class="btn btn-outline-danger btn-sm btn-sm-cust "
                       onClick={this.oktoDeleteTopic.bind(this)}
                     >
-                      OK
+                      تأكيد
                     </button>
 
                     <button
                       class="btn btn-outline-primary btn-sm btn-sm-cust"
-                      onClick={e => {
+                      onClick={(e) => {
                         this.setState({ Wrnining: !this.state.Wrnining });
                       }}
                     >
-                      Cancel
+                      تراجع
                     </button>
                   </div>
                 </div>

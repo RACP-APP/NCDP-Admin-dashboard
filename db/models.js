@@ -5,7 +5,6 @@ var async = require('async');
 //-------------------------------- A function to get all users -----------------------//
 //------------------------------------------------------------------------------------//
 var GetUsers = (cb) => {
-  console.log('44444444444444444444444444444444444444444444444444444444');
   db.query('select * from `USERS`', (error, rsult, fields) => {
     if (error) {
       console.log('Query Error');

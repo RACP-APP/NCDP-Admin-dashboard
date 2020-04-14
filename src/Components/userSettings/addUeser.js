@@ -17,18 +17,16 @@ class AddUser extends React.Component {
       url: '',
       loading: 0,
       HasError: false,
-      ErrorMessage: 'Invalid Email Address'
+      ErrorMessage: 'عنوان البريد الإلكتروني غير صالح',
     };
   }
 
   //-------------------------------- Handeling the uploading Operation for Firbase ----------------------------//
-  handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
-  }
+  handelloadStart(e) {}
 
   onProgress(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
   handelSucces(e) {
@@ -38,7 +36,7 @@ class AddUser extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ url });
       });
@@ -61,14 +59,14 @@ class AddUser extends React.Component {
     if (!this.validate(e.target.value)) {
       this.setState({
         HasError: true,
-        ErrorMessage: 'Invalid Email Address'
+        ErrorMessage: 'عنوان البريد الإلكتروني غير صالح',
       });
     } //-------------------- if the Email is Valid then Save the email in the state --------------------//
     else {
       this.setState({
         aEmail: e.target.value,
         HasError: false,
-        ErrorMessage: ''
+        ErrorMessage: '',
       });
     }
   }
@@ -86,14 +84,14 @@ class AddUser extends React.Component {
       //---------------------- if the user didn't insert username or password or email dont insert ------------//
       this.setState({
         HasError: true,
-        ErrorMessage: ' Please Insert a Valied User Name and Email'
+        ErrorMessage: ' يرجى إدخال اسم مستخدم وبريد إلكتروني صالحين',
       });
     } else {
       //-------------------------- if all information is correct goe to insertion operation -------------------//
       this.setState(
         {
           HasError: false,
-          ErrorMessage: ' '
+          ErrorMessage: ' ',
         },
         () => {
           console.log(this.state.url, 'url');
@@ -103,9 +101,9 @@ class AddUser extends React.Component {
               userName: this.state.userName,
               Email: this.state.aEmail,
               Image: this.state.url,
-              password: this.state.password
+              password: this.state.password,
             })
-            .then(result => {
+            .then((result) => {
               //--------------------------- if the operation run correctly then set the state --------------//
               this.setState(
                 {
@@ -116,7 +114,7 @@ class AddUser extends React.Component {
                   url: '',
                   loading: 0,
                   HasError: false,
-                  ErrorMessage: ''
+                  ErrorMessage: '',
                 },
                 () => {
                   //--------------- after that call the parent function to update the View ----------------//
@@ -124,11 +122,11 @@ class AddUser extends React.Component {
                 }
               );
             })
-            .catch(error => {
+            .catch((error) => {
               //------------------------------- if the post operation failed then show the error ----------//
               this.setState({
                 HasError: true,
-                ErrorMessage: error.response.data
+                ErrorMessage: error.response.data,
               });
             });
         }
@@ -137,14 +135,14 @@ class AddUser extends React.Component {
   }
   render() {
     return (
-      <div id="addUser">
+      <div id="addUser" dir="rtl">
         <table class="table">
           <thead class="thead-dark">
             <tr>
-              <th scope="col">Nanme</th>
-              <th scope="col">Email</th>
-              <th scope="col">Password</th>
-              <th scope="col">Image</th>
+              <th scope="col">اسم المستخدم</th>
+              <th scope="col">البريد الإلكتروني</th>
+              <th scope="col">رمز الدخول</th>
+              <th scope="col">الصوره</th>
               <th scope="col"></th>
               <th scope="col"></th>
               <th scope="col"></th>
@@ -157,8 +155,8 @@ class AddUser extends React.Component {
                 <input
                   class="w3-input"
                   type="text"
-                  placeholder="User Name go's Here ... "
-                  onChange={e => {
+                  placeholder="الرجاء ادخال اسم المستخدم هنا "
+                  onChange={(e) => {
                     this.state.userName = e.target.value;
                     console.log(this.state.userName);
                   }}
@@ -170,7 +168,7 @@ class AddUser extends React.Component {
                 <input
                   class="w3-input"
                   type="text"
-                  placeholder="Email go's here ...."
+                  placeholder="الرجاء إدخال البريد الإلكتروني هنا"
                   onChange={this.validateEmaile.bind(this)}
                 ></input>
               </td>
@@ -179,8 +177,8 @@ class AddUser extends React.Component {
                 <input
                   class="w3-input"
                   type="password"
-                  placeholder="Password go's here ....."
-                  onChange={e => {
+                  placeholder="الرجاء إدخال كلمة المرور هنا"
+                  onChange={(e) => {
                     this.state.password = e.target.value;
                     console.log(this.state.password);
                   }}
@@ -227,7 +225,7 @@ class AddUser extends React.Component {
               <td>
                 <span
                   class="glyphicon glyphicon-remove-circle ItemIcons "
-                  onClick={e => {
+                  onClick={(e) => {
                     this.props.closeAdd();
                   }}
                 ></span>

@@ -25,7 +25,7 @@ class ControlPanel extends React.Component {
       disabled: true,
       loading: 0,
       warinig: true,
-      warningMessage: ''
+      warningMessage: '',
     };
     this.addNewArticle = this.addNewArticle.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
@@ -34,13 +34,11 @@ class ControlPanel extends React.Component {
     this.handelSucces = this.handelSucces.bind(this);
   }
 
-  handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
-  }
+  handelloadStart(e) {}
 
   onProgress(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
   handelSucces(e) {
@@ -50,7 +48,7 @@ class ControlPanel extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url);
         this.setState({ url: url });
       });
@@ -60,18 +58,15 @@ class ControlPanel extends React.Component {
     //------------------------------saving data in database -----------------------//
 
     var that = this;
-    var nowDate = new Date()
-      .toISOString()
-      .slice(0, 19)
-      .replace('T', ' ');
+    var nowDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
     var object = {};
     object['Title'] =
       this.state.Title ||
-      'New Article for Topic ' +
+      'مقال جديد للموضوع' +
         parseInt(JSON.parse(localStorage.getItem('CurrentTpic'))) +
         '-' +
         Date.now();
-    object['Notes'] = this.state.Notes || 'this a New Article ......';
+    object['Notes'] = this.state.Notes || 'هذا مقال جديد ......';
     object['UpdateDate'] = nowDate;
     object['CreatedDate'] = nowDate;
     object['CreatedByUser'] = this.state.CreatedUser;
@@ -84,22 +79,22 @@ class ControlPanel extends React.Component {
 
     axios
       .post(config[0].server + 'Articles/InsertArticles', {
-        data: object
+        data: object,
       })
-      .then(result => {
+      .then((result) => {
         this.props.updateFromChild();
         this.setState({
           addtionMode: false,
           warinig: true,
-          warningMessage: ' Duplicate Titles'
+          warningMessage: 'عنوان مكرر',
         });
 
         $('#ArticlControlPanel').removeClass('row  ControlePanel-col ');
       })
-      .catch(error => {
+      .catch((error) => {
         that.setState({
           warinig: true,
-          warningMessage: 'Duplicate Name Or Connection Error'
+          warningMessage: 'اسم مكرر أو خطأ في الاتصال',
         });
         console.log(error);
       });
@@ -108,7 +103,7 @@ class ControlPanel extends React.Component {
   addNewArticle() {
     if (localStorage.getItem('CurrentTpic') !== null) {
       this.setState({
-        addtionMode: true
+        addtionMode: true,
       });
 
       $('#ArticlControlPanel').css(' row  ControlePanel-col unclickibl');
@@ -116,7 +111,7 @@ class ControlPanel extends React.Component {
       this.setState({
         addtionMode: false,
         url: '',
-        warningMessage: ''
+        warningMessage: '',
       });
     }
   }
@@ -164,10 +159,10 @@ class ControlPanel extends React.Component {
                   <input
                     type="text"
                     class="form-control"
-                    placeholder={'This Field must be Inserted'}
-                    onChange={e => {
+                    placeholder={'يجب إدراج هذا الحقل'}
+                    onChange={(e) => {
                       this.setState({
-                        Title: e.target.value
+                        Title: e.target.value,
                       });
                       console.log(e.target.value);
                     }}
@@ -181,9 +176,9 @@ class ControlPanel extends React.Component {
                     class="form-control"
                     aria-label="Large"
                     aria-describedby="inputGroup-sizing-sm"
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({
-                        Notes: e.target.value
+                        Notes: e.target.value,
                       });
                       console.log(e.target.value);
                     }}
@@ -203,11 +198,11 @@ class ControlPanel extends React.Component {
                   {/* <span class="glyphicon glyphicon-ok"></span> */}
                   <span
                     class="glyphicon glyphicon-remove-circle"
-                    onClick={e => {
+                    onClick={(e) => {
                       this.setState({
                         addtionMode: false,
                         warinig: false,
-                        warningMessage: ''
+                        warningMessage: '',
                       });
                       $('.glyphicon-plus').attr(
                         'class',
@@ -225,7 +220,7 @@ class ControlPanel extends React.Component {
           <Button
             circular
             icon="step backward"
-            onClick={e => {
+            onClick={(e) => {
               this.props.backToModules();
             }}
           />

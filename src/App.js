@@ -6,13 +6,14 @@ import DashBoard from './Components/MainDashBord';
 import firebase from 'firebase';
 import Footer from './Components/footer';
 import TopHeader from './Components/Topheader';
+import ImgUploader from './Components/uploadimage';
 import AdminSettings from './Components/userSettings/AdminAddUser';
 import MainAnalatic from './Components/Analytics/mailAnalyticBoard';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 var firebaseConfig = {
   apiKey: 'AIzaSyAFSTEpX_9R0pzLQ36zBFYxKs19hjxKytA',
@@ -22,7 +23,7 @@ var firebaseConfig = {
   storageBucket: 'ncdp-270519.appspot.com',
   messagingSenderId: '494635556973',
   appId: '1:494635556973:web:1baf74fc1b51eda1885f64',
-  measurementId: 'G-HLNN3MLT5V'
+  measurementId: 'G-HLNN3MLT5V',
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -33,7 +34,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       LoggetIn: false,
-      redirect: ''
+      redirect: '',
     };
     this.logOut = this.logOut.bind(this);
     this.loggedIn = this.loggedIn.bind(this);
@@ -42,7 +43,7 @@ class App extends React.Component {
   loggedIn() {
     this.setState({
       LoggetIn: true,
-      redirect: '/'
+      redirect: '/',
     });
   }
 
@@ -51,7 +52,7 @@ class App extends React.Component {
     this.setState(
       {
         LoggetIn: false,
-        redirect: 'LogIn'
+        redirect: 'LogIn',
       },
       () => {
         localStorage.clear();
@@ -61,27 +62,18 @@ class App extends React.Component {
 
   redirectto(Node) {
     this.setState({
-      redirect: Node
+      redirect: Node,
     });
   }
   componentDidMount() {
-    const messaging = firebase.messaging();
-    messaging
-      .requestPermission()
-      .then(() => {
-        console.log('Notification Permission Granted');
-      })
-      .catch(error => {
-        console.log('unable to get permission to notification');
-      });
     if (localStorage.getItem('user')) {
       this.setState({
-        LoggetIn: true
+        LoggetIn: true,
       });
     } else {
       this.setState({
         LoggetIn: false,
-        redirect: 'LogIn'
+        redirect: 'LogIn',
       });
     }
   }
@@ -91,6 +83,7 @@ class App extends React.Component {
       <div>
         <div className="row">
           <TopHeader></TopHeader>
+          {/* <ImgUploader></ImgUploader> */}
           {/* <MainAnalatic /> */}
         </div>
         {this.state.LoggetIn ? (

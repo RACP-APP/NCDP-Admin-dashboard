@@ -18,20 +18,19 @@ class UserItem extends React.Component {
       userName: '',
       url: '',
       erroMessage: '',
-      error: false
+      error: false,
     };
   }
   //------------------------------- Handeling the uploading Operation for Firbase -------------------------------//
   handelloadStart(e) {
-    console.log('hhhhhhhhhhhhhhhhh');
     this.setState({
-      loading: 1
+      loading: 1,
     });
   }
 
   onProgress(e) {
     this.setState({
-      loading: e
+      loading: e,
     });
   }
   handelSucces(e) {
@@ -41,7 +40,7 @@ class UserItem extends React.Component {
       .ref()
       .child(e)
       .getDownloadURL()
-      .then(url => {
+      .then((url) => {
         console.log(url, ' url user item');
         this.setState({ url: url });
       });
@@ -52,25 +51,25 @@ class UserItem extends React.Component {
     axios
       .post(config[0].server + 'User/deleteUser', {
         userID: [this.props.user['userID']],
-        userName: this.props.user['userName']
+        userName: this.props.user['userName'],
       })
-      .then(result => {
+      .then((result) => {
         this.setState(
           {
             error: false,
             erroMessage: '',
-            edit: false
+            edit: false,
           },
           () => {
             this.props.getallUsers();
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState(
           {
             erroMessage: error.response.data,
-            error: true
+            error: true,
           },
           () => {
             this.props.showError(this.state.erroMessage);
@@ -94,23 +93,23 @@ class UserItem extends React.Component {
     //--------------------------------- send data to server ---------------------------------------//
     axios
       .post(config[0].server + 'User/UpdateUser', obj)
-      .then(result => {
+      .then((result) => {
         this.setState(
           {
             error: false,
             erroMessage: '',
-            edit: false
+            edit: false,
           },
           () => {
             this.props.getallUsers();
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState(
           {
             erroMessage: error.response.data,
-            error: true
+            error: true,
           },
           () => {
             this.props.showError(this.state.erroMessage);
@@ -141,7 +140,7 @@ class UserItem extends React.Component {
           <td>
             <span
               className=" glyphicon glyphicon-pencil  ItemIcons "
-              onClick={e => {
+              onClick={(e) => {
                 this.setState({ edit: true });
               }}
             ></span>
@@ -164,7 +163,7 @@ class UserItem extends React.Component {
               class="w3-input"
               type="text"
               placeholder={this.state.user['userName']}
-              onChange={e => {
+              onChange={(e) => {
                 this.state.userName = e.target.value;
               }}
             ></input>
@@ -175,7 +174,7 @@ class UserItem extends React.Component {
               class="w3-input"
               type="text"
               placeholder={this.props.user['Email']}
-              onChange={e => {
+              onChange={(e) => {
                 this.state.Email = e.target.value;
               }}
             ></input>
@@ -222,7 +221,7 @@ class UserItem extends React.Component {
           <td>
             <span
               class="glyphicon glyphicon-remove-circle ItemIcons "
-              onClick={e => {
+              onClick={(e) => {
                 this.setState({ edit: false });
               }}
             ></span>

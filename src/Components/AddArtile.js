@@ -11,7 +11,7 @@ class AddArticales extends React.Component {
       addingMode: false,
       moduleID: this.props.currentModID,
       Title: '',
-      Link: ''
+      Link: '',
     };
     this.AddArticle = this.AddArticle.bind(this);
   }
@@ -24,12 +24,12 @@ class AddArticales extends React.Component {
         .post(config[0].server + 'Dashbord/AddTopicsToMoules', {
           ID: this.state.moduleID,
           Title: this.state.Title,
-          Link: this.state.Link
+          Link: this.state.Link,
         })
-        .then(result => {
+        .then((result) => {
           console.log(result);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -43,7 +43,7 @@ class AddArticales extends React.Component {
             <div class="input-group input-group-sm mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-sm">
-                  Title
+                  العنوان
                 </span>
               </div>
               <input
@@ -52,9 +52,9 @@ class AddArticales extends React.Component {
                 class="form-control"
                 aria-label="Small"
                 aria-describedby="inputGroup-sizing-sm"
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({
-                    Title: e.target.value
+                    Title: e.target.value,
                   });
                   console.log(e.target.value);
                 }}
@@ -64,7 +64,7 @@ class AddArticales extends React.Component {
             <div class="input-group input-group-sm mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroup-sizing-sm">
-                  link
+                  الرابط
                 </span>
               </div>
               <input
@@ -73,9 +73,9 @@ class AddArticales extends React.Component {
                 class="form-control"
                 aria-label="Small"
                 aria-describedby="inputGroup-sizing-sm"
-                onChange={e => {
+                onChange={(e) => {
                   this.setState({
-                    Link: e.target.value
+                    Link: e.target.value,
                   });
                   console.log(e.target.value);
                 }}
@@ -93,10 +93,9 @@ class AddArticales extends React.Component {
               className="btn-primary  btn-block "
               onClick={this.AddArticle.bind(this)}
             >
-              {' '}
-              save{' '}
+              حفظ
             </button>
-            <button className="btn-primary  btn-block"> Canel </button>
+            <button className="btn-primary  btn-block"> تراجع </button>
           </div>
         </div>
       </div>

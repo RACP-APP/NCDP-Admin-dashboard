@@ -42,15 +42,9 @@ Dashbord.get('/Dashbord/getAllModules', (req, res) => {
   // ----------------------------------------------------------//
   dbModel.getAllModules((err, result) => {
     if (err) {
-      res
-        .status(400)
-        .send('Error Retriving Data')
-        .end();
+      res.status(400).send('خطأ بعملية إسترجلع المعلومات').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 
@@ -66,15 +60,9 @@ Dashbord.post('/Dashbord/UpdateModule', (req, res) => {
     req.body.image,
     (error, result) => {
       if (error) {
-        res
-          .status(500)
-          .send('Data Error ')
-          .end();
+        res.status(500).send('خطأ بمعالجة المعلومات').end();
       } else {
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(200).send(result).end();
       }
     }
   );
@@ -86,15 +74,9 @@ Dashbord.post('/Dashbord/UpdateModule', (req, res) => {
 Dashbord.post('/Dashbord/DeleteModule', (req, res) => {
   dbModel.DeleteeModule(req.body.ID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('error in data')
-        .end();
+      res.status(500).send('خطأ بمعالجة المعلومات').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -105,15 +87,9 @@ Dashbord.post('/Dashbord/DeleteModule', (req, res) => {
 Dashbord.get('/Dashbord/getModuleTopics', (req, res) => {
   dbModel.getAllTopicOfModels(req.query.ID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('Server Error')
-        .end();
+      res.status(500).send('خطأ في الخادم').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -124,15 +100,9 @@ Dashbord.get('/Dashbord/getModuleTopics', (req, res) => {
 Dashbord.post('/Dashbord/getTopic', (req, res) => {
   dbModel.getOneTopic(req.body.TopicID, req.body.ModuleID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('Server Error')
-        .end();
+      res.status(500).send('خطأ في الخادم').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -147,15 +117,9 @@ Dashbord.post('/Dashbord/AddTopicsToMoules', (req, res) => {
     req.body.Link,
     (error, result) => {
       if (error) {
-        res
-          .status(500)
-          .send('Server Error')
-          .end();
+        res.status(500).send('خطأ في الخادم').end();
       } else {
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(200).send(result).end();
       }
     }
   );
@@ -164,15 +128,9 @@ Dashbord.post('/Dashbord/AddTopicsToMoules', (req, res) => {
 Dashbord.post('/Dashbord/ArticleOfTopic', (req, res) => {
   dbModel.getAllArticleOfTopic(req.body.ID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('Server Error')
-        .end();
+      res.status(500).send('خطأ في الخادم').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -184,15 +142,9 @@ Dashbord.post('/Dashbord/addModule', (req, res) => {
     req.body.CreatedBy,
     (error, result) => {
       if (error) {
-        res
-          .status(500)
-          .send('error in insertin data')
-          .end();
+        res.status(500).send('خطأ بإدخال المعلومات').end();
       } else {
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(200).send(result).end();
       }
     }
   );
@@ -205,15 +157,9 @@ Dashbord.post('/Dashbord/UpdatTopic', (req, res) => {
     req.body.Icon,
     (error, result) => {
       if (error) {
-        res
-          .status(500)
-          .send('error in insertin data')
-          .end();
+        res.status(500).send('خطأ بإدخال المعلومات').end();
       } else {
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(200).send(result).end();
       }
     }
   );
@@ -223,15 +169,9 @@ Dashbord.post('/Dashbord/UpdatTopic', (req, res) => {
 Dashbord.post('/Dashbord/DeleteTopic', (req, res) => {
   dbModel.deleteTopic(req.body.TopicID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('error in insertin data')
-        .end();
+      res.status(500).send('خطأ بإدخال المعلومات').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -245,15 +185,9 @@ Dashbord.post('/Dashbord/addTopicToAmodel', (req, res) => {
     req.body.Icon,
     (error, result) => {
       if (error) {
-        res
-          .status(500)
-          .send('error in insertin data')
-          .end();
+        res.status(500).send('خطأ بإدخال المعلومات').end();
       } else {
-        res
-          .status(200)
-          .send(result)
-          .end();
+        res.status(200).send(result).end();
       }
     }
   );

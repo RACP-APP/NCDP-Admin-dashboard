@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../css/component.css';
-import $ from 'jquery';
 import axios from 'axios';
 import config from '../../config.json';
 import OrderingContent from './OrderContents';
@@ -17,6 +16,7 @@ class AllToghterConmponent extends React.Component {
       open: false,
       Update: false,
       contentID: this.props.contentID,
+      errorMessage: '',
     };
 
     this.mapContents = this.mapContents.bind(this);
@@ -40,7 +40,6 @@ class AllToghterConmponent extends React.Component {
   //-------------------------------------------------------------------------------------------------------------------------------//
   componentWillReceiveProps(nextpro) {
     if (nextpro.data !== this.props.data) {
-      console.log('new props -------------------------------------', nextpro);
     }
     this.setState(
       {
@@ -86,20 +85,17 @@ class AllToghterConmponent extends React.Component {
                 );
               })
               .catch((error) => {
-                console.log('errrrrrrrrrrrrrror');
-                // this.setState({
-                //   errorMessage: error[0],
-                // });
+                this.setState({
+                  errorMessage: error.response.data,
+                });
               });
           }
         );
       })
       .catch((error) => {
-        console.log('errrrrrrrrrrrrrror');
-
-        // this.setState({
-        //   errorMessage: error[0],
-        // });
+        this.setState({
+          errorMessage: 'error',
+        });
       });
   }
 
@@ -162,10 +158,14 @@ class AllToghterConmponent extends React.Component {
             >
               <Segment
                 style={{
-                  left: '0%',
+                  left: '1%',
                   position: 'fixed',
-                  top: '8%',
+                  top: '2%',
+                  width: '14%',
                   zIndex: 1000,
+                  height: window.innerHeight - 30,
+                  minWidth: '160px',
+                  overflow: 'auto',
                 }}
               >
                 <OrderingContent
@@ -175,7 +175,7 @@ class AllToghterConmponent extends React.Component {
                   getAllContent={this.getAllContent.bind(this)}
                 />
                 <Button
-                  content="Close and Save"
+                  content="أغلق واحفظ"
                   negative
                   onClick={this.handleClose.bind(this)}
                 />
@@ -289,8 +289,8 @@ class VedioViewing extends React.Component {
             height="100%"
           >
             <source src="video.wmv" />
-            Your browser doesnt support video, you may download the video
-            instead: <a href="video.ogv">Ogg</a>
+            متصفحك لا يدعم الفيديو ، يمكنك تنزيل الفيديو بدلا من:{' '}
+            <a href="video.ogv">Ogg</a>
           </video>
         </div>
       </div>

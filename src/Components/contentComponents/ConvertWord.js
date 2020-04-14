@@ -23,11 +23,11 @@ class ConvertFromWordToHtml extends React.Component {
       errorMessage: '',
       conertedText: '',
       loaded: '',
-      convertin: false
+      convertin: false,
     };
   }
 
-  convertDomToHtmlString = HTMLContent => {
+  convertDomToHtmlString = (HTMLContent) => {
     return HTMLContent.toString()
       .replace(/\\/g, '\\\\')
       .replace(/"/g, '\\"')
@@ -39,23 +39,23 @@ class ConvertFromWordToHtml extends React.Component {
     if (e.target.value === 'non') {
       this.setState({
         type: e.target.value,
-        disabled: true
+        disabled: true,
       });
     } else {
       this.setState({ type: e.target.value, disabled: false });
     }
   }
-  onChangeHandler1 = event => {
+  onChangeHandler1 = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
       loaded: true,
-      convertin: true
+      convertin: true,
     });
     var that = this;
     var file = event.target.files[0];
 
     var reader = new FileReader();
-    reader.onloadend = function(event) {
+    reader.onloadend = function (event) {
       var arrayBuffer = reader.result;
       // debugger
 
@@ -65,14 +65,14 @@ class ConvertFromWordToHtml extends React.Component {
           'b => em',
           'i => strong',
           'u => em',
-          'strike => del'
+          'strike => del',
         ],
-        convertImage: mammoth.images.imgElement(function(image) {
+        convertImage: mammoth.images.imgElement(function (image) {
           this.setState({
-            loaded: true
+            loaded: true,
           });
 
-          return image.read('base64').then(async function(imageBuffer) {
+          return image.read('base64').then(async function (imageBuffer) {
             console.log(image);
             var src = '';
             try {
@@ -89,30 +89,30 @@ class ConvertFromWordToHtml extends React.Component {
 
               await ref
                 .putString(imageBuffer, 'base64', {
-                  contentType: image.contentType
+                  contentType: image.contentType,
                 })
-                .then(async function(snapshot) {
-                  await ref.getDownloadURL().then(downlodurl => {
+                .then(async function (snapshot) {
+                  await ref.getDownloadURL().then((downlodurl) => {
                     src = downlodurl;
                   });
                 });
 
               return {
-                src: src
+                src: src,
               };
             } catch {}
           });
-        })
+        }),
       };
       mammoth
         .convertToHtml({ arrayBuffer: arrayBuffer }, options)
-        .then(function(resultObject) {
+        .then(function (resultObject) {
           var result1 = resultObject.value;
           console.log(result1);
           that.setState({
             conertedText: that.convertDomToHtmlString(result1.toString()),
             loaded: false,
-            convertin: false
+            convertin: false,
           });
         });
       console.timeEnd();
@@ -133,15 +133,15 @@ class ConvertFromWordToHtml extends React.Component {
       .post(config[0].server + 'Articles/InsertText', {
         ContentID: this.props.contentID,
         ContentText: this.state.conertedText,
-        MediaOrder: this.props.MediaOrder
+        MediaOrder: this.props.MediaOrder,
       })
-      .then(result => {
+      .then((result) => {
         this.setState(
           {
             conertedText: '',
             selectedFile: '',
             errorMessage: '',
-            Error: false
+            Error: false,
           },
           () => {
             $('#don').attr('class', ' show ');
@@ -150,15 +150,15 @@ class ConvertFromWordToHtml extends React.Component {
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.setState(
           {
             conertedText: '',
             selectedFile: '',
             errorMessage:
-              'An Error Accured While saving Data \n .1 Text is too long \n 2. no connection ',
-            Error: true
+              'حدث خطأ أثناء حفظ البيانات  n .1 النص طويل جدًا  n 2. لا يوجد اتصال',
+            Error: true,
           },
           () => {
             $('#don').attr('class', ' hide ');
@@ -182,7 +182,7 @@ class ConvertFromWordToHtml extends React.Component {
                 multiple=""
                 onChange={this.onChangeHandler1.bind(this)}
               />{' '}
-              uplaod File
+              رفع ملف
             </label>
           ) : (
             <Dimmer active>
@@ -191,26 +191,18 @@ class ConvertFromWordToHtml extends React.Component {
           )}
         </div>
 
-        {/* <Button.Group basic vertical>
-            <Button
-              icon="retweet"
-              content="Convert to a Text "
-              onClick={this.onClickHandler1.bind(this)}
-            />
-          </Button.Group> */}
-
         <button
           type="button"
           className="btn btn btn-primary btn-block"
           onClick={this.onClickHandler1.bind(this)}
         >
-          Convert to a Text Content
+          تحويل إلى محتوى نصي
         </button>
         <div id="error" class="  hide ">
           {this.state.errorMessage}
         </div>
         <div id="don" class=" hide">
-          {this.state.loaded ? 'loading' : ' Convert Is done ..!'}
+          {this.state.loaded ? 'جار التحميل' : 'تم التحويل ..!'}
         </div>
       </div>
     );

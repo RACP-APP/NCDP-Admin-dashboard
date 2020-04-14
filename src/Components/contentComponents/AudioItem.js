@@ -8,10 +8,7 @@ import firebase from 'firebase';
 import { Table } from 'semantic-ui-react';
 
 import chroma from 'chroma-js';
-const colorScale = chroma
-  .scale(['#0199CB', '#ffffff'])
-  .mode('lch')
-  .colors(5);
+const colorScale = chroma.scale(['#0199CB', '#ffffff']).mode('lch').colors(5);
 
 class AudioPlayerContent extends React.Component {
   constructor(props) {
@@ -20,7 +17,7 @@ class AudioPlayerContent extends React.Component {
       linklist: this.props.link,
       statecurrentLink: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
       ErrorMessage: '',
-      Error: false
+      Error: false,
     };
   }
 
@@ -32,22 +29,22 @@ class AudioPlayerContent extends React.Component {
       .then(() => {
         console.log('don');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('none');
       });
 
-    console.log(',,,,,,', $(e.target).attr('data-link'));
+    // console.log(',,,,,,', $(e.target).attr('data-link'));
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {
-        MediaID: e.target.id
+        MediaID: e.target.id,
       })
-      .then(result => {
+      .then((result) => {
         console.log(result);
         this.setState(
           {
             Error: false,
-            ErrorMessage: ''
+            ErrorMessage: '',
           },
           () => {
             $('#' + id + 'AErrorMessage').css('alert alert-danger hide');
@@ -55,12 +52,12 @@ class AudioPlayerContent extends React.Component {
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState(
           {
             Error: true,
             ErrorMessage:
-              'Cannot delete this item right now please try again later ..'
+              'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
           },
           () => {
             $('#' + id + 'AErrorMessage').css('alert alert-danger hide');
@@ -72,7 +69,7 @@ class AudioPlayerContent extends React.Component {
   render() {
     return (
       <div>
-        {this.props.link.map(link => {
+        {this.props.link.map((link) => {
           if (link['MediaType'] === 'audio') {
             return (
               <Table color="blue" id={link['MediaLink']}>

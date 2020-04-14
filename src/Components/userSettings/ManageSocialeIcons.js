@@ -5,10 +5,7 @@ import data from './FooterData.json';
 import config from '../../config.json';
 import $ from 'jquery';
 import axios from 'axios';
-// import fs from 'browserify-fs';
 import { Checkbox, Input, Icon, Table, Button } from 'semantic-ui-react';
-import { Result } from 'mammoth/lib/results';
-// const fs = require('fs');
 
 export default class ManageSocialIcons extends React.Component {
   constructor(props) {
@@ -17,11 +14,11 @@ export default class ManageSocialIcons extends React.Component {
       data: data,
       Error: false,
       ErrorMessage: '',
-      Updated: false
+      Updated: false,
     };
   }
 
-  toggle = e => {
+  toggle = (e) => {
     var temp = data;
 
     var d = $('#' + e.target.id)
@@ -40,7 +37,7 @@ export default class ManageSocialIcons extends React.Component {
       }
     }
     this.setState({
-      data: temp
+      data: temp,
     });
   };
 
@@ -49,34 +46,33 @@ export default class ManageSocialIcons extends React.Component {
     temp[parseInt(e.target.id[0])]['linke'] = e.target.value;
     this.setState(
       {
-        data: temp
+        data: temp,
       },
       console.log(this.state.data)
     );
   }
 
   saveFooterIcons(e) {
-    console.log('saveFooterIcons .....................');
     let json = JSON.stringify(this.state.data);
     axios
       .post(config[0].server + 'WriteSocialIconsData', {
-        data: this.state.data
+        data: this.state.data,
       })
-      .then(result => {
+      .then((result) => {
         console.log('done');
         this.setState({
           error: false,
           ErrorMessage: '',
-          Updated: true
+          Updated: true,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Error', error);
 
         this.setState({
           error: true,
           ErrorMessage: error.response.data,
-          Updated: false
+          Updated: false,
         });
         console.log(error);
       });
@@ -87,23 +83,21 @@ export default class ManageSocialIcons extends React.Component {
       <div style={{ width: '100%', marginBottom: '5%' }}>
         <h4 class="ui horizontal divider header">
           <i class="tag icon"></i>
-          Edite Social Icons
+          تحرير الرموز الاجتماعية
         </h4>
         {this.state.Error ? (
           <h3 style={{ color: 'red' }}>{this.state.ErrorMessage}</h3>
         ) : null}
 
         {this.state.Updated ? (
-          <h5 style={{ color: 'green' }}>
-            Data has been Updated Successfuly ..
-          </h5>
+          <h5 style={{ color: 'green' }}>تم تحديث البيانات بنجاح ..</h5>
         ) : null}
 
         <Table definition>
           <Table.Header>
-            <Table.Cell width={1}>Icon</Table.Cell>
-            <Table.Cell>Active</Table.Cell>
-            <Table.Cell>linke</Table.Cell>
+            <Table.Cell width={1}>أيقونة</Table.Cell>
+            <Table.Cell>نشيط</Table.Cell>
+            <Table.Cell>الرابط</Table.Cell>
           </Table.Header>
           <Table.Body>
             {this.state.data.map((item, index) => {
@@ -141,7 +135,7 @@ export default class ManageSocialIcons extends React.Component {
         <Table>
           <Table.Row colSpan="3" style={{ textAlign: 'center' }}>
             <Button primary onClick={this.saveFooterIcons.bind(this)}>
-              Save
+              حفظ
             </Button>
           </Table.Row>
         </Table>

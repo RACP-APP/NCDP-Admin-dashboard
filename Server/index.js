@@ -41,9 +41,9 @@ app.post('/WriteSocialIconsData', function (req, res) {
   fs.writeFile(file, JSON.stringify(data), (error) => {
     if (error) {
       console.log(error);
-      res.status(500).send('An Error Occurred During Processing').end();
+      res.status(500).send('حدث خطأ أثناء معالجة').end();
     } else {
-      res.status(200).send('done').end();
+      res.status(200).send('تم').end();
     }
   });
 });
@@ -59,7 +59,7 @@ app.post('/Chart', function (req, res) {
   fs.writeFile(file, JSON.stringify(data), (error) => {
     if (error) {
       console.log(error);
-      res.status(500).send('An Error Occurred During Processing').end();
+      res.status(500).send('حدث خطأ أثناء معالجة').end();
     } else {
       //------------------------------------------ get json from file -------------------------------------//
       res.status(200).send('done').end();

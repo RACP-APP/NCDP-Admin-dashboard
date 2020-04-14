@@ -48,10 +48,7 @@ User.post('/User/Login', (req, res) => {
   //---------------------------------------------------------------------------------//
   dbModel.GetUserByUserName(req.body.Email, async (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('Server Error')
-        .end();
+      res.status(500).send('خطأ في الخادم').end();
     } else {
       //----------------------------------------------------------------------------------------------------------------------//
       //--------------------- try to compar the password  entered by user and the password in the database -------------------//
@@ -65,10 +62,7 @@ User.post('/User/Login', (req, res) => {
             //----------------------------- if the hashing compar operation failed return comparing error ---------------------//
             //-----------------------------------------------------------------------------------------------------------------//
             if (error) {
-              res
-                .status(500)
-                .send('Server Error  ...')
-                .end();
+              res.status(500).send('خطأ في الخادم').end();
             } else {
               //---------------------------------------------------------------------------------------------------------------//
               //---------------------------- if comparing oeration complete successfuly ---------------------------------------//
@@ -83,22 +77,15 @@ User.post('/User/Login', (req, res) => {
                     userID: result[0]['userID'],
                     userName: result[0]['userName'],
                     Email: result[0]['Email'],
-                    Image: result[0]['Image']
-                  }
+                    Image: result[0]['Image'],
+                  },
                 ];
-                console.log(usrer, 'rrrrrrrrrrrrrrrrrrr');
-                res
-                  .status(200)
-                  .send(usrer)
-                  .end();
+                res.status(200).send(usrer).end();
               } else {
                 //-------------------------------------------------------------------------------------------------------------//
                 //------------------------------------ if password are not match then return not found ------------------------//
                 //-------------------------------------------------------------------------------------------------------------//
-                res
-                  .status(500)
-                  .send('No match Password')
-                  .end();
+                res.status(500).send('كلمة مرور غير متطابقة').end();
               }
             }
           }
@@ -107,10 +94,7 @@ User.post('/User/Login', (req, res) => {
         //----------------------------------------------------------------------------------------------------------------------//
         //------------------------------------------------ any Error while comparing the password ------------------------------//
         //----------------------------------------------------------------------------------------------------------------------//
-        res
-          .status(500)
-          .send(' Failed to Find User ')
-          .end();
+        res.status(500).send(' فشل في العثور على المستخدم').end();
       }
     }
   });
@@ -123,15 +107,9 @@ User.post('/User/Login', (req, res) => {
 User.post('/User/UserByID', (req, res) => {
   dbModel.getUserByID(req.body.userID, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send('Server Error ')
-        .end();
+      res.status(500).send('خطأ في الخادم').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -140,15 +118,9 @@ User.post('/User/getAllUsers', (req, res) => {
   dbModel.getAllUsers((error, result) => {
     if (error) {
       console.log(error);
-      res
-        .status(500)
-        .send('DataBase Error')
-        .end();
+      res.status(500).send('خطأ بمعالجة المعلومات').end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .end();
+      res.status(200).send(result).end();
     }
   });
 });
@@ -157,7 +129,6 @@ User.post('/User/getAllUsers', (req, res) => {
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 User.post('/User/UpdateUser', async (req, res) => {
   // console.log(Subject, Html, Text);
-  console.log('password', req.body.password);
   var d = req.body.password;
   //-----------------------------------------------------------------------------------------------------------------//
   //------------------------ hashing the password using bcrybt and then Update the user -----------------------------//
@@ -165,7 +136,7 @@ User.post('/User/UpdateUser', async (req, res) => {
   try {
     await bcryptjs
       .hash(req.body.password, 10)
-      .then(hashed => {
+      .then((hashed) => {
         //-----------------------------------------------------------------------------------------------------------//
         //----------------------------------- if we have a hash then upadte -----------------------------------------//
         //-----------------------------------------------------------------------------------------------------------//
@@ -180,52 +151,39 @@ User.post('/User/UpdateUser', async (req, res) => {
               //-----------------------------------------------------------------------------------------------------//
               //--------------------------------- if Error with Sql the return sql error ----------------------------//
               //-----------------------------------------------------------------------------------------------------//
-              res
-                .status(500)
-                .send(error)
-                .end();
+              res.status(500).send(error).end();
               return;
             } else {
               -(
                 //-------------------------------------- sending Email to the User with Updatet Info--------------------------------------//
                 MailTo.Mailling(
                   req.body.Email,
-                  'Updating your account info',
-                  `<p>HI ${req.body.userName},this Email from NCDP Dashboard .  Your Account hase been Updated and \n here is your New Account Information'</p>,
-                <div><li> Email ${req.body.Email}</li>
-                <li> username ${req.body.userName}</li>
-               <p> Be Carfull with thos ifo </p> </div>`
+                  'تعديل بيانات المستخدم ',
+                  `<p>مرحبا  ${req.body.userName},هذا البريد الإلكتروني من لوحة القيادة NCDP. تم تحديث حسابك و \ n إليك معلومات حسابك الجديد'</p>,
+                <div><li> الايميل ${req.body.Email}</li>
+                <li> اسم المستخدم ${req.body.userName}</li>
+               <p>كن حذرا مع هذه المعلومات</p> </div>`
                 )
               );
               //-----------------------------------------------------------------------------------------------------//
               //----------------------------------- if user is saved return result ----------------------------------//
               //-----------------------------------------------------------------------------------------------------//
-              res
-                .status(200)
-                .send(result)
-                .end();
+              res.status(200).send(result).end();
             }
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         //-------------------------------------------------------------------------------------------------------------//
         //--------------------------------- if hashing Error return Hashing Error -------------------------------------//
         //-------------------------------------------------------------------------------------------------------------//
-        res
-          .status(500)
-          .send(' Hashing  Error ')
-          .end();
+        res.status(500).send('خطأ بتحويل كلمة السر').end();
       });
   } catch {
     //-----------------------------------------------------------------------------------------------------------------//
     //-------------------------------- try accurede an Error then retun hashing error ---------------------------------//
     //-----------------------------------------------------------------------------------------------------------------//
-
-    res
-      .status(500)
-      .send('hashin Error')
-      .end();
+    res.status(500).send('خطأ بتحويل كلمة السر').end();
   }
 });
 
@@ -240,11 +198,10 @@ User.post('/User/AddUser', async (req, res) => {
     //-------------------------------------------------------------------------------------------------------------------//
     //-------------------------------------- wait to hash the password --------------------------------------------------//
     //-------------------------------------------------------------------------------------------------------------------//
-    await bcryptjs.hash(req.body.password, 10).then(hashed => {
+    await bcryptjs.hash(req.body.password, 10).then((hashed) => {
       //-----------------------------------------------------------------------------------------------------------------//
       //------------------------------ after hashing the password we are ready to insert the User -----------------------//
       //-----------------------------------------------------------------------------------------------------------------//
-      console.log('in the hashing ', hashed);
       //---------------------------- schek for UserNAME and Email Befor Inserting ----------------------------------------//
 
       dbModel.addUser(
@@ -259,26 +216,20 @@ User.post('/User/AddUser', async (req, res) => {
 
           if (error) {
             console.log(error);
-            res
-              .status(500)
-              .send(error)
-              .end();
+            res.status(500).send(error).end();
           } else {
             //------------------------------------------------------------------------------------------------------------//
             //----------------------------------- if we inserted the data Correctly --------------------------------------//
             //------------------------------------------------------------------------------------------------------------//
             MailTo.Mailling(
               req.body.Email,
-              'Joining NCDP Dashboard ',
-              `<p>HI ${req.body.userName},Welcom to  NCDP Dashboard . here is Your Account admin Info'</p>,
-               <div><li> Email ${req.body.Email}</li>
-               <li> username ${req.body.userName}</li>
-               <li>New Password: ${req.body.password}</li> <p> Be Carfull with thos ifo.  </p> </div>`
+              'الانضمام إلى لوحة NCDP',
+              `<p>مرحبا ${req.body.userName},مرحبًا بك في لوحة معلومات NCDP. هنا معلومات مسؤول حسابك'</p>,
+               <div><li> الايميل ${req.body.Email}</li>
+               <li> اسم المستخدم ${req.body.userName}</li>
+               <li>الرمز السري: ${req.body.password}</li> <p> كن حذرا مع هذه المعلومات.  </p> </div>`
             );
-            res
-              .status(200)
-              .send(result)
-              .end();
+            res.status(200).send(result).end();
           }
         }
       );
@@ -288,10 +239,7 @@ User.post('/User/AddUser', async (req, res) => {
     //---------------------------------------------------- if an error accured during hashing -------------------------------//
     //-----------------------------------------------------------------------------------------------------------------------//
     console.log('in the catch ', result);
-    res
-      .status(500)
-      .send(' Hashing Error ')
-      .end();
+    res.status(500).send(' خطأ بتحويل كلمة السر ').end();
   }
 });
 
@@ -300,15 +248,9 @@ User.post('/User/deleteUser', (req, res) => {
   //---------------------- sending data to the data model --------------------------------------------------------------------//
   dbModel.deleteUser(req.body.userID, req.body.userName, (error, result) => {
     if (error) {
-      res
-        .status(500)
-        .send(error)
-        .end();
+      res.status(500).send(error).end();
     } else {
-      res
-        .status(200)
-        .send(result)
-        .send();
+      res.status(200).send(result).send();
     }
   });
 });
@@ -316,14 +258,9 @@ User.post('/User/deleteUser', (req, res) => {
 User.post('/User/ChangePassword', (req, res) => {
   dbModel.GetUserByUserName(req.body.Email, async (error, result) => {
     if (error) {
-      console.log(error, 'from GetUserByUserName');
       // ---------------------- get the password stored in the database to compar it with the new One ---------//
-      res
-        .status(500)
-        .send('Server Error')
-        .end();
+      res.status(500).send('خطأ في الخادم').end();
     } else {
-      console.log(result[0]['password'], 'from GetUserByUserName');
       try {
         //------------------- try to compar passwords after getting the password from data base ---------------//
         bcryptjs.compare(
@@ -331,34 +268,21 @@ User.post('/User/ChangePassword', (req, res) => {
           result[0]['password'],
           (error, isMatch) => {
             if (error) {
-              console.log(error, ' bcryptjs.compare');
               //----------------------------- if comparing retuns an error -------------------------------------//
-              res
-                .status(500)
-                .send('Hasshing Error')
-                .end();
+              res.status(500).send('خطأ التجزئة').end();
             } else {
               //----------------------------------- if no errors but no match -----------------------------------//
               if (!isMatch) {
-                console.log(isMatch, 'isMatch bcryptjs.compare');
                 res
                   .status(500)
-                  .send(
-                    'Password Dose Not Match did you forget yor password ?!!'
-                  )
+                  .send('كلمة المرور لا تتطابق ، هل نسيت كلمة المرور؟ !!')
                   .end();
               } else {
-                console.log('in try ............... bcryptjs.hash');
                 //----------------------------------------- try to Hash the password -------------------------------//
                 try {
-                  console.log(
-                    req.body.Newpassword,
-                    'in try ............... bcryptjs.hash'
-                  );
                   bcryptjs
                     .hash(req.body.Newpassword, 10)
-                    .then(Hashed => {
-                      console.log(Hashed, 'Hashed bcryptjs.hash');
+                    .then((Hashed) => {
                       //------------------------------- if Password is Hahed Update the User ------------------------//
                       dbModel.updateUser(
                         req.body.userName,
@@ -373,33 +297,28 @@ User.post('/User/ChangePassword', (req, res) => {
                             res
                               .status(500)
                               .send(
-                                'Something Went Rong While Updating Plaese Try Agin Later'
+                                'حدث خطأ أثناء التحديث ، يرجى المحاولة مرة أخرى لاحقًا'
                               )
                               .end();
                           } else {
                             //----------------------- No Errors in Updating Operation ----------------------------------//
-                            res
-                              .status(200)
-                              .send(result)
-                              .end();
+                            res.status(200).send(result).end();
                           }
                         }
                       );
                     })
-                    .catch(error => {
-                      console.log(error, 'uuuuuuuuuuuuuuuuuu');
+                    .catch((error) => {
                       //--------------------------------- Hashing the password has an exption --------------------------//
                       res
                         .status(500)
-                        .send('Hashing Error Please Try again Later .')
+                        .send('خطأ تجزئة الرجاء إعادة المحاولة لاحقًا.')
                         .end();
                     });
                 } catch {
-                  console.log('22222222222222222');
                   //------------------------------------- try to hash the passwor has an exption -------------------------//
                   res
                     .status(500)
-                    .send('Hashing Error Please Try again Later .');
+                    .send('خطأ تجزئة الرجاء إعادة المحاولة لاحقًا.');
                 }
               }
             }
@@ -407,9 +326,7 @@ User.post('/User/ChangePassword', (req, res) => {
         );
       } catch {
         //---------------------------------- if comparing the passwords returns an Exeption -------------------------------//
-
-        console.log('hiiiiiiiiiiiiiiiiiii');
-        res.status(500).send('Hashing Error Please Try again Later .');
+        res.status(500).send('خطأ تجزئة الرجاء إعادة المحاولة لاحقًا.');
       }
     }
   });

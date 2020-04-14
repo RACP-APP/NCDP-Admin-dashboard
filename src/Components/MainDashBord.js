@@ -8,18 +8,18 @@ class MainDashBoard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      viwerSatte: {}
+      viwerSatte: {},
     };
 
     this.ArrangDashControles = this.ArrangDashControles.bind(this);
   }
 
   componentDidMount() {
-    console.log('in masin dash board');
+    // console.log('in masin dash board');
   }
   ArrangDashControles(satate) {
     this.setState({
-      viwerSatte: satate
+      viwerSatte: satate,
     });
     // console.log(this.state, '--------', satate);
   }

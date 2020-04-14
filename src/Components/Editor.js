@@ -7,12 +7,12 @@ import {
   getDefaultKeyBinding,
   KeyBindingUtil,
   convertToRaw,
-  AtomicBlockUtils
+  AtomicBlockUtils,
 } from 'draft-js';
 
 import Editor, {
   composeDecorators,
-  AlignmentDecorator
+  AlignmentDecorator,
 } from 'draft-js-plugins-editor';
 import createImagePlugin from 'draft-js-image-plugin';
 
@@ -39,12 +39,12 @@ class MyEditor extends React.Component {
       displayColorPicker: false,
       background: '#fff',
       styleMap: {
-        HIGHLIGHT: { backgroundColor: '#fff' }
+        HIGHLIGHT: { backgroundColor: '#fff' },
       },
-      imge: null
+      imge: null,
     };
     //-------define number of function and bind it to the component -----//
-    this.onChange = editorState => {
+    this.onChange = (editorState) => {
       this.state.HTMLContent = stateToHTML(editorState.getCurrentContent());
 
       const contentState = editorState.getCurrentContent();
@@ -106,10 +106,10 @@ class MyEditor extends React.Component {
   //---------------------------------------------------------------//
   //------- handel the picking of the color of the pickr ----------//
   //---------------------------------------------------------------//
-  handleChangeComplete = color => {
+  handleChangeComplete = (color) => {
     this.setState({
       background: color.hex,
-      styleMap: { HIGHLIGHT: { backgroundColor: color.hex } }
+      styleMap: { HIGHLIGHT: { backgroundColor: color.hex } },
     });
   };
 
@@ -195,7 +195,7 @@ class MyEditor extends React.Component {
     }
 
     this.setState({
-      editorState: RichUtils.toggleInlineStyle(this.state.editorState, style)
+      editorState: RichUtils.toggleInlineStyle(this.state.editorState, style),
     });
   }
   //-------------------------------------------------------------------------------//
@@ -206,7 +206,7 @@ class MyEditor extends React.Component {
 
     let block = event.currentTarget.getAttribute('data-block');
     this.setState({
-      editorState: RichUtils.toggleBlockType(this.state.editorState, block)
+      editorState: RichUtils.toggleBlockType(this.state.editorState, block),
     });
 
     console.log(this.state.editorState);
@@ -216,7 +216,7 @@ class MyEditor extends React.Component {
   //----------- Define a Custom Style for Us -----------------------------//
   //----------------------------------------------------------------------//
   componentDidMount() {
-    let contentState = stateFromHTML('<p>Hello</p>');
+    let contentState = stateFromHTML('<p>مرحبا </p>');
     EditorState.createWithContent(contentState);
   }
 
@@ -243,22 +243,22 @@ class MyEditor extends React.Component {
     if (e.target.value === 'non') {
       this.setState({
         type: e.target.value,
-        disabled: true
+        disabled: true,
       });
     } else {
       this.setState({ type: e.target.value, disabled: false });
     }
   }
-  onChangeHandler = event => {
+  onChangeHandler = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
-      loaded: 0
+      loaded: 0,
     });
     var file = document.querySelector('input[type=file]')['files'][0];
     var reader = new FileReader();
     var baseString;
     var that = this;
-    reader.onloadend = function() {
+    reader.onloadend = function () {
       baseString = reader.result;
       console.log(baseString);
       that.onAddImage(baseString);
@@ -283,7 +283,7 @@ class MyEditor extends React.Component {
     );
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const newEditorState = EditorState.set(editorState, {
-      currentContent: contentStateWithEntity
+      currentContent: contentStateWithEntity,
     });
     return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
   }
@@ -291,27 +291,27 @@ class MyEditor extends React.Component {
   render() {
     const popover = {
       position: 'absolute',
-      zIndex: '100'
+      zIndex: '100',
     };
     const cover = {
       position: 'fixed',
       top: '0px',
       right: '0px',
       bottom: '0px',
-      left: '0px'
+      left: '0px',
     };
     return (
       <div className=" ">
         <div>
           <div className="outerFrame">
-            {inlineStyleButtons.map(button => {
+            {inlineStyleButtons.map((button) => {
               return this.renderInlineStyleButton(
                 button.value,
                 button.style,
                 button.icon
               );
             })}
-            {blockButtons.map(button => {
+            {blockButtons.map((button) => {
               return this.renderBlockButton(
                 button.value,
                 button.block,
@@ -355,7 +355,7 @@ class MyEditor extends React.Component {
         <div className="editortextbox">
           <Editor
             plugins={plugins}
-            ref={element => {
+            ref={(element) => {
               this.editor = element;
             }}
             spellCheck="true"
@@ -370,22 +370,22 @@ class MyEditor extends React.Component {
         <button
           className="btn btn-primary"
           // -------------------- on click convert the html into string and send it back to the content viwer ----------------//
-          onClick={e => {
+          onClick={(e) => {
             var d = this.convertDomToHtmlString();
             console.log(this.convertHTMLStringToDom(d));
 
             this.props.saveTextContent(d);
           }}
         >
-          save
+          حفظ
         </button>
         <button
           className="btn btn-primary"
-          onClick={e => {
+          onClick={(e) => {
             this.props.closeEditor();
           }}
         >
-          cancele
+          تراجع
         </button>
       </div>
     );

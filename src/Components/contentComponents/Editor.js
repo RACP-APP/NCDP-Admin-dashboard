@@ -297,7 +297,7 @@ class editor extends Component {
     super(props);
     this.state = {
       editorState: '',
-      EditMod: false
+      EditMod: false,
     };
   }
 
@@ -332,20 +332,20 @@ class editor extends Component {
       //----------------- puting the next state to the editor -------------//
       this.setState({
         EditMod: true,
-        editorState: this.convertHTMLStringToDom(contentState)
+        editorState: this.convertHTMLStringToDom(contentState),
       });
     } else {
-      contentState = '<div>Welecom Back to Ouer Editor</div>';
+      contentState = '<div>مرحبًا بعودتك إلى محررنا</div>';
       console.log(nextpreps.data, 'currenttext');
       this.setState({
         EditMod: false,
-        editorState: this.convertHTMLStringToDom(contentState)
+        editorState: this.convertHTMLStringToDom(contentState),
       });
     }
   }
 
   componentDidMount() {
-    let contentState = '<p>Hello</p>';
+    let contentState = '<p>مــــرحبــا</p>';
     this.setState({ editorState: contentState });
   }
   render() {
@@ -354,10 +354,10 @@ class editor extends Component {
         <div className="editortextbox">
           <CKEditor
             style={{ height: '100%' }}
-            onChange={e => {
+            onChange={(e) => {
               this.setState(
                 {
-                  editorState: e.editor.getData()
+                  editorState: e.editor.getData(),
                 },
                 () => {
                   console.log(this.state.editorState);
@@ -371,14 +371,14 @@ class editor extends Component {
             <button
               className="btn btn-primary"
               // -------------------- on click convert the html into string and send it back to the content viwer ----------------//
-              onClick={e => {
+              onClick={(e) => {
                 console.log();
                 var d = this.convertDomToHtmlString();
                 console.log(this.convertHTMLStringToDom(d));
 
                 this.setState(
                   {
-                    EditMod: false
+                    EditMod: false,
                   },
                   () => {
                     this.props.closeEditor();
@@ -388,33 +388,33 @@ class editor extends Component {
                 );
               }}
             >
-              Update
+              تعديل
             </button>
           ) : (
             <button
               className="btn btn-primary"
               // -------------------- on click convert the html into string and send it back to the content viwer ----------------//
-              onClick={e => {
+              onClick={(e) => {
                 var d = this.convertDomToHtmlString();
                 console.log(this.d);
                 this.props.saveTextContent(d);
               }}
             >
-              save
+              حفظ
             </button>
           )}
           <button
             className="btn btn-primary"
-            onClick={e => {
+            onClick={(e) => {
               // let contentState = stateFromHTML('<p>Hello</p>');
               // EditorState.createWithContent(contentState);
               this.setState({
-                EditMod: false
+                EditMod: false,
               });
               this.props.closeEditor();
             }}
           >
-            cancele
+            تراجع
           </button>
         </div>
       </div>

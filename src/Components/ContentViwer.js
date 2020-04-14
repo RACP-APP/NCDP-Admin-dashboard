@@ -150,7 +150,7 @@ class ContentViwer extends React.Component {
         })
         .then((result) => {
           this.getAllContentText();
-          console.log('done');
+          console.log('تم');
           // this.setState({ currentText: '', currentTextID: });
         })
         .catch((error) => {
@@ -378,14 +378,14 @@ class ContentViwer extends React.Component {
 
   render() {
     return (
-      <div style={{ maxHeight: '700px' }}>
+      <div style={{ maxHeight: '700px' }} dir="rtl">
         <LoadingScreen
           style={{ maxHeight: '700px' }}
           loading={this.state.loading}
           spinnerColor="#9ee5f8"
           textColor="#676767"
           logoSrc={process.env.PUBLIC_URL + '/' + config[0].logo}
-          text="Plaease wait tell Uploading is Complete "
+          text="يرجى الانتظار حتى اكتمال التحميل "
         ></LoadingScreen>
         <Grid style={{ width: '100%' }}>
           <Grid.Row>
@@ -431,7 +431,7 @@ class ContentViwer extends React.Component {
                         aria-expanded="true"
                         aria-controls="collapseOne"
                       >
-                        Text Content
+                        محتوى النص
                       </button>
                     </h2>
                   </div>
@@ -447,12 +447,12 @@ class ContentViwer extends React.Component {
                         <Button.Group basic vertical style={{ width: '100%' }}>
                           <Button
                             icon="add circle"
-                            content="Add new "
+                            content="أضافة جديد"
                             onClick={this.OpenEditor.bind(this)}
                           />
                           <Button
-                            icon="delete"
-                            content="Delete All "
+                            icon="إلغـاء"
+                            content="إلغاء المحدد "
                             onClick={this.DeleteTextAll.bind(this)}
                           />
                         </Button.Group>
@@ -483,7 +483,7 @@ class ContentViwer extends React.Component {
                       {this.state.TextContent.map((TextItemData, index) => {
                         //////////////////////////////////////////////TEXT /////////////////////////////////////////////////
                         return (
-                          <div id={TextItemData['TextID']}>
+                          <div id={TextItemData['TextID']} dir="rtl">
                             <Table color="blue">
                               <Table.Body>
                                 <Table.Row>
@@ -550,7 +550,7 @@ class ContentViwer extends React.Component {
                   </div>
                 </div>
 
-                <div className="card">
+                <div className="card" dir="rtl">
                   <div className="card-header" id="headingTwo">
                     <h2 className="mb-0">
                       <button
@@ -561,7 +561,7 @@ class ContentViwer extends React.Component {
                         aria-expanded="false"
                         aria-controls="collapseTwo"
                       >
-                        Vedio Content
+                        الفيديو
                       </button>
                     </h2>
                   </div>
@@ -611,7 +611,7 @@ class ContentViwer extends React.Component {
                         aria-expanded="false"
                         aria-controls="collapseThree"
                       >
-                        Audio Content
+                        المحتوى الصوتي
                       </button>
                     </h2>
                   </div>
@@ -652,7 +652,7 @@ class ContentViwer extends React.Component {
                   </div>
                 </div>
 
-                <div className="card">
+                <div className="card" dir="rtl">
                   <div className="card-header" id="headingTFour">
                     <h2 className="mb-0">
                       <button
@@ -663,7 +663,7 @@ class ContentViwer extends React.Component {
                         aria-expanded="false"
                         aria-controls="collapseFour"
                       >
-                        Image Content
+                        محتوى الصور
                       </button>
                     </h2>
                   </div>
