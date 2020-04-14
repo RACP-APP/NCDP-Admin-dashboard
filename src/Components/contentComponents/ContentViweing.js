@@ -5,7 +5,45 @@ import config from '../../config.json';
 import OrderingContent from './OrderContents';
 import AudioPlayer from 'react-h5-audio-player';
 import '../../../node_modules/react-h5-audio-player/lib/styles.css';
-import { Grid, Header, Segment, Portal, Button } from 'semantic-ui-react';
+import {
+  Grid,
+  TransitionablePortal,
+  Segment,
+  Portal,
+  Button,
+} from 'semantic-ui-react';
+
+const transitions = [
+  'browse',
+  'browse right',
+  'drop',
+  'fade',
+  'fade up',
+  'fade down',
+  'fade left',
+  'fade right',
+  'fly up',
+  'fly down',
+  'fly left',
+  'fly right',
+  'horizontal flip',
+  'vertical flip',
+  'scale',
+  'slide up',
+  'slide down',
+  'slide left',
+  'slide right',
+  'swing up',
+  'swing down',
+  'swing left',
+  'swing right',
+  'zoom',
+];
+const options = transitions.map((name) => ({
+  key: name,
+  text: name,
+  value: name,
+}));
 
 class AllToghterConmponent extends React.Component {
   constructor(props) {
@@ -17,6 +55,9 @@ class AllToghterConmponent extends React.Component {
       Update: false,
       contentID: this.props.contentID,
       errorMessage: '',
+      animation: transitions[0],
+      duration: 500,
+      open: false,
     };
 
     this.mapContents = this.mapContents.bind(this);
@@ -145,13 +186,17 @@ class AllToghterConmponent extends React.Component {
         <Grid.Row>
           <Grid.Column>
             <Button
-              content="Open Re-Order"
+              content="إعادة ترتيب المحتوى "
               disabled={this.state.open}
               positive
               onClick={this.handleOpen.bind(this)}
             />
 
-            <Portal
+            <TransitionablePortal
+              transition={{
+                animation: this.state.animation,
+                duration: this.state.duration,
+              }}
               onClose={this.handleClose}
               open={this.state.open}
               style={{ left: 0 }}
@@ -180,7 +225,7 @@ class AllToghterConmponent extends React.Component {
                   onClick={this.handleClose.bind(this)}
                 />
               </Segment>
-            </Portal>
+            </TransitionablePortal>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>

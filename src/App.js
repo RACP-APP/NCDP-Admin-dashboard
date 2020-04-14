@@ -49,6 +49,7 @@ class App extends React.Component {
 
   logOut() {
     this.redirectto('/');
+
     this.setState(
       {
         LoggetIn: false,
@@ -56,25 +57,38 @@ class App extends React.Component {
       },
       () => {
         localStorage.clear();
+        localStorage.setItem('CurrentnavNode', '/');
       }
     );
   }
 
   redirectto(Node) {
+    localStorage.setItem('CurrentnavNode', Node);
+
     this.setState({
       redirect: Node,
     });
   }
   componentDidMount() {
     if (localStorage.getItem('user')) {
-      this.setState({
-        LoggetIn: true,
-      });
+      this.setState(
+        {
+          LoggetIn: true,
+        },
+        () => {
+          localStorage.setItem('CurrentnavNode', '/');
+        }
+      );
     } else {
-      this.setState({
-        LoggetIn: false,
-        redirect: 'LogIn',
-      });
+      this.setState(
+        {
+          LoggetIn: false,
+          redirect: 'LogIn',
+        },
+        () => {
+          localStorage.setItem('CurrentnavNode', 'LogIn');
+        }
+      );
     }
   }
 
@@ -83,8 +97,6 @@ class App extends React.Component {
       <div>
         <div className="row">
           <TopHeader></TopHeader>
-          {/* <ImgUploader></ImgUploader> */}
-          {/* <MainAnalatic /> */}
         </div>
         {this.state.LoggetIn ? (
           <Header
@@ -95,7 +107,7 @@ class App extends React.Component {
         <div className="row" style={{ float: 'left' }}>
           <Router>
             <Route>
-              <Redirect to={this.state.redirect}></Redirect>
+              <Redirect to={localStorage.getItem('CurrentnavNode')}></Redirect>
             </Route>
 
             <Route exact path="/" component={DashBoard}></Route>

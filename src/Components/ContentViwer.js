@@ -438,7 +438,7 @@ class ContentViwer extends React.Component {
                         aria-expanded="true"
                         aria-controls="collapseOne"
                       >
-                        محتوى النص
+                        المحتوى النصي
                       </button>
                     </h2>
                   </div>
@@ -463,18 +463,7 @@ class ContentViwer extends React.Component {
                             onClick={this.DeleteTextAll.bind(this)}
                           />
                         </Button.Group>
-                        {/* <button
-                        className="btn btn-primary"
-                        onClick={this.OpenEditor.bind(this)}
-                      >
-                        add a New Article
-                      </button>
-                      <button
-                        className="btn btn-primary"
-                        onClick={this.DeleteTextAll.bind(this)}
-                      >
-                        Delete All
-                      </button> */}
+
                         <span className="note_add	" />
                         <Wordconverter
                           getAllContentText={this.getAllContentText.bind(this)}
@@ -528,28 +517,8 @@ class ContentViwer extends React.Component {
                               </Table.Footer>
                             </Table>
 
-                            <div className="row">
-                              {/* <span
-                              id={index}
-                              className="glyphicon glyphicon-pencil ItemIcons"
-                              onClick={this.EditText2.bind(this)}
-                            ></span>
-                            <span
-                              id={TextItemData['TextID']}
-                              key={TextItemData['TextID']}
-                              className="glyphicon glyphicon-remove ItemIcons"
-                              onClick={this.DeleteText.bind(this)}
-                            ></span>
-                            <input
-                              className="ItemIcons"
-                              type="checkbox"
-                              name="deletChekBox"
-                              id={'d-' + TextItemData['TextID']}
-                            /> */}
-                            </div>
-                            <div className="row unclickibl">
-                              {/* <TextItem data={TextItemData}></TextItem> */}
-                            </div>
+                            <div className="row"></div>
+                            <div className="row unclickibl"></div>
                           </div>
                         );
                       })}
@@ -707,34 +676,12 @@ class ContentViwer extends React.Component {
               <ContentViweing
                 data={this.state.MediaContent}
                 contentID={this.state.contentID}
-                // getAllContent={this.getAllContent.bind(this)}
               ></ContentViweing>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row></Grid.Row>
         </Grid>
       </div>
-      // <div className="row">
-      //   <div className="row  ">
-      //     <Segment raised style={{ width: '100%' }}>
-      //       <span
-      //         className="glyphicon glyphicon-chevron-left ControlePanel-col shawBackground"
-      //         onClick={e => {
-      //           this.props.convertToTopic();
-      //         }}
-      //       ></span>
-      //     </Segment>
-      //   </div>
-
-      //   <LoadingScreen
-      //     loading={this.state.loading}
-      //     spinnerColor="#9ee5f8"
-      //     textColor="#676767"
-      //     logoSrc={process.env.PUBLIC_URL + '/' + config[0].logo}
-      //     text="Plaease wait tell Uploading is Complete "
-      //   ></LoadingScreen>
-
-      // </div>
     );
   }
 }

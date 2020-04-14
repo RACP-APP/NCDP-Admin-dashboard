@@ -3,7 +3,6 @@ import axios from 'axios';
 import config from '../../config.json';
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import ImageContent from './imageContent';
 import { Table } from 'semantic-ui-react';
 
 // ---------------------------------------------- fake data generator -----------------------------------------------//
@@ -24,7 +23,7 @@ const getItems = (count, data) => {
 const CreaContent = (data) => {
   // return `item ${data['MediaType']} ${data['MediaOrder']}`;
 
-  //--------------------------------------------    Image Conten  ------------------------------//
+  //-------------------------------------------------- Image Conten  --------------------------------------------------//
 
   return (
     <Table color="blue" id={data['MediaLink']}>
@@ -40,30 +39,6 @@ const CreaContent = (data) => {
       </Table.Body>
     </Table>
   );
-
-  // //-------------------------------------------- Audio Conten  ----------------------------------//
-  // if (data['MediaType'] === 'audio') {
-  //   return (
-  //     <div class="row">
-  //       <div class="row shawBackground border">{data['MediaOrder']}</div>
-  //       <div class="row">
-  //         <video
-  //           controls
-  //           type="video/*"
-  //           src={data['MediaLink']}
-  //           width="100%"
-  //           height="100%"
-  //         >
-  //           <source src="video.wmv" />
-  //           Your browser doesnt support video, you may download the video
-  //           instead: <a href="video.ogv">Ogg</a>
-  //         </video>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  // return `item ${data['MediaType']} ${data['MediaOrder']}`;
 };
 //--------------------------- a little function to help us with reordering the result----------------------------------//
 const reorder = (list, startIndex, endIndex) => {
