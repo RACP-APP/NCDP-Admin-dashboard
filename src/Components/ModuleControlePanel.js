@@ -4,7 +4,7 @@ import '../css/buttonStyles.css';
 import axios from 'axios';
 import config from '../config.json';
 import $ from 'jquery';
-import FileUploader from 'react-firebase-file-uploader';
+import FileUploader from '../Components/uploadimage';
 import firebase from 'firebase';
 import { Segment, Button, Image, Grid } from 'semantic-ui-react';
 
@@ -34,16 +34,16 @@ class ModuleControlPanel extends React.Component {
     });
   }
   handelSucces(e) {
-    console.log(firebase.storage);
-    firebase
-      .storage()
-      .ref()
-      .child(e)
-      .getDownloadURL()
-      .then((url) => {
-        console.log(url);
-        this.setState({ url: url });
-      });
+    this.setState({ url: e });
+    // firebase
+    //   .storage()
+    //   .ref()
+    //   .child(e)
+    //   .getDownloadURL()
+    //   .then((url) => {
+    //     console.log(url);
+    //
+    //   });
   }
 
   //-------------------------navigate the between addion and nonaddion ------------------------//
@@ -68,7 +68,7 @@ class ModuleControlPanel extends React.Component {
     //------------------------- insrt data after uploading the image ---------------------//
 
     var Icon = this.state.url;
-    console.log('---------------------------------');
+
     axios
       .post(config[0].server + 'Dashbord/addModule', {
         Title: that.state.Title || 'New Model' + Date.now(),
@@ -163,26 +163,13 @@ class ModuleControlPanel extends React.Component {
               </Grid.Row>
               <Grid.Row>
                 <Grid.Column width={3}>
-                  <label className="">
-                    <span className=" glyphicon glyphicon-pencil  ItemIcons "></span>
-                    {this.state.loading ? this.state.loading : null}
-
-                    <FileUploader
-                      hidden
-                      accept="image/*"
-                      name="image"
-                      storageRef={firebase.storage().ref()}
-                      onUploadStart={this.handelloadStart.bind(this)}
-                      onUploadSuccess={this.handelSucces.bind(this)}
-                      onProgress={this.inPrograss.bind(this)}
-                      maxWidth={150}
-                    ></FileUploader>
-                  </label>
-                  {this.state.warinig ? (
-                    <div class="alert alert-danger" role="alert">
-                      {this.state.warningMessage}
-                    </div>
-                  ) : null}
+                  <FileUploader
+                    accept="image/*"
+                    name="images"
+                    onUploadStart={this.handelloadStart.bind(this)}
+                    onUploadSuccess={this.handelSucces.bind(this)}
+                    onProgress={this.inPrograss.bind(this)}
+                  ></FileUploader>
                 </Grid.Column>
                 <Grid.Column width={13}>
                   <Button.Group basic size="small">

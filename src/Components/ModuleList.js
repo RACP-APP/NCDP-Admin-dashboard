@@ -4,8 +4,8 @@ import '../css/buttonStyles.css';
 import axios from 'axios';
 import config from '../config.json';
 import ModuleControlPanel from './ModuleControlePanel';
-import firebase from 'firebase';
-import FileUploader from 'react-firebase-file-uploader';
+import ImageFileUploader from '../Components/uploadimage';
+
 import { Button, Card, Image, Progress } from 'semantic-ui-react';
 
 import $ from 'jquery';
@@ -42,15 +42,15 @@ class ModuleList extends React.Component {
     });
   }
   handelSucces(e) {
-    console.log(firebase.storage);
-    firebase
-      .storage()
-      .ref()
-      .child(e)
-      .getDownloadURL()
-      .then((url) => {
-        this.setState({ url: url, loading: 0 });
-      });
+    this.setState({ url: e });
+    // firebase
+    //   .storage()
+    //   .ref()
+    //   .child(e)
+    //   .getDownloadURL()
+    //   .then((url) => {
+    //
+    //   });
   }
 
   //--------------------------------------------------------------------------//
@@ -157,7 +157,12 @@ class ModuleList extends React.Component {
           onDoubleClick={this.goToTopics.bind(this)}
         >
           <Card.Content>
-            <Image floated="right" size="mini" src={this.props.model['Icon']} />
+            <Image
+              floated="right"
+              size="mini"
+              rounded
+              src={this.props.model['Icon']}
+            />
             <Card.Header> {this.props.model['Title']}</Card.Header>
             <Card.Meta> انشأ من قبل : {this.props.model['USERS']}</Card.Meta>
           </Card.Content>
@@ -220,27 +225,19 @@ class ModuleList extends React.Component {
         >
           <Card.Content>
             <Image
+              rounded
               floated="right"
               size="mini"
               src={this.state.url || this.props.model['Icon']}
             />
             <div>
-              <label className="imageuploadlable">
-                <span className=" glyphicon glyphicon-pencil  ItemIcons imageUploadingSpan"></span>
-
-                <FileUploader
-                  hidden
-                  accept="image/*"
-                  name="image"
-                  storageRef={firebase.storage().ref()}
-                  onUploadStart={this.handelloadStart.bind(this)}
-                  onUploadSuccess={this.handelSucces.bind(this)}
-                  onProgress={this.inPrograss.bind(this)}
-                ></FileUploader>
-                {this.state.loading ? (
-                  <Progress percent={this.state.loading} success size="tiny" />
-                ) : null}
-              </label>
+              <ImageFileUploader
+                accept="image/*"
+                name="images"
+                onUploadStart={this.handelloadStart.bind(this)}
+                onUploadSuccess={this.handelSucces.bind(this)}
+                onProgress={this.inPrograss.bind(this)}
+              ></ImageFileUploader>
             </div>
             <Card.Header>
               <input

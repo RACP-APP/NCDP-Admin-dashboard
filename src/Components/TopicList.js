@@ -2,11 +2,8 @@ import React from 'react';
 import '../css/component.css';
 import '../css/buttonStyles.css';
 import axios from 'axios';
-import $ from 'jquery';
 import config from '../config.json';
-import Axios from 'axios';
 import FileUploader from '../Components/uploadimage';
-import firebase from 'firebase';
 import { Input, Image, Button } from 'semantic-ui-react';
 
 class ArticlesList extends React.Component {
@@ -33,17 +30,7 @@ class ArticlesList extends React.Component {
 
   handelloadStart(e) {}
   handelSucces(e) {
-    console.log(e, 'yyyyyyyyyyyyyyyyyyyyy');
     this.setState({ url: e });
-    // firebase
-    //   .storage()
-    //   .ref()
-    //   .child(e)
-    //   .getDownloadURL()
-    //   .then((url) => {
-    //     console.log(url);
-    //     this.setState({ url: url });
-    //   });
   }
 
   inPrograss(e) {
@@ -152,7 +139,7 @@ class ArticlesList extends React.Component {
 
                 <FileUploader
                   accept="image/*"
-                  name="image"
+                  name="images"
                   onUploadStart={this.handelloadStart.bind(this)}
                   onUploadSuccess={this.handelSucces.bind(this)}
                   onProgress={this.inPrograss.bind(this)}

@@ -233,12 +233,16 @@ class ImagViweing extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ minWidth: '100%' }}>
         <div class="row shawBackground border">
           {this.state.data['MediaOrder']}
         </div>
         <div class="row">
-          <img class="img-row" src={this.state.data['MediaLink']}></img>
+          <img
+            class="img-row"
+            style={{ minWidth: '100%' }}
+            src={this.state.data['MediaLink']}
+          ></img>
         </div>
       </div>
     );

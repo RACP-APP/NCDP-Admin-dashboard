@@ -12,6 +12,8 @@ import AudioPlayerContent from './contentComponents/AudioItem';
 import ImageConten from './contentComponents/imageContent';
 import Wordconverter from './contentComponents/ConvertWord';
 import FileUploader from 'react-firebase-file-uploader';
+import ImageFileUploader from '../Components/uploadimage';
+
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';
 import { Segment, Button, Table, Grid } from 'semantic-ui-react';
@@ -96,22 +98,27 @@ class ContentViwer extends React.Component {
 
   //---------------------------------------- Handel Image Uploadin --------------------------------------------//
   ImageshandelSucces(e) {
-    console.log(firebase.storage().app.remoteConfig());
-    firebase
-      .storage()
-      .ref()
-      .child('images')
-      .child(e)
-      .getDownloadURL()
-      .then((url) => {
-        console.log(url);
-        this.setState({ ImageUrl: url, loading: false }, () => {
-          this.onClickHandlerForImages();
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // console.log(firebase.storage().app.remoteConfig());
+    console.log(e, 'yyyyyyyyyyyyyyy');
+    this.setState({ ImageUrl: e, loading: false }, () => {
+      this.onClickHandlerForImages();
+    });
+    //       this.onClickHandlerForImages();
+    // firebase
+    //   .storage()
+    //   .ref()
+    //   .child('images')
+    //   .child(e)
+    //   .getDownloadURL()
+    //   .then((url) => {
+    //     console.log(url);
+    //     this.setState({ ImageUrl: url, loading: false }, () => {
+    //       this.onClickHandlerForImages();
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   //-----------------------------------------------Get all Media agine ------------------------------------------//
@@ -378,7 +385,7 @@ class ContentViwer extends React.Component {
 
   render() {
     return (
-      <div style={{ maxHeight: '700px' }} dir="rtl">
+      <div style={{ minWidth: '100%' }} dir="rtl">
         <LoadingScreen
           style={{ maxHeight: '700px' }}
           loading={this.state.loading}
@@ -676,22 +683,12 @@ class ContentViwer extends React.Component {
                     <div className="card-body">
                       <form method="post" action="#" id="#" className="border ">
                         <div className="form-group files">
-                          <label>
-                            <span className=" glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
-                            <FileUploader
-                              hidden
-                              accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
-                              name="image"
-                              storageRef={firebase
-                                .storage()
-                                .ref()
-                                .child('images')}
-                              onUploadStart={this.handelloadStart.bind(this)}
-                              onUploadSuccess={this.ImageshandelSucces.bind(
-                                this
-                              )}
-                            ></FileUploader>
-                          </label>
+                          <ImageFileUploader
+                            accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
+                            name="images"
+                            onUploadStart={this.handelloadStart.bind(this)}
+                            onUploadSuccess={this.ImageshandelSucces.bind(this)}
+                          ></ImageFileUploader>
                         </div>
                       </form>
                       {/* -------------------------- IMAGE S Component are here ---------------------- */}

@@ -51,7 +51,7 @@ class ImageUpload extends Component {
         event.target.files[0],
         300,
         300,
-        'JPEG',
+        file.type.substring(file.type.indexOf('/') + 1),
         100,
         0,
         (uri) => {
@@ -62,12 +62,14 @@ class ImageUpload extends Component {
             () => {
               var ref;
               if (this.state.name !== null) {
-                ref = firebase.storage().ref().child('name').child(file.name);
+                ref = firebase
+                  .storage()
+                  .ref()
+                  .child(this.state.name)
+                  .child(file.name);
               } else {
                 ref = firebase.storage().ref().child(file.name);
               }
-
-              console.log(uri.substring(uri.indexOf(',') + 1));
 
               var uploadTask = ref.putString(
                 uri.substring(uri.indexOf(',') + 1),
@@ -125,9 +127,8 @@ class ImageUpload extends Component {
           content="click to Upload your Photo"
           trigger={
             <label>
-              {!this.state.statuse ? (
-                <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
-              ) : null}
+              <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
+
               <input hidden type="file" onChange={this.fileChangedHandler} />
               {!this.state.statuse ? null : (
                 <Progress percent={this.state.statuse} autoSuccess />

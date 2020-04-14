@@ -4,8 +4,7 @@ import '../css/buttonStyles.css';
 import axios from 'axios';
 import config from '../config.json';
 import $ from 'jquery';
-import FileUploader from 'react-firebase-file-uploader';
-import firebase from 'firebase';
+import FileUploader from '../Components/uploadimage';
 import { Segment, Button } from 'semantic-ui-react';
 
 class ControlPanel extends React.Component {
@@ -42,16 +41,7 @@ class ControlPanel extends React.Component {
     });
   }
   handelSucces(e) {
-    console.log(firebase.storage);
-    firebase
-      .storage()
-      .ref()
-      .child(e)
-      .getDownloadURL()
-      .then((url) => {
-        console.log(url);
-        this.setState({ url: url });
-      });
+    this.setState({ url: e }); // firebase
   }
 
   onClickHandler = () => {
@@ -104,6 +94,7 @@ class ControlPanel extends React.Component {
     if (localStorage.getItem('CurrentTpic') !== null) {
       this.setState({
         addtionMode: true,
+        warningMessage: 'اسم مكرر أو خطأ في الاتصال',
       });
 
       $('#ArticlControlPanel').css(' row  ControlePanel-col unclickibl');
@@ -127,27 +118,21 @@ class ControlPanel extends React.Component {
                   className="ItemImage header_imge "
                   src={
                     this.state.url ||
-                    'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005'
+                    'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=8e62158f-a9f1-42fa-b87e-03b390c4db9c'
                   }
                 ></input>
 
-                <label>
-                  <span className=" glyphicon glyphicon-pencil  ItemIcons imageUploadingSpan"></span>
-
-                  <FileUploader
-                    hidden
-                    accept="image/*"
-                    name="image"
-                    storageRef={firebase.storage().ref()}
-                    onUploadStart={this.handelloadStart.bind(this)}
-                    onUploadSuccess={this.handelSucces.bind(this)}
-                    onProgress={this.onProgress.bind(this)}
-                  ></FileUploader>
-                  {this.state.loading ? this.state.loading : null}
-                </label>
+                <FileUploader
+                  accept="image/*"
+                  name="images"
+                  onUploadStart={this.handelloadStart.bind(this)}
+                  onUploadSuccess={this.handelSucces.bind(this)}
+                  onProgress={this.onProgress.bind(this)}
+                ></FileUploader>
+                {this.state.loading ? this.state.loading : null}
 
                 {this.state.warinig ? (
-                  <div class="alert alert-danger" role="alert">
+                  <div style={{ color: 'red' }}>
                     {this.state.warningMessage}
                   </div>
                 ) : null}

@@ -4,7 +4,7 @@ import '../css/buttonStyles.css';
 import axios from 'axios';
 import config from '../config.json';
 import $ from 'jquery';
-import FileUploader from 'react-firebase-file-uploader';
+import FileUploader from '../Components/uploadimage';
 import firebase from 'firebase';
 import { Segment, Button, Grid, Image, Input } from 'semantic-ui-react';
 
@@ -24,16 +24,16 @@ class TopicControlPanel extends React.Component {
 
   handelloadStart(e) {}
   handelSucces(e) {
+    this.setState({ url: e });
     console.log(firebase.storage);
-    firebase
-      .storage()
-      .ref()
-      .child(e)
-      .getDownloadURL()
-      .then((url) => {
-        console.log(url);
-        this.setState({ url: url });
-      });
+    // firebase
+    //   .storage()
+    //   .ref()
+    //   .child(e)
+    //   .getDownloadURL()
+    //   .then((url) => {
+    //     console.log(url);
+    //   });
   }
 
   //-------------------------- the percentege of upl-loading ---------------------//
@@ -134,20 +134,13 @@ class TopicControlPanel extends React.Component {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column width={5}>
-                <label>
-                  <span className=" glyphicon glyphicon-pencil  ItemIcons imageUploadingSpan"></span>
-
-                  <FileUploader
-                    hidden
-                    accept="image/*"
-                    name="image"
-                    storageRef={firebase.storage().ref()}
-                    onUploadStart={this.handelloadStart.bind(this)}
-                    onUploadSuccess={this.handelSucces.bind(this)}
-                    onProgress={this.inPrograss.bind(this)}
-                  ></FileUploader>
-                  {this.state.loading ? this.state.loading : null}
-                </label>
+                <FileUploader
+                  accept="image/*"
+                  name="images"
+                  onUploadStart={this.handelloadStart.bind(this)}
+                  onUploadSuccess={this.handelSucces.bind(this)}
+                  onProgress={this.inPrograss.bind(this)}
+                ></FileUploader>
               </Grid.Column>
               <Grid.Column width={5} style={{ textAlign: 'center' }}>
                 <Button.Group basic size="small">
