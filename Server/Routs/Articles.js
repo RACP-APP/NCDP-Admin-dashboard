@@ -114,6 +114,21 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
   );
 });
 
+//-------------------------------------------------------------------------------------------------------------//
+//---------------------------------- Get The ID and Registration Token From Mobile App ------------------------//
+//-------------------------------------------------------------------------------------------------------------//
+Articles.post('/Articles/Registration', (req, res) => {
+  var token = req.body.token;
+  var id = req.body.id;
+  db.AddNewToken(token, id, (err, result) => {
+    if (err) {
+      res.status(500).send('حصل مشكله بعملية التسجيل ').end();
+    } else {
+      res.status(200).send('تم التسجيل بنجاح').end();
+    }
+  });
+});
+
 //----------------------------------------------------------------- PDF Converter -------------------------------------------------------------------------//
 Articles.post('/Articles/convertPDF', (req, res) => {
   // console.log('in the convertPDF upload');

@@ -940,10 +940,29 @@ var updateUser = (userName, Email, Image, password, userID, cb) => {
   );
 };
 
+//------------------------------- Insert The Token Of  A new Rigistered Mobile for the Application ----------------------//
+var AddNewToken = (Token, MobID, cb) => {
+  db.query(
+    ' INSERT INTO MobRegistration (MobID, Token ) VALUES ("' +
+      MobID +
+      '","' +
+      Token +
+      '")',
+    (error, result, fields) => {
+      if (error) {
+        cb(error, null);
+      } else {
+        cb(null, result);
+      }
+    }
+  );
+};
+
 // var ChangePassword=(userName, Email, Image, password, userID, cb) => {
 //   db.query
 // }
 module.exports = {
+  AddNewToken: AddNewToken,
   ReorderContent: ReorderContent,
   addUser: addUser,
   updateUser: updateUser,

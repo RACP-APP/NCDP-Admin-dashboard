@@ -139,8 +139,6 @@ class ControlPanel extends React.Component {
               </div>
               <div className="col-6 rowCenter">
                 <div className="row">
-                  {/* Title is here  */}
-
                   <input
                     type="text"
                     class="form-control"
@@ -153,8 +151,7 @@ class ControlPanel extends React.Component {
                     }}
                   />
                 </div>
-                {/* end of title group */}
-                {/* start of not group */}
+
                 <div className="row">
                   <input
                     type="text"
@@ -173,14 +170,12 @@ class ControlPanel extends React.Component {
               {/*  --------------------------- Edit Mode Icons ------------------------------------------- */}
               <div className="col-2 rowCenter">
                 <div className=" row ItemIcons ">
-                  {/* <span class="glyphicon glyphicon-ok"></span> */}
                   <span
                     class="glyphicon glyphicon-ok"
                     onClick={this.onClickHandler.bind(this)}
                   ></span>
                 </div>
                 <div className=" row ItemIcons ">
-                  {/* <span class="glyphicon glyphicon-ok"></span> */}
                   <span
                     class="glyphicon glyphicon-remove-circle"
                     onClick={(e) => {
@@ -201,7 +196,6 @@ class ControlPanel extends React.Component {
           </div>
         ) : null}
         <div id="ArticlControlPanel" className=" row ">
-          {/* <span class="glyphicon glyphicon-ok"></span> */}
           <Button
             circular
             icon="step backward"
@@ -214,18 +208,6 @@ class ControlPanel extends React.Component {
             icon="add circle"
             onClick={this.addNewArticle.bind(this)}
           />
-
-          {/* <span
-            class="glyphicon glyphicon-chevron-left ControlePanel-col "
-            onClick={e => {
-              this.props.backToModules();
-            }}
-          ></span>
-          <span
-            class="glyphicon glyphicon-plus ControlePanel-col "
-            onClick={this.addNewArticle.bind(this)}
-          ></span> */}
-          {/* <span class="glyphicon glyphicon-minus " /> */}
         </div>
       </div>
     );

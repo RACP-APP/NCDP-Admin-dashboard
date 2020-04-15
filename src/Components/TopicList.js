@@ -159,17 +159,6 @@ class ArticlesList extends React.Component {
                   });
                 }}
               />
-              {/* <input
-                style={{ maxWidth: '120px' }}
-                type="text"
-                aria-label="Small"
-                placeholder={this.state.data['Title']}
-                onChange={e => {
-                  this.setState({
-                    Title: e.target.value
-                  });
-                }}
-              ></input> */}
             </td>
             <td>
               <tr>

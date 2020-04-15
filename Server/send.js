@@ -4,28 +4,36 @@ var serviceAccount = require('./ncdp-270519-firebase-adminsdk-7vzkv-07bdff9001.j
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://ncdp-270519.firebaseio.com'
+  databaseURL: 'https://ncdp-270519.firebaseio.com',
 });
 var registrationToken =
-  'dE-gVKhESMi4xUAci_m6kV:APA91bEGXLuA1wY34ehC2uT1bJQa128M8d03P1DJt_vtNxwUClr56dVGTxvn88aCUux8z-D7TDkw9GsLY1OGMDWe8F2XUFSTtVGrtnaQ0uaeUEHrC2JsXurS0keawEiJBXOUZVmvPjxU';
+  'dHAT7WB6Q-uvqpXtmcgM4E:APA91bFnMKAtY8QMpRrc5TpSdiEuyMYT3bXcEWRl5rDkQvDrIkY_qbCs1i7ixkGZutgqvA6xIIG2Kwojvfd39hYk2UCIDfKBIot4yo0Zew8d8L1rw5xRm0CK8bcgePUDWl72lCFbS6ND';
 
 var palyload = {
+  notification: {
+    title: 'Test Notification Title',
+    body: 'Test Notification Body',
+    sound: 'default',
+    badge: '1',
+  },
   data: {
-    myKey1: 'hellow'
-  }
+    title: ' this is the first try for data',
+    body: 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+    click_action: 'FLUTTER_NOTIFICATION_CLICK',
+  },
 };
 
 var options = {
   priority: 'high',
-  timeToLive: 60 * 60 * 24
+  timeToLive: 60 * 60 * 24,
 };
 
 admin
   .messaging()
   .sendToDevice(registrationToken, palyload, options)
-  .then(response => {
+  .then((response) => {
     console.log('successfully send message :', response);
   })
-  .catch(error => {
+  .catch((error) => {
     console.log('Error sending message', error);
   });

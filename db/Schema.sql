@@ -103,5 +103,14 @@ DROP TABLE IF EXISTS TEXT;
     MediaType VARCHAR(20) NOT NULL,
     FOREIGN KEY (ContentID) REFERENCES Content(contentID) ON DELETE CASCADE
   );
-  ALTER TABLE Text  CONVERT TO CHARACTER SET utf8;
+    ALTER TABLE Text  CONVERT TO CHARACTER SET utf8;
+
+
+     CREATE TABLE MobRegistration 
+  (
+    ID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    MobID varchar(300),
+    Token varchar(500)
+  
+  );
 

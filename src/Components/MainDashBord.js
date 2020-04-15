@@ -27,7 +27,7 @@ class MainDashBoard extends React.Component {
     return (
       <div className="row ">
         <div className="row"></div>
-        {this.state.viwerSatte['ViwerTitle']}
+        {/* {this.state.viwerSatte['ViwerTitle']} */}
 
         <div className="row">
           <Viwer viwerSatte={this.ArrangDashControles.bind(this)} />

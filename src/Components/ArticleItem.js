@@ -5,7 +5,7 @@ import axios from 'axios';
 import axios2 from 'axios';
 
 import config from '../config.json';
-import FileUploader from 'react-firebase-file-uploader';
+import FileUploader from '../Components/uploadimage';
 import firebase from 'firebase';
 import { Button } from 'semantic-ui-react';
 
@@ -32,19 +32,20 @@ class ArticlesItem extends React.Component {
 
   handelloadStart(e) {}
   handelSucces(e) {
-    console.log(firebase.storage);
-    firebase
-      .storage()
-      .ref()
-      .child(e)
-      .getDownloadURL()
-      .then((url) => {
-        console.log(url);
-        this.setState({ url: url });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.setState({ url: e });
+    // console.log(firebase.storage);
+    // firebase
+    //   .storage()
+    //   .ref()
+    //   .child(e)
+    //   .getDownloadURL()
+    //   .then((url) => {
+    //     console.log(url);
+    //     this.setState({ url: url });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   //--------------------------------------------------------//
@@ -175,18 +176,12 @@ class ArticlesItem extends React.Component {
                 className=" img-thumbnail ItemImage"
               ></img>
 
-              <label className="imageuploadlable">
-                <span className=" glyphicon glyphicon-pencil  ItemIcons imageUploadingSpan"></span>
-                <FileUploader
-                  hidden
-                  accept="image/*"
-                  name="image"
-                  storageRef={firebase.storage().ref()}
-                  onUploadStart={this.handelloadStart.bind(this)}
-                  onUploadSuccess={this.handelSucces.bind(this)}
-                ></FileUploader>
-                <span>{this.state.loading ? this.state.loading : null}</span>
-              </label>
+              <FileUploader
+                accept="image/*"
+                name="images"
+                onUploadStart={this.handelloadStart.bind(this)}
+                onUploadSuccess={this.handelSucces.bind(this)}
+              ></FileUploader>
             </div>
 
             <div className="col-7 rowCenter">
@@ -226,19 +221,37 @@ class ArticlesItem extends React.Component {
             </div>
 
             {/*  --------------------------- Edit Mode Icons ------------------------------------------- */}
-            <div
-              div
-              className="col-1  border edit-col shawBackground  rowCenter"
-            >
-              <div className=" row ItemIcons ">
-                {/* <span class="glyphicon glyphicon-ok"></span> */}
+            <div className="col-1   edit-col   rowCenter">
+              <td>
+                <tr>
+                  <Button.Group basic size="small">
+                    <Button
+                      icon="save"
+                      onClick={this.onClickHandler.bind(this)}
+                    />
+                  </Button.Group>
+                </tr>
+
+                <tr>
+                  <Button.Group basic size="small">
+                    <Button
+                      icon="cancel"
+                      onClick={(e) => {
+                        this.setState({
+                          editMode: false,
+                        });
+                      }}
+                    />
+                  </Button.Group>
+                </tr>
+              </td>
+              {/* <div className=" row ItemIcons ">
                 <span
                   class="glyphicon glyphicon-ok"
                   onClick={this.onClickHandler.bind(this)}
                 ></span>
               </div>
               <div className=" row ItemIcons ">
-                {/* <span class="glyphicon glyphicon-ok"></span> */}
                 <span
                   class="glyphicon glyphicon-remove-circle"
                   onClick={(e) => {
@@ -247,7 +260,7 @@ class ArticlesItem extends React.Component {
                     });
                   }}
                 ></span>
-              </div>
+              </div> */}
             </div>
           </div>
         ) : (

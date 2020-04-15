@@ -9,12 +9,7 @@ import TopHeader from './Components/Topheader';
 import ImgUploader from './Components/uploadimage';
 import AdminSettings from './Components/userSettings/AdminAddUser';
 import MainAnalatic from './Components/Analytics/mailAnalyticBoard';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 var firebaseConfig = {
   apiKey: 'AIzaSyAFSTEpX_9R0pzLQ36zBFYxKs19hjxKytA',
   authDomain: 'ncdp-270519.firebaseapp.com',
@@ -41,6 +36,7 @@ class App extends React.Component {
   }
 
   loggedIn() {
+    localStorage.setItem('CurrentnavNode', '/');
     this.setState({
       LoggetIn: true,
       redirect: '/',
@@ -57,7 +53,7 @@ class App extends React.Component {
       },
       () => {
         localStorage.clear();
-        localStorage.setItem('CurrentnavNode', '/');
+        localStorage.setItem('CurrentnavNode', 'LogIn');
       }
     );
   }
