@@ -78,7 +78,7 @@ var writeTopic = (Topic) => {
                 newData[i]['Topics'][j] = Topic;
                 break;
               } else {
-                // ---------------------- if there is no item with this id then add it to the array -------------------------------//
+                // ------------------------ if there is no item with this id then add it to the array -----------------------------//
                 newData[i]['Topics'].push(Topic);
                 break;
               }
