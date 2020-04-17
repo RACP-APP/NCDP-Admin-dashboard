@@ -10,6 +10,9 @@ const cors = require('cors');
 var multer = require('multer');
 const favicon = require('express-favicon');
 const fs = require('fs');
+const db = require('../db/models');
+
+const messaging = require('./send');
 
 const cssPath = path.join(__dirname, '../public');
 
@@ -28,6 +31,28 @@ app.use(favicon(__dirname + '../build/favicon.ico'));
 app.use(require('./Routs/LogIn'));
 app.use(require('./Routs/Articles'));
 app.use(require('./Routs/Dashbord'));
+
+//-------------------------------------------------------------------------------------------------------//
+//------------------------- A rout to send a notifications to all reigistered Mobile ---------------------//
+//--------------------------------------------------------------------------------------------------------//
+app.get('/sendNotification', (req, res) => {
+  db.getRegistrationTokens((error, result) => {
+    if (error) {
+      res
+        .status(500)
+        .send('حدث خطأ بإسترجاع المعلومات . يرجى إعادة المحاولة ')
+        .end();
+    } else {
+      messaging.sendMessage(result, (error) => {
+        if (error) {
+          res.status(500).send('حصل مشكله أثناء ارسال الإشعارات').end();
+        } else {
+          res.status(200).send('تم ارسال الاشعارات بنجاح').end();
+        }
+      });
+    }
+  });
+});
 
 //---------------------------------------------------------------------------------------------------------//
 //--------------- arout to generat json file and send it to the mobile app --------------------------------//
@@ -84,7 +109,10 @@ app.get('/GetChart', function (req, res) {
 //---------------------------------------------------------------------------------------------------------//
 app.get('/JSONFile', async function (req, res) {
   const CreatJSON = await require('../db/JsonGenrator').creatJson();
-  res.sendFile(path.join(__dirname, '../', 'phraseFreqs.json'));
+
+  //------------------------------------------ get json from file -----------------------------------------//
+
+  res.sendFile(path.join(__dirname, '../db/', 'phraseFreqs.json')).end();
 });
 
 //------------------------------------- for any other request ----------------------------------------------//
