@@ -412,6 +412,7 @@ class ContentViwer extends React.Component {
                     circular
                     icon="step backward"
                     onClick={(e) => {
+                      // localStorage.setItem()
                       this.props.convertToTopic();
                     }}
                   />

@@ -142,6 +142,7 @@ class ArticlesItem extends React.Component {
         ArticleID: this.props.data['ArticleID'],
       })
       .then((result) => {
+        this.props.updateNavigator(this.props.data['Title']);
         this.props.leaveTpicToContent(result.data);
       })
       .catch((error) => {

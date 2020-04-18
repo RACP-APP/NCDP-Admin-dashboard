@@ -64,7 +64,10 @@ class MyList extends React.Component {
   componentDidMount() {
     this.getData(this.props.id);
   }
-
+  updateNavigator(nodeName) {
+    console.log(nodeName);
+    this.props.updateNavigator(nodeName);
+  }
   //-----------------------------------------------------------------------------------//
   //--------------- Update Stause from Child Component --------------------------------//
   //----------------------------------------------------------------------------------//
@@ -105,6 +108,7 @@ class MyList extends React.Component {
                   data={item}
                   updateFromChild={this.updateFromChild.bind(this)}
                   leaveTpicToContent={this.leaveTpicToContent.bind(this)}
+                  updateNavigator={this.updateNavigator.bind(this)}
                 ></ArticlesItem>
               );
             })}

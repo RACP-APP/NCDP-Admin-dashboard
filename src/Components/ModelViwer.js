@@ -58,10 +58,12 @@ class MainDashBoard extends React.Component {
         isContent: false,
         articales: [],
         id: null,
+        ViwerTitle: this.updateNavigator(
+          JSON.parse(localStorage.getItem('navMap'))
+        ),
       },
       () => {
         localStorage.setItem('CurrentNav', 'Model');
-        // localStorage.getItem('CurrentNav') === 'Model')
       }
     );
     localStorage.removeItem('CurrentTpic');
@@ -102,7 +104,6 @@ class MainDashBoard extends React.Component {
         isModule: false,
         isTpics: false,
         isContent: true,
-        ViwerTitle: <div className="accordianTitle">عارض المحتوى</div>,
         Updated: false,
         Contents: Contents,
       },
@@ -215,7 +216,6 @@ class MainDashBoard extends React.Component {
 
   //------------------------------------------Update Navigator -------------------------------------------//
   updateNavigator(newNode) {
-    console.log(this.state.steps);
     if (!Array.isArray(newNode)) {
       if (localStorage.getItem('CurrentNav') === 'Model') {
         this.setState(
@@ -227,23 +227,34 @@ class MainDashBoard extends React.Component {
             this.createNavPare();
           }
         );
-      } else {
-        if (localStorage.getItem('CurrentNav') === 'Topic') {
-          var d = this.state.steps;
-          if (d.length === 3) {
-            d.pop();
-          }
-          d[1] = newNode;
-          this.setState(
-            {
-              steps: d,
-            },
-            () => {
-              localStorage.setItem('navMap', JSON.stringify(this.state.steps));
-              this.createNavPare();
-            }
-          );
+      } else if (localStorage.getItem('CurrentNav') === 'Topic') {
+        var d = this.state.steps;
+        if (d.length === 3) {
+          d.pop();
         }
+        d[1] = newNode;
+        this.setState(
+          {
+            steps: d,
+          },
+          () => {
+            localStorage.setItem('navMap', JSON.stringify(this.state.steps));
+            this.createNavPare();
+          }
+        );
+      } else if (localStorage.getItem('CurrentNav') === 'Content') {
+        var d = this.state.steps;
+
+        d[2] = newNode;
+        this.setState(
+          {
+            steps: d,
+          },
+          () => {
+            localStorage.setItem('navMap', JSON.stringify(this.state.steps));
+            this.createNavPare();
+          }
+        );
       }
     } else {
       this.setState(
@@ -261,8 +272,11 @@ class MainDashBoard extends React.Component {
     console.log(e.target.id, 'eeeeeeeeeeeeeeee');
     if (e.target.id === '0') {
       await localStorage.setItem('CurrentNav', 'Model');
-      console.log('addded');
+
       this.getAllModules();
+    } else if (e.target.id === '1') {
+      await localStorage.setItem('CurrentNav', 'Topic');
+      this.goToTopicsViwer();
     }
   }
   //------------------------------------ Create NavePare -------------------------------------------------//
@@ -404,6 +418,7 @@ class MainDashBoard extends React.Component {
                           id={this.state.id}
                           backToModules={this.backToModules.bind(this)}
                           goToContentViwer={this.goToContentViwer.bind(this)}
+                          updateNavigator={this.updateNavigator.bind(this)}
                         ></MyList>
                       </div>
                     </div>
