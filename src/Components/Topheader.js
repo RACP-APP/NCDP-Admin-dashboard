@@ -74,6 +74,8 @@ class TopHeader extends React.Component {
             // active={activeItem === 'features'}
             onClick={() => {
               localStorage.setItem('CurrentnavNode', '/');
+              localStorage.setItem('CurrentNav', 'Model');
+              localStorage.setItem('navMap', JSON.stringify(['عارض النماذج']));
             }}
           >
             <a href={config[0].server}>

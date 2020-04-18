@@ -128,7 +128,9 @@ class MainDashBoard extends React.Component {
         isTpics: true,
         isContent: false,
         currentModel: parseInt(localStorage.getItem('selectedModel')),
-
+        ViwerTitle: this.updateNavigator(
+          JSON.parse(localStorage.getItem('navMap'))
+        ),
         Updated: false,
       },
       () => {
@@ -184,6 +186,7 @@ class MainDashBoard extends React.Component {
   }
   //-----------------------------------------------------------------------------------------------------//
   async componentDidMount() {
+    console.log(this.state.steps, 'ffffffffffff');
     if (localStorage.getItem('CurrentNav') === null) {
       await localStorage.setItem('CurrentNav', 'Model');
       console.log('addded');
@@ -213,38 +216,65 @@ class MainDashBoard extends React.Component {
   //------------------------------------------Update Navigator -------------------------------------------//
   updateNavigator(newNode) {
     console.log(this.state.steps);
-    if (localStorage.getItem('CurrentNav') === 'Model') {
+    if (!Array.isArray(newNode)) {
+      if (localStorage.getItem('CurrentNav') === 'Model') {
+        this.setState(
+          {
+            steps: [newNode],
+          },
+          () => {
+            localStorage.setItem('navMap', JSON.stringify(this.state.steps));
+            this.createNavPare();
+          }
+        );
+      } else {
+        if (localStorage.getItem('CurrentNav') === 'Topic') {
+          var d = this.state.steps;
+          if (d.length === 3) {
+            d.pop();
+          }
+          d[1] = newNode;
+          this.setState(
+            {
+              steps: d,
+            },
+            () => {
+              localStorage.setItem('navMap', JSON.stringify(this.state.steps));
+              this.createNavPare();
+            }
+          );
+        }
+      }
+    } else {
       this.setState(
         {
-          steps: [newNode],
+          steps: newNode,
         },
         () => {
           this.createNavPare();
         }
       );
-    } else {
-      if (localStorage.getItem('CurrentNav') === 'Topic') {
-        var d = this.state.steps;
-        if (d.length === 3) {
-          d.pop();
-        }
-        d[1] = newNode;
-        this.setState(
-          {
-            steps: d,
-          },
-          () => {
-            this.createNavPare();
-          }
-        );
-      }
     }
   }
 
+  async naveClick(e) {
+    console.log(e.target.id, 'eeeeeeeeeeeeeeee');
+    if (e.target.id === '0') {
+      await localStorage.setItem('CurrentNav', 'Model');
+      console.log('addded');
+      this.getAllModules();
+    }
+  }
   //------------------------------------ Create NavePare -------------------------------------------------//
   createNavPare() {
-    const sections = this.state.steps.map((item) => {
-      return { key: item, content: item, link: true };
+    const sections = this.state.steps.map((item, index) => {
+      return {
+        id: index,
+        key: index,
+        content: item,
+        link: true,
+        onClick: this.naveClick.bind(this),
+      };
     });
     this.setState({
       ViwerTitle: <Breadcrumb sections={sections}></Breadcrumb>,
@@ -320,7 +350,6 @@ class MainDashBoard extends React.Component {
 
     //---------------------- if we are in the module Area ------------------//
     if (localStorage.getItem('CurrentNav') === 'Model') {
-      console.log('a Model');
       ArrayModules = this.mapModels();
     } else if (localStorage.getItem('CurrentNav') === 'Topic') {
       console.log(localStorage.getItem('selectedModel'));
