@@ -255,7 +255,7 @@ class MainDashBoard extends React.Component {
             this.createNavPare();
           }
         );
-      }
+      } //-------------------
     } else {
       this.setState(
         {
