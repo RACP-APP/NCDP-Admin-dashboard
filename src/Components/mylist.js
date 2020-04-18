@@ -22,12 +22,16 @@ class MyList extends React.Component {
 
   //-------------------------- return Back to Modules Panele ------------------------------------//
   backToModules() {
-    this.setState({
-      data: [],
-      id: null,
-    });
-
-    this.props.backToModules();
+    this.setState(
+      {
+        data: [],
+        id: null,
+      },
+      () => {
+        localStorage.setItem('CurrentNav', 'Topic');
+        this.props.backToModules();
+      }
+    );
   }
 
   getData(TopicID) {
@@ -68,6 +72,8 @@ class MyList extends React.Component {
     this.getData(this.state.id);
   }
   leaveTpicToContent(contents) {
+    localStorage.setItem('CurrentNav', 'Content');
+    console.log(contents, 'vvvvvvvvvvvvvvvvvvvvv');
     this.props.goToContentViwer(contents);
   }
   render() {

@@ -23,6 +23,9 @@ class MainDashBoard extends React.Component {
     });
     // console.log(this.state, '--------', satate);
   }
+  componentWillUnmount() {
+    localStorage.removeItem('CurrentNav');
+  }
   render() {
     return (
       <div className="row ">

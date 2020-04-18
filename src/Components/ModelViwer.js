@@ -169,17 +169,29 @@ class MainDashBoard extends React.Component {
       await localStorage.setItem('CurrentNav', 'Model');
       console.log('addded');
       this.getAllModules();
-    } else {
-      if (localStorage.getItem('CurrentNav') === 'Model') {
-        this.getAllModules();
-      } else if (localStorage.getItem('CurrentNav') === 'Topic') {
-        this.goToTopicsViwer();
-      }
-      console.log('esixt');
-    }
+    } else if (localStorage.getItem('CurrentNav') === 'Model') {
+      this.getAllModules();
+    } else if (localStorage.getItem('CurrentNav') === 'Topic') {
+      this.goToTopicsViwer();
+    } else if (localStorage.getItem('CurrentNav') === 'Content') {
+      var ArticleItem = localStorage.getItem('selectedArticle');
 
-    // console.log(localStorage.getItem('CurrentNav'));
+      axios
+        .post(config[0].server + 'Articles/getContentID', {
+          ArticleID: localStorage.getItem('selectedArticle'),
+        })
+        .then((result) => {
+          // this.props.leaveTpicToContent(result.data);
+          this.goToContentViwer(result.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // console.log(ArticleItem);
+    }
   }
+
+  // console.log(localStorage.getItem('CurrentNav'));
 
   //-------------------------------------------Get All the Modules ---------------------------------------//
   mapModels() {
@@ -251,6 +263,7 @@ class MainDashBoard extends React.Component {
       console.log(localStorage.getItem('selectedModel'));
       ArrayModules = this.mapTopics();
     } else if (this.state.isContent) {
+      console.log(localStorage.getItem('CurrentNav'));
       ArrayModules = this.mapContents();
     } else {
       console.log(localStorage.getItem('CurrentNav'));

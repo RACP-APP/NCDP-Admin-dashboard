@@ -52,10 +52,15 @@ class ModuleList extends React.Component {
     //
     //   });
   }
-
+  UpdateNavegation(e) {
+    var id =
+      parseInt(e.currentTarget.id) ||
+      parseInt($(e.currentTarget).attr('data-id'));
+  }
   //--------------------------------------------------------------------------//
   //------this fnc is to get the model id and send it back to the Viwer ------//
   //--------------------------------------------------------------------------//
+
   goToTopics(e) {
     console.log('im go to topics', parseInt(e.currentTarget.id));
     var id =
@@ -155,6 +160,7 @@ class ModuleList extends React.Component {
           id={this.props.model['ModelID']}
           className="ModuleCrd "
           onDoubleClick={this.goToTopics.bind(this)}
+          onClick={this.UpdateNavegation.bind(this)}
         >
           <Card.Content>
             <Image

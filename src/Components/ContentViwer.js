@@ -13,7 +13,6 @@ import ImageConten from './contentComponents/imageContent';
 import Wordconverter from './contentComponents/ConvertWord';
 import FileUploader from 'react-firebase-file-uploader';
 import ImageFileUploader from '../Components/uploadimage';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';
@@ -395,20 +394,6 @@ class ContentViwer extends React.Component {
   render() {
     return (
       <div style={{ minWidth: '100%' }} dir="rtl">
-        <Router>
-          {/* <Route>
-            <Redirect to={localStorage.getItem('CurrentnavNode')}></Redirect>
-          </Route> */}
-
-          <Route
-            exact
-            path="/Dashboard/Model"
-            render={() => {
-              console.log('ddddddddd');
-              return <div>hiiiiiiiiiiiiiiii</div>;
-            }}
-          ></Route>
-        </Router>
         <LoadingScreen
           style={{ maxHeight: '700px' }}
           loading={this.state.loading}
