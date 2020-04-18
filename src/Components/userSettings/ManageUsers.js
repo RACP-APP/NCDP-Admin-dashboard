@@ -5,6 +5,7 @@ import config from '../../config.json';
 import axios from 'axios';
 import User from './UserItem';
 import AddUser from './addUeser';
+import { TransitionablePortal, Segment, Header, Icon } from 'semantic-ui-react';
 
 class ManagUsers extends React.Component {
   constructor(props) {
@@ -20,6 +21,9 @@ class ManagUsers extends React.Component {
       url: '',
       loading: 0,
       HasError: '',
+      open: false,
+      animation: 'slide down',
+      duration: 500,
     };
     this.getallUsers = this.getallUsers.bind(this);
     this.showError = this.showError.bind(this);
@@ -45,14 +49,16 @@ class ManagUsers extends React.Component {
     axios
       .post(config[0].server + 'User/getAllUsers')
       .then((result) => {
-        console.log(result.data);
         this.setState({
           Users: result.data,
           addUser: false,
         });
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          error: true,
+          ErrorMessage: error.response.data,
+        });
       });
   }
   componentDidMount() {
@@ -60,16 +66,47 @@ class ManagUsers extends React.Component {
   }
   render() {
     return (
-      <div>
-        <span
-          onClick={() => {
-            this.setState({
-              addUser: true,
-            });
+      <div style={{ width: '100%' }}>
+        <TransitionablePortal
+          open={this.state.open}
+          transition={{
+            animation: this.state.animation,
+            duration: this.state.duration,
           }}
         >
-          لإضافة مستخدم انقر هنا من فضلك
-        </span>
+          <Segment
+            style={{
+              left: '40%',
+              position: 'fixed',
+
+              zIndex: 1000,
+
+              top: '2%',
+
+              zIndex: 1000,
+
+              overflow: 'auto',
+            }}
+          >
+            <Header>
+              <Icon name="window close" style={{ color: 'red !important' }} />
+              Error
+            </Header>
+            <p>{this.state.ErrorMessage}</p>
+          </Segment>
+        </TransitionablePortal>
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <span
+            onClick={() => {
+              this.setState({
+                addUser: true,
+              });
+            }}
+          >
+            لإضافة مستخدم انقر هنا من فضلك
+          </span>
+          <br></br>
+        </div>
         {this.state.error ? (
           <div className="row">{this.state.ErrorMessage}</div>
         ) : null}

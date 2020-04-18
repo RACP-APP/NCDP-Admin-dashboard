@@ -5,7 +5,7 @@ import '../../css/buttonStyles.css';
 import ManagUsers from './ManageUsers';
 import ChangePassword from './shangPassword';
 import SocialItems from './ManageSocialeIcons';
-
+import { Segment } from 'semantic-ui-react';
 class AdminSettings extends React.Component {
   constructor(props) {
     super(props);
@@ -21,9 +21,12 @@ class AdminSettings extends React.Component {
     this.props.LogOut();
   }
 
+  componentDidMount() {
+    localStorage.setItem('CurrentnavNode', 'userSetting');
+  }
   render() {
     return (
-      <div className="container" dir="rtl">
+      <div className="container">
         <div className="row" style={{ justifyContent: 'right' }}>
           <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -68,25 +71,28 @@ class AdminSettings extends React.Component {
           </nav>
           <div class="tab-content" id="nav-tabContent">
             <div
-              dir="rtl"
               class="tab-pane fade show active in"
               id="nav-home"
               role="tabpanel"
               aria-labelledby="nav-home-tab"
             >
-              {/* ------------------------------------------- Users and Manage them ------------------------------------ */}
-              <br></br>
-              <br></br>
-              <p>
-                لاحظ المشرف الأعزاء أنه إذا قمت بتغيير إعداد المستخدمين لن
-                يتمكنوا بعد الآن من تسجيل الدخول إلى لوحة الشرطة اقول لكم ارسال
-                بريد الكتروني لهم كل المعلومات المطلوبة
-              </p>
-              <br></br>
+              <Segment style={{ width: '100%' }}>
+                {/* ------------------------------------------- Users and Manage them ------------------------------------ */}
+                <br></br>
+                <br></br>
+                <p>
+                  لاحظ المشرف الأعزاء أنه إذا قمت بتغيير إعداد المستخدمين لن
+                  يتمكنوا بعد الآن من تسجيل الدخول إلى لوحة الشرطة اقول لكم
+                  ارسال بريد الكتروني لهم كل المعلومات المطلوبة
+                </p>
+                <br></br>
 
-              {/* ------------------------------------- end of the add User ---------------------------------------- */}
-              <ManagUsers></ManagUsers>
+                {/* ------------------------------------- end of the add User ---------------------------------------- */}
+
+                <ManagUsers></ManagUsers>
+              </Segment>
             </div>
+
             <div
               dir="rtl"
               class="tab-pane fade"
@@ -94,38 +100,44 @@ class AdminSettings extends React.Component {
               role="tabpanel"
               aria-labelledby="nav-profile-tab"
             >
-              <br></br>
-              <br></br>
-              <p>
-                أهلا : {JSON.parse(localStorage.getItem('user'))['userName']} لا
-                تتردد في استخدام NCDP Manage Account لتعديل إعدادك ، إذا قمت
-                بتغيير كلمة المرور الخاصة بك ، فسيتم إرسالها مباشرة إلى بريدك
-                الإلكتروني.
-              </p>
-              <br></br>
-
-              <ChangePassword LogOut={this.LogOut.bind(this)}></ChangePassword>
+              <Segment dir="rtl" style={{ width: '100%' }}>
+                <div style={{ textAlign: 'right' }}>
+                  <br></br>
+                  أهلا : {
+                    JSON.parse(localStorage.getItem('user'))['userName']
+                  }{' '}
+                  لا تتردد في استخدام NCDP Manage Account لتعديل إعدادك ، إذا
+                  قمت بتغيير كلمة المرور الخاصة بك ، فسيتم إرسالها مباشرة إلى
+                  بريدك الإلكتروني.
+                  <br></br>
+                </div>
+                <br></br>
+                <ChangePassword
+                  LogOut={this.LogOut.bind(this)}
+                ></ChangePassword>
+              </Segment>
             </div>
 
             {/* --------------------------------------- Sosial items starts here ----------------------------- */}
 
             <div
-              dir="rtl"
               class="tab-pane fade"
               id="nav-contact"
               role="tabpanel"
               aria-labelledby="nav-contact-tab"
             >
-              <br></br>
-              <br></br>
-              <p>
-                اهلا : {JSON.parse(localStorage.getItem('user'))['userName']} لا
-                تتردد في استخدام حساب إدارة NCDP لتعديل الإعدادات ، إذا لقد قمت
-                بتغيير أيقونات الموقع الاجتماعية سوف ينعكس هذا التغيير على موقع
-                الويب الخاص بك.
-              </p>
-              <br></br>
-              <SocialItems></SocialItems>
+              <Segment style={{ width: '100%' }}>
+                <br></br>
+                <br></br>
+                <p>
+                  اهلا : {JSON.parse(localStorage.getItem('user'))['userName']}{' '}
+                  لا تتردد في استخدام حساب إدارة NCDP لتعديل الإعدادات ، إذا لقد
+                  قمت بتغيير أيقونات الموقع الاجتماعية سوف ينعكس هذا التغيير على
+                  موقع الويب الخاص بك.
+                </p>
+                <br></br>
+                <SocialItems></SocialItems>
+              </Segment>
             </div>
           </div>
         </div>

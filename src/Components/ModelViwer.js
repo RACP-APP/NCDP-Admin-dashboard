@@ -12,6 +12,7 @@ import TopicControlPanel from './TopicControlPanel';
 import ContentViwer from './ContentViwer';
 import ModuleControlPanel from './ModuleControlePanel';
 import { List, Image, Card, Menu, Segment, Grid } from 'semantic-ui-react';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import $ from 'jquery';
 
@@ -41,12 +42,19 @@ class MainDashBoard extends React.Component {
 
   //-------------------- Return Back To module List ----------------------------------//
   backToModules() {
-    this.setState({
-      isModule: true,
-      isTpics: false,
-      articales: [],
-      id: null,
-    });
+    this.setState(
+      {
+        isModule: true,
+        isTpics: false,
+        isContent: false,
+        articales: [],
+        id: null,
+      },
+      () => {
+        localStorage.setItem('CurrentNav', 'Model');
+        // localStorage.getItem('CurrentNav') === 'Model')
+      }
+    );
     localStorage.removeItem('CurrentTpic');
     this.getAllModules();
   }
@@ -74,15 +82,20 @@ class MainDashBoard extends React.Component {
   //-----------------------------------------------------------------------------------//
   goToContentViwer(Contents) {
     // console.log(Contents, this.state.Contents);
-    this.setState({
-      model: [<div>hiiiiiiiiiiiiiii</div>],
-      isModule: false,
-      isTpics: false,
-      isContent: true,
-      ViwerTitle: <div className="accordianTitle">عارض المحتوى</div>,
-      Updated: false,
-      Contents: Contents,
-    });
+    this.setState(
+      {
+        model: [<div>hiiiiiiiiiiiiiii</div>],
+        isModule: false,
+        isTpics: false,
+        isContent: true,
+        ViwerTitle: <div className="accordianTitle">عارض المحتوى</div>,
+        Updated: false,
+        Contents: Contents,
+      },
+      () => {
+        localStorage.setItem('CurrentNav', 'Content');
+      }
+    );
     console.log(
       'in got to content ,',
       this.state.module,
@@ -94,16 +107,22 @@ class MainDashBoard extends React.Component {
   //-------------- a component to swich from Model Viwer to Topics Viewr --------------//
   //-----------------------------------------------------------------------------------//
   goToTopicsViwer() {
-    this.setState({
-      module: [],
-      isModule: false,
-      isTpics: true,
-      isContent: false,
-      currentModel: parseInt(localStorage.getItem('selectedModel')),
-      ViwerTitle: <a className="accordianTitle">عارض الموضوع</a>,
-      Updated: false,
-    });
+    this.setState(
+      {
+        module: [],
+        isModule: false,
+        isTpics: true,
+        isContent: false,
+        currentModel: parseInt(localStorage.getItem('selectedModel')),
+        ViwerTitle: <a className="accordianTitle">عارض الموضوع</a>,
+        Updated: false,
+      },
+      () => {
+        localStorage.setItem('CurrentNav', 'Topic');
+      }
+    );
 
+    console.log('in axios of topic');
     axios
       .get(
         '/Dashbord/getModuleTopics?ID=' + localStorage.getItem('selectedModel')
@@ -145,8 +164,21 @@ class MainDashBoard extends React.Component {
       });
   }
   //-----------------------------------------------------------------------------------------------------//
-  componentDidMount() {
-    this.getAllModules();
+  async componentDidMount() {
+    if (localStorage.getItem('CurrentNav') === null) {
+      await localStorage.setItem('CurrentNav', 'Model');
+      console.log('addded');
+      this.getAllModules();
+    } else {
+      if (localStorage.getItem('CurrentNav') === 'Model') {
+        this.getAllModules();
+      } else if (localStorage.getItem('CurrentNav') === 'Topic') {
+        this.goToTopicsViwer();
+      }
+      console.log('esixt');
+    }
+
+    // console.log(localStorage.getItem('CurrentNav'));
   }
 
   //-------------------------------------------Get All the Modules ---------------------------------------//
@@ -199,7 +231,6 @@ class MainDashBoard extends React.Component {
 
   //-------------------------------------------Get All the Modules ---------------------------------------//
   mapContents() {
-    console.log('this.state.Contents', this.state.Contents);
     return (
       <ContentViwer
         data={this.state.Contents}
@@ -213,12 +244,16 @@ class MainDashBoard extends React.Component {
     var ArrayModules = [];
 
     //---------------------- if we are in the module Area ------------------//
-    if (this.state.isModule) {
+    if (localStorage.getItem('CurrentNav') === 'Model') {
+      console.log('a Model');
       ArrayModules = this.mapModels();
-    } else if (this.state.isTpics) {
+    } else if (localStorage.getItem('CurrentNav') === 'Topic') {
+      console.log(localStorage.getItem('selectedModel'));
       ArrayModules = this.mapTopics();
     } else if (this.state.isContent) {
       ArrayModules = this.mapContents();
+    } else {
+      console.log(localStorage.getItem('CurrentNav'));
     }
 
     return (
@@ -256,7 +291,8 @@ class MainDashBoard extends React.Component {
                   {ArrayModules.length === 0 && !this.state.isContent
                     ? 'لم يتم العثور على بيانات '
                     : ArrayModules}
-                  {this.state.isTpics && !this.state.isContent ? (
+                  {localStorage.getItem('CurrentNav') === 'Topic' &&
+                  !this.state.isContent ? (
                     <div className="col">
                       <div className="">
                         <MyList

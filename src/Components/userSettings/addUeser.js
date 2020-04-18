@@ -5,6 +5,7 @@ import config from '../../config.json';
 import axios from 'axios';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase';
+import { TransitionablePortal, Segment, Header, Icon } from 'semantic-ui-react';
 
 class AddUser extends React.Component {
   constructor(props) {
@@ -18,6 +19,9 @@ class AddUser extends React.Component {
       loading: 0,
       HasError: false,
       ErrorMessage: 'عنوان البريد الإلكتروني غير صالح',
+      open: false,
+      animation: 'slide down',
+      duration: 500,
     };
   }
 
@@ -60,6 +64,7 @@ class AddUser extends React.Component {
       this.setState({
         HasError: true,
         ErrorMessage: 'عنوان البريد الإلكتروني غير صالح',
+        open: true,
       });
     } //-------------------- if the Email is Valid then Save the email in the state --------------------//
     else {
@@ -85,6 +90,7 @@ class AddUser extends React.Component {
       this.setState({
         HasError: true,
         ErrorMessage: ' يرجى إدخال اسم مستخدم وبريد إلكتروني صالحين',
+        open: true,
       });
     } else {
       //-------------------------- if all information is correct goe to insertion operation -------------------//
@@ -127,6 +133,7 @@ class AddUser extends React.Component {
               this.setState({
                 HasError: true,
                 ErrorMessage: error.response.data,
+                open: true,
               });
             });
         }
@@ -136,6 +143,34 @@ class AddUser extends React.Component {
   render() {
     return (
       <div id="addUser" dir="rtl">
+        <TransitionablePortal
+          open={this.state.open}
+          transition={{
+            animation: this.state.animation,
+            duration: this.state.duration,
+          }}
+        >
+          <Segment
+            style={{
+              left: '40%',
+              position: 'fixed',
+
+              zIndex: 1000,
+
+              top: '2%',
+
+              zIndex: 1000,
+
+              overflow: 'auto',
+            }}
+          >
+            <Header>
+              <Icon name="window close" style={{ color: 'red !important' }} />
+              Error
+            </Header>
+            <p>{this.state.ErrorMessage}</p>
+          </Segment>
+        </TransitionablePortal>
         <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -238,9 +273,7 @@ class AddUser extends React.Component {
                 ></span>
               </td>
             </tr>
-            <tr>
-              <span>{this.state.ErrorMessage}</span>
-            </tr>
+            <tr>{/* <span>{this.state.ErrorMessage}</span> */}</tr>
           </tbody>
         </table>
       </div>

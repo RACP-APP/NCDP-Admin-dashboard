@@ -9,7 +9,7 @@ import {
   Grid,
   TransitionablePortal,
   Segment,
-  Portal,
+  Label,
   Button,
 } from 'semantic-ui-react';
 
@@ -55,7 +55,7 @@ class AllToghterConmponent extends React.Component {
       Update: false,
       contentID: this.props.contentID,
       errorMessage: '',
-      animation: transitions[0],
+      animation: 'browse',
       duration: 500,
       open: false,
     };
@@ -122,6 +122,7 @@ class AllToghterConmponent extends React.Component {
                     console.log(this.state.data, 'result');
 
                     this.mapContents();
+                    this.props.isReorede();
                   }
                 );
               })
@@ -149,24 +150,40 @@ class AllToghterConmponent extends React.Component {
       for (var i = 0; i < this.state.data.length; i++) {
         //------------------------------------------------- if the content is an image ------------------------------------------------//
         if (this.state.data[i]['MediaType'] === 'Image') {
-          myComponents[i] = <ImagViweing data={this.state.data[i]} />;
+          myComponents[i] = (
+            <Grid.Row>
+              <ImagViweing data={this.state.data[i]} />
+            </Grid.Row>
+          );
         }
         //------------------------------------------------ if the content is an Text ---------------------------------------------------//
 
         if (this.state.data[i]['MediaType'] === 'Text') {
-          myComponents[i] = <TextViweing data={this.state.data[i]} />;
+          myComponents[i] = (
+            <Grid.Row>
+              <TextViweing data={this.state.data[i]} />
+            </Grid.Row>
+          );
         }
 
         //------------------------------------------ if the content is an audio ---------------------------------------------------------//
 
         if (this.state.data[i]['MediaType'] === 'vedio') {
-          myComponents[i] = <VedioViewing data={this.state.data[i]} />;
+          myComponents[i] = (
+            <Grid.Row>
+              <VedioViewing data={this.state.data[i]} />
+            </Grid.Row>
+          );
         }
 
         //---------------------------------------------- if the content is an vedio ------------------------------------------------------//
 
         if (this.state.data[i]['MediaType'] === 'audio') {
-          myComponents[i] = <AudioViewing data={this.state.data[i]} />;
+          myComponents[i] = (
+            <Grid.Row>
+              <AudioViewing data={this.state.data[i]} />
+            </Grid.Row>
+          );
         }
       }
 
@@ -228,9 +245,7 @@ class AllToghterConmponent extends React.Component {
             </TransitionablePortal>
           </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
-          <div className=" row">{this.state.items}</div>
-        </Grid.Row>
+        {this.state.items}
       </Grid>
     );
   }
@@ -255,14 +270,17 @@ class TextViweing extends React.Component {
     var parse = require('html-react-parser');
 
     return (
-      <div id={'T' + this.state.data['TextID']} style={{ width: '100%' }}>
-        <div class="row shawBackground border">
-          {this.state.data['MediaOrder']}
+      <Segment raised style={{ width: '100%' }}>
+        <Label as="a" color="blued" ribbon>
+          رقم : {this.state.data['MediaOrder']}
+        </Label>
+
+        <div id={'T' + this.state.data['TextID']} style={{ width: '100%' }}>
+          <div class="row">
+            {parse(this.convertHTMLStringToDom(this.state.data['ContentText']))}
+          </div>
         </div>
-        <div class="row">
-          {parse(this.convertHTMLStringToDom(this.state.data['ContentText']))}
-        </div>
-      </div>
+      </Segment>
     );
   }
 }
@@ -278,18 +296,18 @@ class ImagViweing extends React.Component {
 
   render() {
     return (
-      <div style={{ minWidth: '100%' }}>
-        <div class="row shawBackground border">
-          {this.state.data['MediaOrder']}
+      <Segment raised style={{ width: '100%' }}>
+        <Label as="a" color="blued" ribbon>
+          رقم : {this.state.data['MediaOrder']}
+        </Label>
+
+        <div>
+          <div class="row shawBackground border"></div>
+          <div class="row">
+            <img class="img-row" src={this.state.data['MediaLink']}></img>
+          </div>
         </div>
-        <div class="row">
-          <img
-            class="img-row"
-            style={{ minWidth: '100%' }}
-            src={this.state.data['MediaLink']}
-          ></img>
-        </div>
-      </div>
+      </Segment>
     );
   }
 }
@@ -305,12 +323,14 @@ class AudioViewing extends React.Component {
 
   render() {
     return (
-      <div class="row" id={'a-' + this.state.data['MediaID']}>
-        <div class="row shawBackground border">
-          {this.state.data['MediaOrder']}
+      <Segment raised style={{ width: '100%' }}>
+        <Label as="a" color="blued" ribbon>
+          رقم : {this.state.data['MediaOrder']}
+        </Label>
+        <div class="row" id={'a-' + this.state.data['MediaID']}>
+          <AudioPlayer AudioPlayer src={this.state.data['MediaLink']} />
         </div>
-        <AudioPlayer AudioPlayer src={this.state.data['MediaLink']} />
-      </div>
+      </Segment>
     );
   }
 }
@@ -325,24 +345,26 @@ class VedioViewing extends React.Component {
   }
   render() {
     return (
-      <div class="row">
-        <div class="row shawBackground border">
-          {this.state.data['MediaOrder']}
-        </div>
+      <Segment raised style={{ width: '100%' }}>
+        <Label as="a" color="blued" ribbon>
+          رقم : {this.state.data['MediaOrder']}
+        </Label>
         <div class="row">
-          <video
-            controls
-            type="video/*"
-            src={this.state.data['MediaLink']}
-            width="100%"
-            height="100%"
-          >
-            <source src="video.wmv" />
-            متصفحك لا يدعم الفيديو ، يمكنك تنزيل الفيديو بدلا من:{' '}
-            <a href="video.ogv">Ogg</a>
-          </video>
+          <div class="row">
+            <video
+              controls
+              type="video/*"
+              src={this.state.data['MediaLink']}
+              width="100%"
+              height="100%"
+            >
+              <source src="video.wmv" />
+              متصفحك لا يدعم الفيديو ، يمكنك تنزيل الفيديو بدلا من:{' '}
+              <a href="video.ogv">Ogg</a>
+            </video>
+          </div>
         </div>
-      </div>
+      </Segment>
     );
   }
 }

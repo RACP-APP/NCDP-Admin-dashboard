@@ -1,6 +1,6 @@
 [
   {
-    "server": "http://localhost:3005/",
+    "server": "http://localhost:3000/",
     "logo": "logo.png"
   }
 ]

@@ -608,6 +608,7 @@ ul {
   font-size: medium;
   color: #6f7a81;
   display: block;
+  font-weight: bold;
   transition: 0.3s;
 }
 .sidepareItem {

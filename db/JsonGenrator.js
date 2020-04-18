@@ -1,14 +1,14 @@
 // import { promises as fs } from 'fs';
 const db = require('./db');
 const fs = require('fs');
-// const path = require('path');
+const path = require('path');
 var modules = [];
 var cc = false;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 async function writeotfile(object) {
-  var file = path.join(__dirname, './phraseFreqs.json');
+  var file = path.join(__dirname, '/phraseFreqs.json');
   try {
     await fs.writeFileSync(file, JSON.stringify(object));
     console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiii2');
@@ -21,7 +21,7 @@ async function getData(cb) {
   await db
     .query(
       'SELECT MODELS.* ,users.userName from  MODELS , `USERS` users Where CreatedBy = users.userID ',
-      async function(err, result) {
+      async function (err, result) {
         object = [];
         if (result) {
           for (var j = 0; j < result.length; j++) {
@@ -40,7 +40,7 @@ async function getData(cb) {
             await db.query(
               'SELECT Topics.* from  Topics  Where Topics.ModelID = ' +
                 result[i]['ModelID'],
-              async function(error, result) {
+              async function (error, result) {
                 if (error) {
                   console.log(err);
                 } else {
@@ -60,7 +60,7 @@ async function getData(cb) {
                     await db.query(
                       'SELECT Article.* , users.userName as createBy, users.userName as UpdatedBy from  Article  , `USERS` users  Where  Article.UpdateByUser=users.userID  AND  Article.CreatedByUser=users.userID  AND Article.TopicID = ' +
                         result[articl]['TopicID'],
-                      async function(error, result) {
+                      async function (error, result) {
                         if (err) {
                         } else {
                           var articls = [];
@@ -84,7 +84,7 @@ async function getData(cb) {
                             await db.query(
                               ' SELECT Content.* from  Content  Where Content.ArticleID =' +
                                 result[content]['ArticleID'],
-                              async function(error, result) {
+                              async function (error, result) {
                                 if (error) {
                                   // console.log('error in content');
                                 } else {
@@ -143,7 +143,7 @@ async function getData(cb) {
                                           await db.query(
                                             'SELECT Media.* from  Media  Where Media.ContentID =' +
                                               contents[m]['contentID'],
-                                            function(err, res) {
+                                            function (err, res) {
                                               if (err) {
                                                 // console.log(err);
                                               } else {
@@ -220,6 +220,6 @@ var creatJson = async () => {
   // });
 };
 module.exports = {
-  creatJson: creatJson
+  creatJson: creatJson,
   // iiiiiiiiiiiii
 };

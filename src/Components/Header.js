@@ -1,8 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 import config from '../config';
-import { Link } from 'react-router-dom';
 
+import { Menu, Icon, Label, Input, Portal, Button } from 'semantic-ui-react';
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -48,20 +48,6 @@ class Header extends React.Component {
       <div className="navnar  transparentBackground" dir="rtl">
         <div id="mySidenav" class="sidenav ">
           <div>
-            <div className="row UserSection">
-              <img
-                className="header_imge"
-                alt="Avatar"
-                src={JSON.parse(localStorage.getItem('user'))['Image']}
-              ></img>
-            </div>
-            <div className="row ">
-              <span className="sidparUserInfo">
-                {JSON.parse(localStorage.getItem('user'))['userName']}: مرحبا
-              </span>
-            </div>
-          </div>
-          <div>
             <a
               href="javascript:void(0)"
               className="closebtn"
@@ -72,10 +58,81 @@ class Header extends React.Component {
               &times;
             </a>
           </div>
-          <div className="sidepareItem borderTop">
+          <Menu size="large" pointing vertical style={{ maxWidth: '250px' }}>
+            <Menu.Item>
+              <div>
+                <div className="row UserSection">
+                  <img
+                    className="header_imge"
+                    alt="Avatar"
+                    src={JSON.parse(localStorage.getItem('user'))['Image']}
+                  ></img>
+                </div>
+                <div className="row ">
+                  <span className="sidparUserInfo">
+                    {JSON.parse(localStorage.getItem('user'))['userName']}:
+                    مرحبا
+                  </span>
+                </div>
+              </div>
+            </Menu.Item>
+            <Menu.Item
+              name="inbox"
+              // active={activeItem === 'inbox'}
+              // onClick={this.handleItemClick}
+            >
+              <Icon name="home" size="large" />
+              <a href={config[0].server}>الصفحة الرئيسيه</a>
+            </Menu.Item>
+
+            <Menu.Item
+              name="spam"
+              // active={activeItem === 'spam'}
+              // onClick={this.handleItemClick}
+            >
+              <Icon name="log out" size="large" />
+              <a
+                onClick={(e) => {
+                  // this.props.redirect('userSetting');
+                  this.props.logOut();
+                }}
+              >
+                تسجيل الخروج
+              </a>
+            </Menu.Item>
+
+            <Menu.Item
+              name="updates"
+              // active={activeItem === 'updates'}
+              // onClick={this.handleItemClick}
+            >
+              <Icon name="cogs" size="large" />
+              <a
+                href={config[0].server + 'userSetting'}
+                onClick={() => {
+                  // this.props.redirect('userSetting');
+                }}
+              >
+                الضبط
+              </a>
+            </Menu.Item>
+            <Menu.Item>
+              <Icon name="chart area" size="big" />
+              <a
+                href={config[0].server + 'Analytics'}
+                onClick={() => {
+                  localStorage.setItem('CurrentnavNode', 'Analytics');
+                  // this.props.redirect('Analytics');
+                }}
+              >
+                إحصائيات
+              </a>
+            </Menu.Item>
+          </Menu>
+          {/* <div className="sidepareItem borderTop">
             <a href={config[0].server}>الصفحة الرئيسيه</a>
-          </div>
-          <div className="sidepareItem borderTop">
+          </div> */}
+          {/* <div className="sidepareItem borderTop">
             <a
               href=""
               onClick={(e) => {
@@ -84,10 +141,10 @@ class Header extends React.Component {
             >
               تسجيل الخروج
             </a>
-          </div>
+          </div> */}
           {}
-          <div className="sidepareItem borderTop">
-            {/* <Link to="/"></Link> */}
+          {/* <div className="sidepareItem borderTop">
+            {/* <Link to="/"></Link>
             <a
               onClick={() => {
                 this.props.redirect('userSetting');
@@ -104,7 +161,7 @@ class Header extends React.Component {
             >
               إحصائيات
             </a>
-          </div>
+          </div> */}
         </div>
 
         <div className="  infoi transparentBackground">

@@ -13,6 +13,7 @@ import ImageConten from './contentComponents/imageContent';
 import Wordconverter from './contentComponents/ConvertWord';
 import FileUploader from 'react-firebase-file-uploader';
 import ImageFileUploader from '../Components/uploadimage';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';
@@ -98,29 +99,16 @@ class ContentViwer extends React.Component {
 
   //---------------------------------------- Handel Image Uploadin --------------------------------------------//
   ImageshandelSucces(e) {
-    // console.log(firebase.storage().app.remoteConfig());
-    console.log(e, 'yyyyyyyyyyyyyyy');
     this.setState({ ImageUrl: e, loading: false }, () => {
       this.onClickHandlerForImages();
     });
-    //       this.onClickHandlerForImages();
-    // firebase
-    //   .storage()
-    //   .ref()
-    //   .child('images')
-    //   .child(e)
-    //   .getDownloadURL()
-    //   .then((url) => {
-    //     console.log(url);
-    //     this.setState({ ImageUrl: url, loading: false }, () => {
-    //       this.onClickHandlerForImages();
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }
 
+  isReordered() {
+    this.getAllContentText();
+    this.getAllMedia();
+    localStorage.setItem('ContentUpdate', '1');
+  }
   //-----------------------------------------------Get all Media agine ------------------------------------------//
   getAllMedia() {
     axios
@@ -157,6 +145,8 @@ class ContentViwer extends React.Component {
         })
         .then((result) => {
           this.getAllContentText();
+          localStorage.setItem('ContentUpdate', '1');
+
           console.log('تم');
           // this.setState({ currentText: '', currentTextID: });
         })
@@ -183,6 +173,7 @@ class ContentViwer extends React.Component {
         })
         .then((result) => {
           this.getAllContentText();
+          localStorage.setItem('ContentUpdate', '1');
         })
         .catch((error) => {
           this.setState({
@@ -242,6 +233,7 @@ class ContentViwer extends React.Component {
       .then((result) => {
         console.log(result);
         this.getAllContentText();
+        localStorage.setItem('ContentUpdate', '1');
       })
       .catch((error) => {
         console.log(error);
@@ -262,6 +254,7 @@ class ContentViwer extends React.Component {
       })
       .then((result) => {
         this.getAllContentText();
+        localStorage.setItem('ContentUpdate', '1');
       })
       .catch((error) => {
         console.log(error);
@@ -288,9 +281,14 @@ class ContentViwer extends React.Component {
     });
   };
   onClickHandlerForAudio = () => {
-    this.setState({
-      loading: true,
-    });
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {
+        localStorage.setItem('ContentUpdate', '1');
+      }
+    );
 
     var path = this.state.audioURL;
 
@@ -304,6 +302,8 @@ class ContentViwer extends React.Component {
         MediaType: 'audio',
       })
       .then((reslt) => {
+        localStorage.setItem('ContentUpdate', '1');
+
         this.getAllMedia();
       })
       .catch((error) => {
@@ -314,9 +314,14 @@ class ContentViwer extends React.Component {
   };
 
   onClickHandlerForImages = (e) => {
-    this.setState({
-      loading: true,
-    });
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {
+        localStorage.setItem('ContentUpdate', '1');
+      }
+    );
 
     console.log("this.props.data['ContentID']", this.props.data['contentID']);
     var path = this.state.ImageUrl;
@@ -332,6 +337,8 @@ class ContentViwer extends React.Component {
         MediaType: 'Image',
       })
       .then((reslt) => {
+        localStorage.setItem('ContentUpdate', '1');
+
         this.getAllMedia();
       })
       .catch((error) => {
@@ -356,6 +363,8 @@ class ContentViwer extends React.Component {
         MediaType: 'vedio',
       })
       .then((reslt) => {
+        localStorage.setItem('ContentUpdate', '1');
+
         this.getAllMedia();
       })
       .catch((error) => {
@@ -386,6 +395,20 @@ class ContentViwer extends React.Component {
   render() {
     return (
       <div style={{ minWidth: '100%' }} dir="rtl">
+        <Router>
+          {/* <Route>
+            <Redirect to={localStorage.getItem('CurrentnavNode')}></Redirect>
+          </Route> */}
+
+          <Route
+            exact
+            path="/Dashboard/Model"
+            render={() => {
+              console.log('ddddddddd');
+              return <div>hiiiiiiiiiiiiiiii</div>;
+            }}
+          ></Route>
+        </Router>
         <LoadingScreen
           style={{ maxHeight: '700px' }}
           loading={this.state.loading}
@@ -674,6 +697,7 @@ class ContentViwer extends React.Component {
             </Grid.Column>
             <Grid.Column width={12}>
               <ContentViweing
+                isReorede={this.isReordered.bind(this)}
                 data={this.state.MediaContent}
                 contentID={this.state.contentID}
               ></ContentViweing>

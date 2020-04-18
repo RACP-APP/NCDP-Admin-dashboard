@@ -909,7 +909,7 @@ var updateUser = (userName, Email, Image, password, userID, cb) => {
           if (result.length === 1 && result[0]['userID'] !== userID) {
             console.log(result, userID);
             console.log('not in dublicat .........', result);
-            cb('dublicap Email Accounts', null);
+            cb('بريد إلكتروني مكرر .', null);
           } else {
             console.log('not in dublicat .........', result);
             //---------------------- if no Email like this Email ----------------------------//
@@ -958,38 +958,48 @@ var AddNewToken = (Token, MobID, cb) => {
   );
 };
 
-// var ChangePassword=(userName, Email, Image, password, userID, cb) => {
-//   db.query
-// }
+//-------------------------------------------- get all Mob Registration Token --------------------------------------------------//
+var getRegistrationTokens = (cb) => {
+  db.query('Select  Token from MobRegistration ', (error, result, fields) => {
+    if (error) {
+      cb(error, result);
+    } else {
+      cb(null, result);
+    }
+  });
+};
+
+//-----------------------------------------------------------------------------------------------------------------------------//
 module.exports = {
-  AddNewToken: AddNewToken,
-  ReorderContent: ReorderContent,
-  addUser: addUser,
-  updateUser: updateUser,
-  getAllUsers: getAllUsers,
-  deleteUser: deleteUser,
-  UpdateTexConten: UpdateTexConten,
-  getAllMedia: getAllMedia,
-  DeleteFromMedia: DeleteFromMedia,
-  insertToMedia: insertToMedia,
-  DeleteTextByID: DeleteTextByID,
-  GetAllTextsForaContent: GetAllTextsForaContent,
-  AddingText: AddingText,
-  createContentID: createContentID,
-  getOneTopic: getOneTopic,
-  UpdateTopic: UpdateTopic,
-  deleteTopic: deleteTopic,
-  GetUserByUserName: GetUserByUserName,
-  GetUsers: GetUsers,
-  getAllModules: getAllModules,
-  getUserByID: getUserByID,
-  UpdateModule: UpdateModule,
-  DeleteeModule: DeleteeModule,
-  getAllTopicOfModels: getAllTopicOfModels,
-  addTopicToAmodel: addTopicToAmodel,
-  getAllArticleOfTopic: getAllArticleOfTopic,
-  UpdateArticle: UpdateArticle,
-  deleteArticle: deleteArticle,
-  addArticle: addArticle,
-  addModule: addModule,
+  AddNewToken,
+  getRegistrationTokens,
+  ReorderContent,
+  addUser,
+  updateUser,
+  getAllUsers,
+  deleteUser,
+  UpdateTexConten,
+  getAllMedia,
+  DeleteFromMedia,
+  insertToMedia,
+  DeleteTextByID,
+  GetAllTextsForaContent,
+  AddingText,
+  createContentID,
+  getOneTopic,
+  UpdateTopic,
+  deleteTopic,
+  GetUserByUserName,
+  GetUsers,
+  getAllModules,
+  getUserByID,
+  UpdateModule,
+  DeleteeModule,
+  getAllTopicOfModels,
+  addTopicToAmodel,
+  getAllArticleOfTopic,
+  UpdateArticle,
+  deleteArticle,
+  addArticle,
+  addModule,
 };

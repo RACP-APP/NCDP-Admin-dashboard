@@ -44,7 +44,9 @@ class App extends React.Component {
   }
 
   logOut() {
-    this.redirectto('/');
+    localStorage.setItem('CurrentnavNode', 'LogIn');
+
+    // this.redirectto('LogIn');
 
     this.setState(
       {
@@ -56,10 +58,15 @@ class App extends React.Component {
         localStorage.setItem('CurrentnavNode', 'LogIn');
       }
     );
+    console.log(
+      localStorage.getItem('CurrentnavNode'),
+      'CurrentnavNode----------------'
+    );
   }
 
   redirectto(Node) {
     localStorage.setItem('CurrentnavNode', Node);
+    console.log(Node, 'kkkk');
 
     this.setState({
       redirect: Node,

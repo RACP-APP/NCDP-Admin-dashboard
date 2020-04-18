@@ -15,7 +15,7 @@ class MainDashBoard extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('in masin dash board');
+    //  localStorage.setItem('NavePointer', 'Content');
   }
   ArrangDashControles(satate) {
     this.setState({

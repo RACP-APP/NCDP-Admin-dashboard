@@ -10,9 +10,12 @@ class MainAnalytic extends React.Component {
     super(props);
     this.state = {};
   }
+  componentDidMount() {
+    localStorage.setItem('CurrentnavNode', 'Analytics');
+  }
   render() {
     return (
-      <div style={{ paddingBottom: '3%', height: '60%', width: '90%' }}>
+      <div style={{ paddingBottom: '3%', height: '60%', width: '100%' }}>
         <Grid>
           <Grid.Row>
             <Grid.Column width={8}>
