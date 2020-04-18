@@ -11,8 +11,16 @@ import MyList from './mylist';
 import TopicControlPanel from './TopicControlPanel';
 import ContentViwer from './ContentViwer';
 import ModuleControlPanel from './ModuleControlePanel';
-import { List, Image, Card, Menu, Segment, Grid } from 'semantic-ui-react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import {
+  List,
+  Step,
+  Card,
+  Menu,
+  Segment,
+  Grid,
+  Icon,
+  Breadcrumb,
+} from 'semantic-ui-react';
 
 import $ from 'jquery';
 
@@ -30,6 +38,7 @@ class MainDashBoard extends React.Component {
       isContent: false,
       ViwerTitle: <a></a>,
       currentModel: 0,
+      steps: [],
     };
 
     this.goToTopicsViwer = this.goToTopicsViwer.bind(this);
@@ -61,6 +70,11 @@ class MainDashBoard extends React.Component {
 
   //------------------------ afunction to get all articels of a cliked Artcile ----------//
   ArticleOfTopic(e) {
+    console.log(
+      $('#' + e.currentTarget.id).attr('data-name'),
+      ' e.currentTarget.id'
+    );
+    this.updateNavigator($('#' + e.currentTarget.id).attr('data-name'));
     if (localStorage.getItem('CurrentTpic') !== null) {
       $('#art' + localStorage.getItem('CurrentTpic'))
         .find('div#' + localStorage.getItem('CurrentTpic'))
@@ -114,7 +128,7 @@ class MainDashBoard extends React.Component {
         isTpics: true,
         isContent: false,
         currentModel: parseInt(localStorage.getItem('selectedModel')),
-        ViwerTitle: <a className="accordianTitle">عارض الموضوع</a>,
+
         Updated: false,
       },
       () => {
@@ -128,9 +142,14 @@ class MainDashBoard extends React.Component {
         '/Dashbord/getModuleTopics?ID=' + localStorage.getItem('selectedModel')
       )
       .then((result) => {
-        this.setState({
-          module: result.data,
-        });
+        this.setState(
+          {
+            module: result.data,
+          },
+          () => {
+            console.log('module', this.state.module);
+          }
+        );
       })
       .catch((error) => {
         console.log(error);
@@ -153,7 +172,7 @@ class MainDashBoard extends React.Component {
       .then((result) => {
         this.setState({
           module: result.data,
-          ViwerTitle: <div className="accordianTitle">عارض النماذج</div>,
+          ViwerTitle: ' عارض النماذج',
         });
       })
       .catch((error) => {
@@ -191,6 +210,46 @@ class MainDashBoard extends React.Component {
     }
   }
 
+  //------------------------------------------Update Navigator -------------------------------------------//
+  updateNavigator(newNode) {
+    console.log(this.state.steps);
+    if (localStorage.getItem('CurrentNav') === 'Model') {
+      this.setState(
+        {
+          steps: [newNode],
+        },
+        () => {
+          this.createNavPare();
+        }
+      );
+    } else {
+      if (localStorage.getItem('CurrentNav') === 'Topic') {
+        var d = this.state.steps;
+        if (d.length === 3) {
+          d.pop();
+        }
+        d[1] = newNode;
+        this.setState(
+          {
+            steps: d,
+          },
+          () => {
+            this.createNavPare();
+          }
+        );
+      }
+    }
+  }
+
+  //------------------------------------ Create NavePare -------------------------------------------------//
+  createNavPare() {
+    const sections = this.state.steps.map((item) => {
+      return { key: item, content: item, link: true };
+    });
+    this.setState({
+      ViwerTitle: <Breadcrumb sections={sections}></Breadcrumb>,
+    });
+  }
   // console.log(localStorage.getItem('CurrentNav'));
 
   //-------------------------------------------Get All the Modules ---------------------------------------//
@@ -200,6 +259,7 @@ class MainDashBoard extends React.Component {
         <ModuleList
           model={model}
           convertToTopic={this.goToTopicsViwer.bind(this)}
+          updateNavigator={this.updateNavigator.bind(this)}
           UpdateListafterDelete={this.UpdateListafterDelete.bind(this)}
         />
       );
@@ -215,12 +275,14 @@ class MainDashBoard extends React.Component {
         <Grid.Row
           key={model['TopicID']}
           id={'art' + model['TopicID']}
+          data-name={model['Title']}
           onClick={this.ArticleOfTopic.bind(this)}
         >
           <Grid.Column>
             <ArticlesList
               Artical={model}
               goToTopicsViwer={this.goToTopicsViwer.bind(this)}
+              updateNavigator={this.updateNavigator.bind(this)}
               currentModID={localStorage.getItem('selectedModel')}
             ></ArticlesList>
           </Grid.Column>
@@ -247,6 +309,7 @@ class MainDashBoard extends React.Component {
       <ContentViwer
         data={this.state.Contents}
         convertToTopic={this.goToTopicsViwer.bind(this)}
+        updateNavigator={this.updateNavigator.bind(this)}
         UpdateListafterDelete={this.UpdateListafterDelete.bind(this)}
       />
     );

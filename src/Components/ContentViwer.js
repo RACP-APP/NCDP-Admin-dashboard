@@ -13,6 +13,7 @@ import ImageConten from './contentComponents/imageContent';
 import Wordconverter from './contentComponents/ConvertWord';
 import FileUploader from 'react-firebase-file-uploader';
 import ImageFileUploader from '../Components/uploadimage';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';

@@ -135,6 +135,7 @@ class ArticlesItem extends React.Component {
   getContent(e) {
     console.log(this.props.data['TopicID'], this.props.data['ArticleID']);
     localStorage.setItem('selectedArticle', this.props.data['ArticleID']);
+    console.log('uuuuuuuuuuuuuuuuuuuuuuuu');
     localStorage.setItem('CurrentNav', 'Content');
     axios
       .post(config[0].server + 'Articles/getContentID', {

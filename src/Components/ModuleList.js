@@ -56,12 +56,15 @@ class ModuleList extends React.Component {
     var id =
       parseInt(e.currentTarget.id) ||
       parseInt($(e.currentTarget).attr('data-id'));
+    console.log($(e.currentTarget).attr('data-name'));
+    this.props.updateNavigator($(e.currentTarget).attr('data-name'));
   }
   //--------------------------------------------------------------------------//
   //------this fnc is to get the model id and send it back to the Viwer ------//
   //--------------------------------------------------------------------------//
 
   goToTopics(e) {
+    this.UpdateNavegation(e);
     console.log('im go to topics', parseInt(e.currentTarget.id));
     var id =
       parseInt(e.currentTarget.id) ||
@@ -157,6 +160,7 @@ class ModuleList extends React.Component {
           style={{ maxWidth: '210px' }}
           color="blue"
           key="ModelID"
+          data-name={this.props.model['Title']}
           id={this.props.model['ModelID']}
           className="ModuleCrd "
           onDoubleClick={this.goToTopics.bind(this)}
