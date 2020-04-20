@@ -6,7 +6,15 @@ import config from '../config.json';
 import $ from 'jquery';
 import FileUploader from '../Components/uploadimage';
 import firebase from 'firebase';
-import { Segment, Button, Image, Grid } from 'semantic-ui-react';
+import {
+  Segment,
+  Button,
+  Image,
+  Grid,
+  Modal,
+  Label,
+  Input,
+} from 'semantic-ui-react';
 
 class ModuleControlPanel extends React.Component {
   constructor(props) {
@@ -21,6 +29,7 @@ class ModuleControlPanel extends React.Component {
       disabled: true,
       loading: 0,
       url: '',
+      open: false,
     };
     this.addNewModule = this.addNewModule.bind(this);
   }
@@ -82,7 +91,8 @@ class ModuleControlPanel extends React.Component {
           {
             addtionMode: false,
             warinig: false,
-            warningMessage: 'عناوين مكررة',
+            warningMessage: '',
+            open: false,
           },
           () => {
             that.props.mapModels();
@@ -95,7 +105,6 @@ class ModuleControlPanel extends React.Component {
           warinig: true,
           warningMessage: 'عناوين مكررة',
         });
-        console.log(error);
       });
   };
 
@@ -121,82 +130,130 @@ class ModuleControlPanel extends React.Component {
     }
   }
 
+  show = () => this.setState({ open: true });
+  close = () => this.setState({ open: false });
+
   render() {
     return (
       <Segment raised>
-        {!this.state.addtionMode ? (
-          <div className="row">
-            {/* --------------------- Showing plus ------------------ */}
+        <div className="row">
+          {/* --------------------- Showing plus ------------------ */}
 
-            <Button
-              circular
-              icon="add circle"
-              onClick={this.addNewModule.bind(this)}
-            />
-          </div>
-        ) : (
-          <div style={{ maxWidth: '300px', left: 0, right: 0, margin: 'auto' }}>
-            <Grid>
-              <Grid.Row>
-                <Grid.Column width={3}>
-                  <Image
-                    src={
-                      this.state.url ||
-                      'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005'
-                    }
-                    avatar
-                    size="small"
-                  />
-                </Grid.Column>
-                <Grid.Column width={13}>
-                  <input
-                    type="text"
-                    placeholder=" أدخل عنوان الحقل - الوحدة المطلوبة"
-                    onChange={(e) => {
+          <Button
+            circular
+            icon="add circle"
+            onClick={this.show.bind(this)}
+          ></Button>
+
+          <Modal
+            style={{ maxHeight: '250px', left: 0, right: 0, margin: 'auto' }}
+            size="mini"
+            dimmer="blurring"
+            open={this.state.open}
+            onClose={this.close}
+          >
+            <Modal.Header>إضافة وحده جديده</Modal.Header>
+            <Modal.Content image>
+              <Image
+                wrapped
+                size="small"
+                src={
+                  this.state.url ||
+                  'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/images%2Fcircle-png-circle-icon-1600.png?alt=media&token=1b9d90e2-f5ce-4e08-9bb7-ccd0ce79786c'
+                }
+              />
+              <div style={{ position: 'absolute', right: 10, top: '25%' }}>
+                <FileUploader
+                  accept="image/*"
+                  name="images"
+                  onUploadStart={this.handelloadStart.bind(this)}
+                  onUploadSuccess={this.handelSucces.bind(this)}
+                  onProgress={this.inPrograss.bind(this)}
+                ></FileUploader>
+              </div>
+              <Modal.Description>
+                <div
+                  style={{
+                    maxWidth: '300px',
+                    left: 0,
+                    right: 0,
+                    margin: 'auto',
+                  }}
+                >
+                  <Grid>
+                    <Grid.Row>
+                      <Grid.Column width={16}>
+                        <div
+                          style={{
+                            maxWidth: '300px',
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            margin: 'auto',
+                          }}
+                        >
+                          <Input
+                            labelPosition="right"
+                            type="text"
+                            placeholder="Amount"
+                          >
+                            <Label>العنوان</Label>
+                            <input
+                              placeholder=" أدخل عنوان الحقل - الوحدة المطلوبة"
+                              onChange={(e) => {
+                                this.setState({
+                                  Title: e.target.value,
+                                });
+                                console.log(e.target.value);
+                              }}
+                            />
+                          </Input>
+
+                          <p style={{ color: 'red', fontWeight: 'bold' }}>
+                            {this.state.warningMessage}
+                          </p>
+                        </div>
+                      </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Grid.Column width={16}></Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </div>
+              </Modal.Description>
+            </Modal.Content>
+            <Modal.Actions>
+              <div
+                style={{
+                  textAlign: 'center',
+                }}
+              >
+                <Button.Group basic size="small">
+                  <Button
+                    icon="cancel"
+                    onClick={(e) => {
                       this.setState({
-                        Title: e.target.value,
+                        addtionMode: false,
+                        warinig: false,
+                        warningMessage: '',
+                        open: false,
                       });
-                      console.log(e.target.value);
+                      $('.glyphicon-plus').attr(
+                        'class',
+                        'glyphicon glyphicon-plus'
+                      );
                     }}
                   />
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Column width={3}>
-                  <FileUploader
-                    accept="image/*"
-                    name="images"
-                    onUploadStart={this.handelloadStart.bind(this)}
-                    onUploadSuccess={this.handelSucces.bind(this)}
-                    onProgress={this.inPrograss.bind(this)}
-                  ></FileUploader>
-                </Grid.Column>
-                <Grid.Column width={13}>
-                  <Button.Group basic size="small">
-                    <Button
-                      icon="cancel"
-                      onClick={(e) => {
-                        this.setState({
-                          addtionMode: false,
-                          warinig: false,
-                          warningMessage: '',
-                        });
-                        $('.glyphicon-plus').attr(
-                          'class',
-                          'glyphicon glyphicon-plus'
-                        );
-                      }}
-                    />
-                    <Button
-                      icon="save"
-                      onClick={this.onClickHandler.bind(this)}
-                    />
-                  </Button.Group>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </div>
-        )}
+                  <Button
+                    icon="save"
+                    onClick={this.onClickHandler.bind(this)}
+                  />
+                </Button.Group>
+              </div>
+            </Modal.Actions>
+          </Modal>
+        </div>
       </Segment>
     );
   }
