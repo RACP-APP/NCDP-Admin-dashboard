@@ -148,6 +148,8 @@ class ModuleControlPanel extends React.Component {
           ></Button>
 
           <Modal
+            closeOnDimmerClick={false}
+            closeOnEscape={true}
             style={{
               maxHeight: '250px',
               left: 0,

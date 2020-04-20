@@ -77,7 +77,8 @@ class ControlPanel extends React.Component {
         this.setState({
           addtionMode: false,
           warinig: true,
-          warningMessage: 'عنوان مكرر',
+          warningMessage: '',
+          open: false,
         });
 
         $('#ArticlControlPanel').removeClass('row  ControlePanel-col ');
@@ -86,6 +87,7 @@ class ControlPanel extends React.Component {
         that.setState({
           warinig: true,
           warningMessage: 'اسم مكرر أو خطأ في الاتصال',
+          open: true,
         });
         console.log(error);
       });
@@ -249,6 +251,7 @@ class ControlPanel extends React.Component {
                       addtionMode: false,
                       warinig: false,
                       warningMessage: '',
+                      open: false,
                     });
                     $('.glyphicon-plus').attr(
                       'class',
@@ -261,92 +264,6 @@ class ControlPanel extends React.Component {
             </div>
           </Modal.Actions>
         </Modal>
-        {this.state.addtionMode ? (
-          <div className="">
-            <div className="row">
-              <div className="col-4 ">
-                <input
-                  type="image"
-                  className="ItemImage header_imge "
-                  src={
-                    this.state.url ||
-                    'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=8e62158f-a9f1-42fa-b87e-03b390c4db9c'
-                  }
-                ></input>
-
-                <FileUploader
-                  accept="image/*"
-                  name="images"
-                  onUploadStart={this.handelloadStart.bind(this)}
-                  onUploadSuccess={this.handelSucces.bind(this)}
-                  onProgress={this.onProgress.bind(this)}
-                ></FileUploader>
-                {this.state.loading ? this.state.loading : null}
-
-                {this.state.warinig ? (
-                  <div style={{ color: 'red' }}>
-                    {this.state.warningMessage}
-                  </div>
-                ) : null}
-              </div>
-              <div className="col-6 rowCenter">
-                <div className="row">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder={'يجب إدراج هذا الحقل'}
-                    onChange={(e) => {
-                      this.setState({
-                        Title: e.target.value,
-                      });
-                      console.log(e.target.value);
-                    }}
-                  />
-                </div>
-
-                <div className="row">
-                  <input
-                    type="text"
-                    class="form-control"
-                    aria-label="Large"
-                    aria-describedby="inputGroup-sizing-sm"
-                    onChange={(e) => {
-                      this.setState({
-                        Notes: e.target.value,
-                      });
-                      console.log(e.target.value);
-                    }}
-                  />
-                </div>
-              </div>
-              {/*  --------------------------- Edit Mode Icons ------------------------------------------- */}
-              <div className="col-2 rowCenter">
-                <div className=" row ItemIcons ">
-                  <span
-                    class="glyphicon glyphicon-ok"
-                    onClick={this.onClickHandler.bind(this)}
-                  ></span>
-                </div>
-                <div className=" row ItemIcons ">
-                  <span
-                    class="glyphicon glyphicon-remove-circle"
-                    onClick={(e) => {
-                      this.setState({
-                        addtionMode: false,
-                        warinig: false,
-                        warningMessage: '',
-                      });
-                      $('.glyphicon-plus').attr(
-                        'class',
-                        'glyphicon glyphicon-plus '
-                      );
-                    }}
-                  ></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null}
       </div>
     );
   }
