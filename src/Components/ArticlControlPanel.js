@@ -65,7 +65,7 @@ class ControlPanel extends React.Component {
     object['TopicID'] = parseInt(localStorage.getItem('CurrentTpic'));
     object['Icon'] =
       this.state.url ||
-      'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=a9f1a9fa-08e8-40a8-8c55-a8e4a3bcb005';
+      'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/images%2Fcircle-png-circle-icon-1600.png?alt=media&token=1b9d90e2-f5ce-4e08-9bb7-ccd0ce79786c';
     var that = this;
 
     axios
@@ -128,6 +128,7 @@ class ControlPanel extends React.Component {
           circular
           icon="step backward"
           onClick={(e) => {
+            localStorage.removeItem('CurrentTpic');
             this.props.backToModules();
           }}
         />
@@ -158,7 +159,7 @@ class ControlPanel extends React.Component {
               size="tiny"
               src={
                 this.state.url ||
-                'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/circle-png-circle-icon-1600.png?alt=media&token=8e62158f-a9f1-42fa-b87e-03b390c4db9c'
+                'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/images%2Fcircle-png-circle-icon-1600.png?alt=media&token=1b9d90e2-f5ce-4e08-9bb7-ccd0ce79786c'
               }
             />
             <div style={{ position: 'absolute', right: 10, top: '25%' }}>
@@ -214,6 +215,7 @@ class ControlPanel extends React.Component {
                         <input
                           type="text"
                           class="form-control"
+                          placeholder={'يجب إدراج هذا الحقل'}
                           aria-label="Large"
                           aria-describedby="inputGroup-sizing-sm"
                           onChange={(e) => {
