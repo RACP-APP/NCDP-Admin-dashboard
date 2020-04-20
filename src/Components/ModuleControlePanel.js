@@ -93,6 +93,8 @@ class ModuleControlPanel extends React.Component {
             warinig: false,
             warningMessage: '',
             open: false,
+            url:
+              'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/images%2Fcircle-png-circle-icon-1600.png?alt=media&token=1b9d90e2-f5ce-4e08-9bb7-ccd0ce79786c',
           },
           () => {
             that.props.mapModels();
@@ -146,7 +148,13 @@ class ModuleControlPanel extends React.Component {
           ></Button>
 
           <Modal
-            style={{ maxHeight: '250px', left: 0, right: 0, margin: 'auto' }}
+            style={{
+              maxHeight: '250px',
+              left: 0,
+              right: 0,
+              margin: 'auto',
+              overflow: 'auto',
+            }}
             size="mini"
             dimmer="blurring"
             open={this.state.open}
