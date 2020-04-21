@@ -237,7 +237,7 @@ class AllToghterConmponent extends React.Component {
                   getAllContent={this.getAllContent.bind(this)}
                 />
                 <Button
-                  content="أغلق واحفظ"
+                  content="خفظ "
                   negative
                   onClick={this.handleClose.bind(this)}
                 />

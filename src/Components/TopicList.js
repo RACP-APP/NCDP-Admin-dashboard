@@ -5,6 +5,7 @@ import axios from 'axios';
 import config from '../config.json';
 import FileUploader from '../Components/uploadimage';
 import { Input, Image, Button } from 'semantic-ui-react';
+import ErrorDialog from '../Components/ErroeDialog';
 
 class ArticlesList extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class ArticlesList extends React.Component {
       imagePreviewUrl: null,
       Wrnining: false,
       WrniningMessage: '',
+      open: false,
       url: '',
       loading: 0,
     };
@@ -47,11 +49,16 @@ class ArticlesList extends React.Component {
       .then((result) => {
         this.setState({
           Wrnining: false,
+          open: false,
+          WrniningMessage: '',
         });
         this.props.goToTopicsViwer();
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          open: true,
+          WrniningMessage: error.response.data,
+        });
       });
   }
 
@@ -67,15 +74,21 @@ class ArticlesList extends React.Component {
       .then((result) => {
         this.setState({
           data: result.data[0],
+          WrniningMessage: '',
+          open: false,
         });
       })
       .catch((error) => {
-        console.log(error);
+        this.state({
+          open: true,
+          WrniningMessage: error.response.data,
+        });
       });
   }
   editTopic() {
     this.setState({
       editionMode: true,
+      open: false,
     });
   }
 
@@ -105,6 +118,7 @@ class ArticlesList extends React.Component {
           Wrnining: false,
           url: '',
           loading: 0,
+          open: false,
         });
       })
       .catch((error) => {
@@ -113,6 +127,7 @@ class ArticlesList extends React.Component {
         this.setState({
           Wrnining: true,
           WrniningMessage: error.response.data,
+          open: true,
         });
       });
   };
@@ -127,6 +142,10 @@ class ArticlesList extends React.Component {
     if (this.state.editionMode) {
       return (
         <table id={this.state.data['TopicID']} className="bottomBorder">
+          <ErrorDialog
+            open={this.state.open}
+            ErrorMessage={this.state.WrniningMessage}
+          />
           <tr> {this.state.Wrnining ? this.state.WrniningMessage : null}</tr>
           <tr>
             <td>

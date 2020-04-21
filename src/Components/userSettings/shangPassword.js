@@ -5,6 +5,7 @@ import config from '../../config.json';
 import axios from 'axios';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase';
+import ErrorMessage from '../../Components/ErroeDialog';
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class ChangePassword extends React.Component {
       ErrorMessage: '',
       oldPasswordHasChanged: false,
       error: false,
+      open: false,
     };
   }
 
@@ -85,6 +87,7 @@ class ChangePassword extends React.Component {
     if (this.state.oldPassword === '' || this.state.aEmail === '') {
       this.setState({
         ErrorMessage: 'من فضلك أدخل كلمة مرورك ..',
+        open: true,
       });
     } else {
       if (this.checkConfirmingPassword()) {
@@ -98,6 +101,7 @@ class ChangePassword extends React.Component {
             this.setState(
               {
                 ErrorMessage: '',
+                open: false,
               },
               () => {
                 this.props.LogOut();
@@ -108,6 +112,7 @@ class ChangePassword extends React.Component {
             console.log(error.response.data);
             this.setState({
               ErrorMessage: error.response.data,
+              open: true,
             });
           });
       }
@@ -126,6 +131,7 @@ class ChangePassword extends React.Component {
       this.setState({
         error: true,
         ErrorMessage: 'كلمة السر غير متطابقة',
+        open: true,
       });
       return false;
       //------------------ if password dose not match then return false and show error ------------------//
@@ -136,18 +142,24 @@ class ChangePassword extends React.Component {
       this.setState({
         error: true,
         ErrorMessage: 'أدخل كلمة مرور صالحة',
+        open: true,
       });
       return false;
     }
     this.setState({
       error: false,
       ErrorMessage: '',
+      open: false,
     });
     return true;
   }
   render() {
     return (
       <div className=" row" style={{ width: '100%' }}>
+        <ErrorMessage
+          open={this.state.open}
+          ErrorMessage={this.state.ErrorMessage}
+        />
         <br></br>
         <div className="row border">
           <div className="col-3 shangpassword">
@@ -300,9 +312,6 @@ class ChangePassword extends React.Component {
                   }}
                 ></input>
               </div>
-            </div>
-            <div className="row">
-              <p style={{ color: 'red' }}>{this.state.ErrorMessage}</p>
             </div>
           </div>
         </div>

@@ -13,8 +13,7 @@ import ImageConten from './contentComponents/imageContent';
 import Wordconverter from './contentComponents/ConvertWord';
 import FileUploader from 'react-firebase-file-uploader';
 import ImageFileUploader from '../Components/uploadimage';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-
+import ErrorDialog from '../Components/ErroeDialog';
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';
 import { Segment, Button, Table, Grid } from 'semantic-ui-react';
@@ -27,7 +26,6 @@ class ContentViwer extends React.Component {
       currentText: 'ytttttttt',
       currentTextID: null,
       addMode: false,
-      errorMessage: '',
       ModuleID: parseInt(localStorage.getItem('selectedModel')),
       Title: '',
       TextContent: this.props.data['Text'],
@@ -44,6 +42,8 @@ class ContentViwer extends React.Component {
       vedioURL: '',
       audioURL: '',
       ImageUrl: '',
+      open: false,
+      errorMessage: '',
     };
     this.closeEditor = this.closeEditor.bind(this);
     this.OpenEditor = this.OpenEditor.bind(this);
@@ -56,7 +56,7 @@ class ContentViwer extends React.Component {
   //-----------------------function to handel uploading to firbase ----------------//
 
   handelloadStart(e) {
-    this.setState({ loading: true });
+    this.setState({ loading: true, open: false });
   }
   handelSucces(e) {
     console.log(firebase.storage().app.remoteConfig());
@@ -68,12 +68,18 @@ class ContentViwer extends React.Component {
       .getDownloadURL()
       .then((url) => {
         console.log(url);
-        this.setState({ vedioURL: url, loading: false }, () => {
-          this.onVedioSucsessHandler();
-        });
+        this.setState(
+          { vedioURL: url, loading: false, open: false, errorMessage: '' },
+          () => {
+            this.onVedioSucsessHandler();
+          }
+        );
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          open: true,
+          errorMessage: error.response.data,
+        });
       });
   }
 
@@ -88,12 +94,18 @@ class ContentViwer extends React.Component {
       .getDownloadURL()
       .then((url) => {
         console.log(url);
-        this.setState({ audioURL: url, loading: false }, () => {
-          this.onClickHandlerForAudio();
-        });
+        this.setState(
+          { audioURL: url, loading: false, open: false, errorMessage: '' },
+          () => {
+            this.onClickHandlerForAudio();
+          }
+        );
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          open: true,
+          errorMessage: error.response.data,
+        });
       });
   }
 
@@ -126,11 +138,14 @@ class ContentViwer extends React.Component {
           ImageUrl: '',
           audioURL: '',
           vedioURL: '',
+          open: false,
+          errorMessage: '',
         });
       })
       .catch((error) => {
         this.setState({
-          errorMessage: error[0],
+          errorMessage: error.response.data,
+          open: true,
         });
       });
   }
@@ -148,13 +163,15 @@ class ContentViwer extends React.Component {
           localStorage.setItem('ContentUpdate', '1');
 
           console.log('تم');
-          // this.setState({ currentText: '', currentTextID: });
+          this.setState({ open: false, errorMessage: '' });
         })
         .catch((error) => {
           this.setState({
             errorMessage: error,
             currentText: '',
             currentTextID: null,
+            open: true,
+            errorMessage: error.response.data,
           });
         });
     }
@@ -174,10 +191,15 @@ class ContentViwer extends React.Component {
         .then((result) => {
           this.getAllContentText();
           localStorage.setItem('ContentUpdate', '1');
+          this.setState({
+            open: false,
+            errorMessage: '',
+          });
         })
         .catch((error) => {
           this.setState({
-            errorMessage: error,
+            open: true,
+            errorMessage: error.response.data,
           });
         });
     }
@@ -192,6 +214,8 @@ class ContentViwer extends React.Component {
         this.setState(
           {
             TextContent: result.data,
+            open: false,
+            errorMessage: '',
           },
           () => {
             this.getAllMedia();
@@ -201,7 +225,8 @@ class ContentViwer extends React.Component {
       })
       .catch((error) => {
         this.setState({
-          errorMessage: error,
+          open: true,
+          errorMessage: error.response.data,
         });
       });
   }
@@ -225,18 +250,23 @@ class ContentViwer extends React.Component {
 
   //----------------------  a function to Delte a Text --------------------------------//
   DeleteText(e) {
-    console.log(e.target.id);
     axios
       .post(config[0].server + 'Articles/DeletetTexts', {
         TextIDs: [e.target.id],
       })
       .then((result) => {
-        console.log(result);
         this.getAllContentText();
         localStorage.setItem('ContentUpdate', '1');
+        this.setState({
+          open: false,
+          errorMessage: '',
+        });
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          open: true,
+          errorMessage: error.response.data,
+        });
       });
   }
   //------------------------- Delete all Checked Box's ----------------------//
@@ -255,9 +285,16 @@ class ContentViwer extends React.Component {
       .then((result) => {
         this.getAllContentText();
         localStorage.setItem('ContentUpdate', '1');
+        this.setState({
+          open: false,
+          errorMessage: '',
+        });
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({
+          open: true,
+          errorMessage: error.response.data,
+        });
       });
   }
   //---------------------------------------------------------------//
@@ -308,7 +345,8 @@ class ContentViwer extends React.Component {
       })
       .catch((error) => {
         this.setState({
-          errorMessage: error,
+          open: true,
+          errorMessage: error.response.data,
         });
       });
   };
@@ -343,8 +381,9 @@ class ContentViwer extends React.Component {
       })
       .catch((error) => {
         this.setState({
-          errorMessage: error,
+          errorMessage: error.response.data,
           ImageUrl: '',
+          open: false,
         });
       });
   };
@@ -369,8 +408,9 @@ class ContentViwer extends React.Component {
       })
       .catch((error) => {
         this.setState({
-          errorMessage: error,
+          errorMessage: error.response.data,
           loading: false,
+          open: false,
         });
       });
   };
@@ -395,6 +435,10 @@ class ContentViwer extends React.Component {
   render() {
     return (
       <div style={{ minWidth: '100%' }} dir="rtl">
+        <ErrorDialog
+          open={this.state.open}
+          ErrorMessage={this.state.errorMessage}
+        />
         <LoadingScreen
           style={{ maxHeight: '700px' }}
           loading={this.state.loading}
@@ -412,7 +456,6 @@ class ContentViwer extends React.Component {
                     circular
                     icon="step backward"
                     onClick={(e) => {
-                      // localStorage.setItem()
                       this.props.convertToTopic();
                     }}
                   />

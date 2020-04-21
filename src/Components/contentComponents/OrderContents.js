@@ -3,7 +3,7 @@ import axios from 'axios';
 import config from '../../config.json';
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { Table } from 'semantic-ui-react';
+import { Table, Icon } from 'semantic-ui-react';
 
 // ---------------------------------------------- fake data generator -----------------------------------------------//
 const getItems = (count, data) => {
@@ -30,6 +30,7 @@ const CreaContent = (data) => {
       <Table.Body>
         <Table.Row>
           <Table.Cell>
+            <Icon name={'grab'} />
             <span className="ItemIcons">{data['MediaOrder']}</span>
           </Table.Cell>
           <Table.Cell>
@@ -74,7 +75,7 @@ const getListStyle = (isDraggingOver) => ({
 class OrderContents extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.data);
+
     this.state = {
       items: getItems(5, this.props.data),
       Update: this.props.Update,

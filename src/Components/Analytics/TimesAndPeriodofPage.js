@@ -5,8 +5,8 @@ import { Pie } from 'react-chartjs-2';
 import { Dropdown, Input } from 'semantic-ui-react';
 import axios from 'axios';
 import config from '../../config.json';
-
-import { Grid, Segment, Header, Label, Table } from 'semantic-ui-react';
+import ErrorDialog from '../../Components/ErroeDialog';
+import { Grid, Segment, Header, Table } from 'semantic-ui-react';
 
 // const TimeReviwed = require('../../ChartData.json')['TimeReviwed'];
 
@@ -14,6 +14,8 @@ export default class TimesRevied extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      open: false,
+      ErrorMessage: '',
       dropDownVlues: [],
       selectedValue: '2020',
       color: [],
@@ -51,7 +53,6 @@ export default class TimesRevied extends React.Component {
   //-------------------------- Func to shange dataset for our Chart ----------------------------------------------------//
   //--------------------------------------------------------------------------------------------------------------------//
   getChartForEachModuleTopics(e, { value }) {
-    console.log(value);
     this.ChangeDataSet(value);
     this.setState({
       selectedValue: e.target.textContent,
@@ -65,44 +66,54 @@ export default class TimesRevied extends React.Component {
     var datasets = [];
     var labels = [];
     var backgroundColor = [];
-    var data = {};
-    axios.get(config[0].server + 'GetChart').then((result) => {
-      for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
-        if (
-          result.data['TimeReviwed'][i]['ModelTitle'] +
-            '-' +
-            result.data['TimeReviwed'][i]['TopicTiele'] ===
-          value
-        ) {
-          for (
-            var j = 0;
-            j < result.data['TimeReviwed'][i]['Articles'].length;
-            j++
+
+    axios
+      .get(config[0].server + 'GetChart')
+      .then((result) => {
+        for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
+          if (
+            result.data['TimeReviwed'][i]['ModelTitle'] +
+              '-' +
+              result.data['TimeReviwed'][i]['TopicTiele'] ===
+            value
           ) {
-            console.log(
-              result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
-            );
-            labels.push(
-              result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
-            );
-            datasets.push(
-              result.data['TimeReviwed'][i]['Articles'][j][this.props.filter]
-            );
-            backgroundColor.push(this.random_rgba());
+            for (
+              var j = 0;
+              j < result.data['TimeReviwed'][i]['Articles'].length;
+              j++
+            ) {
+              console.log(
+                result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
+              );
+              labels.push(
+                result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
+              );
+              datasets.push(
+                result.data['TimeReviwed'][i]['Articles'][j][this.props.filter]
+              );
+              backgroundColor.push(this.random_rgba());
+            }
+
+            break;
           }
-
-          break;
         }
-      }
 
-      this.setState({
-        color: backgroundColor,
-        data: {
-          datasets: [{ data: datasets, backgroundColor: backgroundColor }],
-          labels: labels,
-        },
+        this.setState({
+          ErrorMessage: '',
+          open: false,
+          color: backgroundColor,
+          data: {
+            datasets: [{ data: datasets, backgroundColor: backgroundColor }],
+            labels: labels,
+          },
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          open: true,
+          ErrorMessage: error.response.data,
+        });
       });
-    });
 
     //----------------- Implement the functionality and then set the state here --------------------------------------//
   }
@@ -145,40 +156,51 @@ export default class TimesRevied extends React.Component {
   componentDidMount() {
     //-------------------- fill our drop downlist with values -------------------//
     var dropDownVluesTemp = [];
-    axios.get(config[0].server + 'GetChart').then((result) => {
-      for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
-        dropDownVluesTemp.push({
-          key:
-            result.data['TimeReviwed'][i]['ModelTitle'] +
-            '-' +
-            result.data['TimeReviwed'][i]['TopicTiele'],
-          text:
-            result.data['TimeReviwed'][i]['ModelTitle'] +
-            '-' +
-            result.data['TimeReviwed'][i]['TopicTiele'],
-          value:
-            result.data['TimeReviwed'][i]['ModelTitle'] +
-            '-' +
-            result.data['TimeReviwed'][i]['TopicTiele'],
-        });
-      }
-
-      this.ChangeDataSet(dropDownVluesTemp[0]['key']);
-
-      this.setState(
-        {
-          dropDownVlues: dropDownVluesTemp,
-        },
-        () => {
-          console.log(this.createInfoData());
+    axios
+      .get(config[0].server + 'GetChart')
+      .then((result) => {
+        for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
+          dropDownVluesTemp.push({
+            key:
+              result.data['TimeReviwed'][i]['ModelTitle'] +
+              '-' +
+              result.data['TimeReviwed'][i]['TopicTiele'],
+            text:
+              result.data['TimeReviwed'][i]['ModelTitle'] +
+              '-' +
+              result.data['TimeReviwed'][i]['TopicTiele'],
+            value:
+              result.data['TimeReviwed'][i]['ModelTitle'] +
+              '-' +
+              result.data['TimeReviwed'][i]['TopicTiele'],
+          });
         }
-      );
-    });
+
+        this.ChangeDataSet(dropDownVluesTemp[0]['key']);
+
+        this.setState(
+          {
+            dropDownVlues: dropDownVluesTemp,
+            open: false,
+            ErrorMessage: '',
+          },
+          () => {
+            console.log(this.createInfoData());
+          }
+        );
+      })
+      .catch((error) => {
+        this.setState({ open: false, ErrorMessage: error.response.data });
+      });
   }
 
   render() {
     return (
       <div style={{ width: '100%', height: '100%' }}>
+        <ErrorDialog
+          open={this.state.open}
+          ErrorMessage={this.state.ErrorMessage}
+        />
         <Segment placeholder>
           <Grid columns={2} relaxed="very" stackable>
             <Grid.Column width={10}>

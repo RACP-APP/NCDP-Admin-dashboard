@@ -5,6 +5,7 @@ import config from '../../config.json';
 import axios from 'axios';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase';
+import ErrorDialog from '../../Components/ErroeDialog';
 import { TransitionablePortal, Segment, Header, Icon } from 'semantic-ui-react';
 
 class AddUser extends React.Component {
@@ -143,34 +144,11 @@ class AddUser extends React.Component {
   render() {
     return (
       <div id="addUser" dir="rtl">
-        <TransitionablePortal
+        <ErrorDialog
           open={this.state.open}
-          transition={{
-            animation: this.state.animation,
-            duration: this.state.duration,
-          }}
-        >
-          <Segment
-            style={{
-              left: '40%',
-              position: 'fixed',
+          ErrorMessage={this.state.ErrorMessage}
+        />
 
-              zIndex: 1000,
-
-              top: '2%',
-
-              zIndex: 1000,
-
-              overflow: 'auto',
-            }}
-          >
-            <Header>
-              <Icon name="window close" style={{ color: 'red !important' }} />
-              Error
-            </Header>
-            <p>{this.state.ErrorMessage}</p>
-          </Segment>
-        </TransitionablePortal>
         <table class="table">
           <thead class="thead-dark">
             <tr>

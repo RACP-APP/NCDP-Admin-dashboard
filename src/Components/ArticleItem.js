@@ -33,19 +33,6 @@ class ArticlesItem extends React.Component {
   handelloadStart(e) {}
   handelSucces(e) {
     this.setState({ url: e });
-    // console.log(firebase.storage);
-    // firebase
-    //   .storage()
-    //   .ref()
-    //   .child(e)
-    //   .getDownloadURL()
-    //   .then((url) => {
-    //     console.log(url);
-    //     this.setState({ url: url });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }
 
   //--------------------------------------------------------//
@@ -135,7 +122,7 @@ class ArticlesItem extends React.Component {
   getContent(e) {
     console.log(this.props.data['TopicID'], this.props.data['ArticleID']);
     localStorage.setItem('selectedArticle', this.props.data['ArticleID']);
-    console.log('uuuuuuuuuuuuuuuuuuuuuuuu');
+
     localStorage.setItem('CurrentNav', 'Content');
     axios
       .post(config[0].server + 'Articles/getContentID', {
@@ -248,22 +235,6 @@ class ArticlesItem extends React.Component {
                   </Button.Group>
                 </tr>
               </td>
-              {/* <div className=" row ItemIcons ">
-                <span
-                  class="glyphicon glyphicon-ok"
-                  onClick={this.onClickHandler.bind(this)}
-                ></span>
-              </div>
-              <div className=" row ItemIcons ">
-                <span
-                  class="glyphicon glyphicon-remove-circle"
-                  onClick={(e) => {
-                    this.setState({
-                      editMode: false,
-                    });
-                  }}
-                ></span>
-              </div> */}
             </div>
           </div>
         ) : (
@@ -304,27 +275,14 @@ class ArticlesItem extends React.Component {
             <div className="col-1" style={{ marginTop: '22px' }}>
               <Button.Group vertical basic size="small">
                 <Button icon="edit" onClick={this.EditArticle.bind(this)} />
-                {/* <span
-                  class="glyphicon glyphicon-pencil margin"
-                  onClick={this.EditArticle.bind(this)}
-                ></span> */}
 
                 <Button icon="delete" onClick={this.deleteMod.bind(this)} />
-                {/* <span
-                  class="glyphicon glyphicon-remove margin"
-                  onClick={this.deleteMod.bind(this)}
-                ></span> */}
 
                 <Button
                   icon="folder open"
                   id={this.props.data['ArticleID']}
                   onClick={this.getContent.bind(this)}
                 />
-                {/* <span
-                  id={this.props.data['ArticleID']}
-                  onClick={this.getContent.bind(this)}
-                  className="glyphicon glyphicon-folder-open margin"
-                ></span> */}
               </Button.Group>
             </div>
 

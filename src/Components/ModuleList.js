@@ -3,9 +3,8 @@ import '../css/component.css';
 import '../css/buttonStyles.css';
 import axios from 'axios';
 import config from '../config.json';
-import ModuleControlPanel from './ModuleControlePanel';
 import ImageFileUploader from '../Components/uploadimage';
-
+import ErrorDialog from '../Components/ErroeDialog';
 import { Button, Card, Image, Progress } from 'semantic-ui-react';
 
 import $ from 'jquery';
@@ -23,6 +22,7 @@ class ModuleList extends React.Component {
       UpdateWarning: false,
       url: '',
       loading: 0,
+      open: false,
     };
     this.goToTopics = this.goToTopics.bind(this);
     this.deletMode = this.deletMode.bind(this);
@@ -43,20 +43,12 @@ class ModuleList extends React.Component {
   }
   handelSucces(e) {
     this.setState({ url: e });
-    // firebase
-    //   .storage()
-    //   .ref()
-    //   .child(e)
-    //   .getDownloadURL()
-    //   .then((url) => {
-    //
-    //   });
   }
   UpdateNavegation(e) {
     var id =
       parseInt(e.currentTarget.id) ||
       parseInt($(e.currentTarget).attr('data-id'));
-    console.log($(e.currentTarget).attr('data-name'));
+
     this.props.updateNavigator($(e.currentTarget).attr('data-name'));
   }
   //--------------------------------------------------------------------------//
@@ -65,7 +57,7 @@ class ModuleList extends React.Component {
 
   goToTopics(e) {
     this.UpdateNavegation(e);
-    console.log('im go to topics', parseInt(e.currentTarget.id));
+
     var id =
       parseInt(e.currentTarget.id) ||
       parseInt($(e.currentTarget).attr('data-id'));
@@ -103,10 +95,16 @@ class ModuleList extends React.Component {
           Wrnining: false,
           WrniningMessage: '',
           UpdateWarning: false,
+          open: false,
         });
         that.props.UpdateListafterDelete();
       })
-      .catch((error) => {});
+      .catch((error) => {
+        this.state({
+          open: true,
+          WrniningMessage: error.response.data,
+        });
+      });
   }
 
   //--------------------------------------------------------------------------//
@@ -115,6 +113,7 @@ class ModuleList extends React.Component {
   editModel(e) {
     this.setState({
       editMod: true,
+      open: false,
     });
 
     this.props.UpdateListafterDelete();
@@ -139,6 +138,7 @@ class ModuleList extends React.Component {
           UpdateWarning: false,
           WrniningMessage: '',
           url: '',
+          open: false,
         });
         that.props.UpdateListafterDelete();
       })
@@ -147,8 +147,9 @@ class ModuleList extends React.Component {
         this.setState({
           editMod: true,
           UpdateWarning: true,
-          WrniningMessage: 'Duplicate Items is not Allowed',
+          WrniningMessage: 'العناصر المكررة غير مسموح بها',
           UpdateTitle: '',
+          open: true,
         });
       });
   }
@@ -226,64 +227,70 @@ class ModuleList extends React.Component {
       );
     } else {
       return (
-        <Card
-          color="blue"
-          style={{ maxWidth: '210px' }}
-          key="ModelID"
-          id={this.props.model['ModelID']}
-          onDoubleClick={this.goToTopics.bind(this)}
-        >
-          <Card.Content>
-            <Image
-              rounded
-              floated="right"
-              size="mini"
-              src={this.state.url || this.props.model['Icon']}
-            />
-            <div>
-              <ImageFileUploader
-                accept="image/*"
-                name="images"
-                onUploadStart={this.handelloadStart.bind(this)}
-                onUploadSuccess={this.handelSucces.bind(this)}
-                onProgress={this.inPrograss.bind(this)}
-              ></ImageFileUploader>
-            </div>
-            <Card.Header>
-              <input
-                id="Title"
-                type="text"
-                class="form-control"
-                aria-label="Small"
-                aria-describedby="inputGroup-sizing-sm"
-                placeholder={
-                  this.state.UpdateTitle || this.state.modelData['Title']
-                }
-                onChange={(e) => {
-                  this.setState({
-                    UpdateTitle: e.target.value,
-                  });
-                }}
+        <div>
+          <ErrorDialog
+            open={this.state.open}
+            ErrorMessage={this.state.WrniningMessage}
+          />
+          <Card
+            color="blue"
+            style={{ maxWidth: '210px' }}
+            key="ModelID"
+            id={this.props.model['ModelID']}
+            onDoubleClick={this.goToTopics.bind(this)}
+          >
+            <Card.Content>
+              <Image
+                rounded
+                floated="right"
+                size="mini"
+                src={this.state.url || this.props.model['Icon']}
               />
-            </Card.Header>
+              <div>
+                <ImageFileUploader
+                  accept="image/*"
+                  name="images"
+                  onUploadStart={this.handelloadStart.bind(this)}
+                  onUploadSuccess={this.handelSucces.bind(this)}
+                  onProgress={this.inPrograss.bind(this)}
+                ></ImageFileUploader>
+              </div>
+              <Card.Header>
+                <input
+                  id="Title"
+                  type="text"
+                  class="form-control"
+                  aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder={
+                    this.state.UpdateTitle || this.state.modelData['Title']
+                  }
+                  onChange={(e) => {
+                    this.setState({
+                      UpdateTitle: e.target.value,
+                    });
+                  }}
+                />
+              </Card.Header>
 
-            <Card.Description>
-              انشأ من قبل : {this.props.model['USERS']}
-            </Card.Description>
-          </Card.Content>
+              <Card.Description>
+                انشأ من قبل : {this.props.model['USERS']}
+              </Card.Description>
+            </Card.Content>
 
-          <Card.Content extra>
-            <Button.Group basic size="small">
-              <Button
-                icon="cancel"
-                onClick={() => {
-                  this.setState({ editMod: false });
-                }}
-              />
-              <Button icon="save" onClick={this.SaveModule.bind(this)} />
-            </Button.Group>
-          </Card.Content>
-        </Card>
+            <Card.Content extra>
+              <Button.Group basic size="small">
+                <Button
+                  icon="cancel"
+                  onClick={() => {
+                    this.setState({ editMod: false });
+                  }}
+                />
+                <Button icon="save" onClick={this.SaveModule.bind(this)} />
+              </Button.Group>
+            </Card.Content>
+          </Card>
+        </div>
       );
     }
 

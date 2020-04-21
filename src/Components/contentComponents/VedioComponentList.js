@@ -5,6 +5,7 @@ import config from '../../config.json';
 import $ from 'jquery';
 import firebase from 'firebase';
 import { Table } from 'semantic-ui-react';
+import ErrorDialog from '../../Components/ErroeDialog';
 
 class VedioConmponent extends React.Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class VedioConmponent extends React.Component {
       statecurrentLink: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
       ErrorMessage: '',
       Error: false,
-      vediourl: ''
+      vediourl: '',
+      open: false,
     };
   }
 
@@ -28,19 +30,24 @@ class VedioConmponent extends React.Component {
       .then(() => {
         console.log('don');
       })
-      .catch(error => {
+      .catch((error) => {
+        this.setState({
+          ErrorMessage: error.response.data,
+          open: true,
+        });
         console.log('none');
       });
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {
-        MediaID: e.target.id
+        MediaID: e.target.id,
       })
-      .then(result => {
+      .then((result) => {
         this.setState(
           {
             Error: false,
-            ErrorMessage: ''
+            open: false,
+            ErrorMessage: '',
           },
           () => {
             $('#' + id + 'vErrorMessage').css('alert alert-danger show ');
@@ -48,13 +55,14 @@ class VedioConmponent extends React.Component {
           }
         );
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         this.setState(
           {
             Error: true,
+            open: true,
             ErrorMessage:
-              'Cannot delete this item right now please try again later ..'
+              'Cannot delete this item right now please try again later ..',
           },
           () => {
             $('#' + id + 'vErrorMessage').css('alert alert-danger show ');
@@ -66,8 +74,12 @@ class VedioConmponent extends React.Component {
   render() {
     return (
       <div className="row ">
+        <ErrorDialog
+          open={this.state.open}
+          ErrorMessage={this.state.ErrorMessage}
+        />
         <ul>
-          {this.props.link.map(link => {
+          {this.props.link.map((link) => {
             if (link['MediaType'] === 'vedio') {
               return (
                 <Table color="blue">
@@ -96,28 +108,6 @@ class VedioConmponent extends React.Component {
                     </Table.Row>
                   </Table.Body>
                 </Table>
-                // <li className="border shawBackground">
-                //   <div
-                //     id={link['MediaID'] + 'vErrorMessage'}
-                //     class="alert alert-danger hide"
-                //     role="alert"
-                //   >
-                //     {this.state.ErrorMessage}
-                //   </div>
-
-                //   <video
-                //     controls
-                //     type="video/*"
-                //     src={link['MediaLink'].toString()}
-                //     width="90%"
-                //     height="90%"
-                //   >
-                //     <source src="video.wmv" />
-                //     Your browser doesn't support video, you may download the
-                //     video instead: <a href="video.ogv">Ogg</a>
-                //   </video>
-
-                // </li>
               );
             }
           })}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import firebase from 'firebase';
 import $ from 'jquery';
 import { Table } from 'semantic-ui-react';
+import ErrorDialog from '../../Components/ErroeDialog';
 
 class ImageConten extends React.Component {
   constructor(props) {
@@ -12,35 +13,35 @@ class ImageConten extends React.Component {
       linklist: this.props.link,
       ErrorMessage: '',
       Error: false,
+      open: true,
     };
   }
 
   DeleteMedia(e) {
     var mediaID = e.target.id;
     console.log(e.target.id, $(e.target).attr('data-link'));
+    try {
+      firebase
+        .storage()
+        .refFromURL($(e.target).attr('data-link'))
+        .delete()
+        .then(() => {
+          console.log('deleted');
+        })
+        .catch((error) => {
+          this.setState({
+            ErrorMessage: error.response.data,
+            open: true,
+          });
+        });
+    } catch {
+      this.setState({
+        ErrorMessage:
+          'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
 
-    firebase
-      .storage()
-      .refFromURL($(e.target).attr('data-link'))
-      .delete()
-      .then(() => {
-        console.log('deleted');
-      })
-      .catch((error) => {
-        console.log(error);
-        // this.setState(
-        //   {
-        //     ErrorMessage:
-        //       'Cannot delete this item right now please try again later ..',
-        //     Error: true
-        //   },
-        //   () => {
-        //     $('#' + e.target.id + 'ErrorMessage').css(
-        //       'alert alert-danger show '
-        //     );
-        //   }
-        // );
+        open: true,
       });
+    }
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {
@@ -51,6 +52,7 @@ class ImageConten extends React.Component {
           {
             ErrorMessage: '',
             Error: false,
+            open: false,
           },
           () => {
             $('#' + mediaID + 'ErrorMessage').css('alert alert-danger hide ');
@@ -59,12 +61,12 @@ class ImageConten extends React.Component {
         this.props.getAllMedia();
       })
       .catch((error) => {
-        console.log(error);
         this.setState(
           {
             ErrorMessage:
               'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
             Error: true,
+            open: true,
           },
           () => {
             $('#' + mediaID + 'ErrorMessage').css('alert alert-danger show ');
@@ -76,6 +78,10 @@ class ImageConten extends React.Component {
   render() {
     return (
       <div>
+        <ErrorDialog
+          open={this.state.open}
+          ErrorMessage={this.state.ErrorMessage}
+        />
         {this.props.link.map((link) => {
           if (link['MediaType'] === 'Image') {
             return (

@@ -4,8 +4,8 @@ import config from '../../config.json';
 import axios from 'axios';
 import $ from 'jquery';
 import firebase from 'firebase';
-import { Button, Grid, Loader, Dimmer } from 'semantic-ui-react';
-
+import { Loader, Dimmer } from 'semantic-ui-react';
+import ErrorDialogr from '../../Components/ErroeDialog';
 // const pdf = require('pdf-parse');
 var mammoth = require('mammoth');
 const fs = require('fs');
@@ -24,6 +24,9 @@ class ConvertFromWordToHtml extends React.Component {
       conertedText: '',
       loaded: '',
       convertin: false,
+      open: false,
+      animation: 'slide down',
+      duration: 500,
     };
   }
 
@@ -68,6 +71,7 @@ class ConvertFromWordToHtml extends React.Component {
           'strike => del',
         ],
         convertImage: mammoth.images.imgElement(function (image) {
+          var that = this;
           this.setState({
             loaded: true,
           });
@@ -100,7 +104,12 @@ class ConvertFromWordToHtml extends React.Component {
               return {
                 src: src,
               };
-            } catch {}
+            } catch {
+              that.setState({
+                open: true,
+                errorMessage: 'عذرا ..... حدث خطأ أثناء التحويل',
+              });
+            }
           });
         }),
       };
@@ -113,6 +122,8 @@ class ConvertFromWordToHtml extends React.Component {
             conertedText: that.convertDomToHtmlString(result1.toString()),
             loaded: false,
             convertin: false,
+            open: false,
+            errorMessage: '',
           });
         });
       console.timeEnd();
@@ -123,10 +134,6 @@ class ConvertFromWordToHtml extends React.Component {
   //---------------------- handling the converting operation --------------------------------//
   onClickHandler1 = () => {
     var that = this;
-    console.log(
-      this.props.contentID,
-      'contnt id ----------------------------------------'
-    );
 
     console.log('this.props.contentID,', this.props.contentID);
     axios
@@ -142,6 +149,7 @@ class ConvertFromWordToHtml extends React.Component {
             selectedFile: '',
             errorMessage: '',
             Error: false,
+            open: false,
           },
           () => {
             $('#don').attr('class', ' show ');
@@ -159,6 +167,7 @@ class ConvertFromWordToHtml extends React.Component {
             errorMessage:
               'حدث خطأ أثناء حفظ البيانات  n .1 النص طويل جدًا  n 2. لا يوجد اتصال',
             Error: true,
+            open: true,
           },
           () => {
             $('#don').attr('class', ' hide ');
@@ -171,6 +180,10 @@ class ConvertFromWordToHtml extends React.Component {
   render() {
     return (
       <div className="row border" style={{ width: '100%' }}>
+        <ErrorDialogr
+          open={this.state.open}
+          ErrorMessage={this.state.errorMessage}
+        />
         <div className="">
           {!this.state.convertin ? (
             <label className="glyphicon glyphicon-file	ItemIcons">
@@ -181,7 +194,7 @@ class ConvertFromWordToHtml extends React.Component {
                 className="form-control"
                 multiple=""
                 onChange={this.onChangeHandler1.bind(this)}
-              />{' '}
+              />
               رفع ملف
             </label>
           ) : (

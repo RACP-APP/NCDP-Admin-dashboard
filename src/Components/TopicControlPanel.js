@@ -27,14 +27,6 @@ class TopicControlPanel extends React.Component {
   handelSucces(e) {
     this.setState({ url: e });
     console.log(firebase.storage);
-    // firebase
-    //   .storage()
-    //   .ref()
-    //   .child(e)
-    //   .getDownloadURL()
-    //   .then((url) => {
-    //     console.log(url);
-    //   });
   }
 
   //-------------------------- the percentege of upl-loading ---------------------//

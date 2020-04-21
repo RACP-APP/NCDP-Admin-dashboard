@@ -5,7 +5,7 @@ import config from '../../config.json';
 import axios from 'axios';
 import User from './UserItem';
 import AddUser from './addUeser';
-import { TransitionablePortal, Segment, Header, Icon } from 'semantic-ui-react';
+import ErrorDialog from '../../Components/ErroeDialog';
 
 class ManagUsers extends React.Component {
   constructor(props) {
@@ -67,34 +67,11 @@ class ManagUsers extends React.Component {
   render() {
     return (
       <div style={{ width: '100%' }}>
-        <TransitionablePortal
+        <ErrorDialog
           open={this.state.open}
-          transition={{
-            animation: this.state.animation,
-            duration: this.state.duration,
-          }}
-        >
-          <Segment
-            style={{
-              left: '40%',
-              position: 'fixed',
+          ErrorMessage={this.state.ErrorMessage}
+        />
 
-              zIndex: 1000,
-
-              top: '2%',
-
-              zIndex: 1000,
-
-              overflow: 'auto',
-            }}
-          >
-            <Header>
-              <Icon name="window close" style={{ color: 'red !important' }} />
-              Error
-            </Header>
-            <p>{this.state.ErrorMessage}</p>
-          </Segment>
-        </TransitionablePortal>
         <div style={{ width: '100%', textAlign: 'center' }}>
           <span
             onClick={() => {

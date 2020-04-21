@@ -5,6 +5,8 @@ import config from '../../config.json';
 import axios from 'axios';
 import $ from 'jquery';
 import firebase from 'firebase';
+import ErrorDialogr from '../../Components/ErroeDialog';
+
 import { Table } from 'semantic-ui-react';
 
 import chroma from 'chroma-js';
@@ -18,6 +20,9 @@ class AudioPlayerContent extends React.Component {
       statecurrentLink: 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4',
       ErrorMessage: '',
       Error: false,
+      open: false,
+      animation: 'slide down',
+      duration: 500,
     };
   }
 
@@ -27,13 +32,18 @@ class AudioPlayerContent extends React.Component {
     linkref
       .delete()
       .then(() => {
-        console.log('don');
+        this.setState({
+          open: false,
+          ErrorMessage: '',
+        });
       })
       .catch((error) => {
         console.log('none');
+        this.setState({
+          open: true,
+          ErrorMessage: error.response.data,
+        });
       });
-
-    // console.log(',,,,,,', $(e.target).attr('data-link'));
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {
@@ -45,30 +55,31 @@ class AudioPlayerContent extends React.Component {
           {
             Error: false,
             ErrorMessage: '',
+            open: false,
           },
           () => {
-            $('#' + id + 'AErrorMessage').css('alert alert-danger hide');
             this.props.getAllMedia();
           }
         );
       })
       .catch((error) => {
-        this.setState(
-          {
-            Error: true,
-            ErrorMessage:
-              'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
-          },
-          () => {
-            $('#' + id + 'AErrorMessage').css('alert alert-danger hide');
-          }
-        );
+        this.setState({
+          Error: true,
+          ErrorMessage:
+            'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
+          open: true,
+        });
       });
   }
 
   render() {
     return (
       <div>
+        <ErrorDialogr
+          open={this.state.open}
+          ErrorMessage={this.state.ErrorMessage}
+        />
+
         {this.props.link.map((link) => {
           if (link['MediaType'] === 'audio') {
             return (

@@ -5,6 +5,8 @@ import data from './FooterData.json';
 import config from '../../config.json';
 import $ from 'jquery';
 import axios from 'axios';
+import ErrorMessage from '../../Components/ErroeDialog';
+
 import { Checkbox, Input, Icon, Table, Button } from 'semantic-ui-react';
 
 export default class ManageSocialIcons extends React.Component {
@@ -15,6 +17,9 @@ export default class ManageSocialIcons extends React.Component {
       Error: false,
       ErrorMessage: '',
       Updated: false,
+      open: false,
+      animation: 'slide down',
+      duration: 500,
     };
   }
 
@@ -64,23 +69,27 @@ export default class ManageSocialIcons extends React.Component {
           error: false,
           ErrorMessage: '',
           Updated: true,
+          open: false,
         });
       })
       .catch((error) => {
-        console.log('Error', error);
-
         this.setState({
           error: true,
           ErrorMessage: error.response.data,
           Updated: false,
+          open: true,
         });
-        console.log(error);
       });
   }
 
   render() {
     return (
       <div style={{ width: '100%', marginBottom: '5%' }}>
+        <ErrorMessage
+          open={this.state.open}
+          ErrorMessage={this.state.ErrorMessage}
+        />
+
         <h4 class="ui horizontal divider header">
           <i class="tag icon"></i>
           تحرير الرموز الاجتماعية
@@ -88,11 +97,9 @@ export default class ManageSocialIcons extends React.Component {
         {this.state.Error ? (
           <h3 style={{ color: 'red' }}>{this.state.ErrorMessage}</h3>
         ) : null}
-
         {this.state.Updated ? (
           <h5 style={{ color: 'green' }}>تم تحديث البيانات بنجاح ..</h5>
         ) : null}
-
         <Table definition>
           <Table.Header>
             <Table.Cell width={1}>أيقونة</Table.Cell>

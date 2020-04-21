@@ -9,9 +9,7 @@
   box-shadow: 10px 10px 5px -8px rgba(140, 146, 161, 0.52);
 }
 body {
-  /* vertical-align: middle; */
   align-self: start;
-  /* color: rgb(21, 135, 173); */
   margin: 0 auto;
   padding: 0;
   font-family: 'Roboto Condensed', Montserrat, Arial, Helvetica, sans-serif;

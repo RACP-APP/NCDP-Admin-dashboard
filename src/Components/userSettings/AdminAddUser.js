@@ -5,7 +5,7 @@ import '../../css/buttonStyles.css';
 import ManagUsers from './ManageUsers';
 import ChangePassword from './shangPassword';
 import SocialItems from './ManageSocialeIcons';
-import { Segment } from 'semantic-ui-react';
+import { Segment, TransitionablePortal } from 'semantic-ui-react';
 class AdminSettings extends React.Component {
   constructor(props) {
     super(props);
