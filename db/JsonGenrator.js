@@ -11,13 +11,12 @@ async function writeotfile(object) {
   var file = path.join(__dirname, '/phraseFreqs.json');
   try {
     await fs.writeFileSync(file, JSON.stringify(object));
-    console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiii2');
   } catch {}
 
   // fs.watch(file, (curr, prev) => {
   //   console.log(`the current mtime is: ${curr.mtime}`);
   //   console.log(`the previous mtime was: ${prev.mtime}`);
-  // });
+  // })
 }
 
 async function getData(cb) {
@@ -206,9 +205,7 @@ async function getData(cb) {
         }
       }
     )
-    .on('end', () => {
-      console.log('dooooooooooooooooooppppppppppppppppppppppppppppgggggggg');
-    });
+    .on('end', () => {});
 }
 
 var creatJson = async (cb) => {
@@ -222,7 +219,6 @@ var creatJson = async (cb) => {
   } catch {}
 
   setTimeout(() => {
-    console.log('dddddddddddddddddddddddddddooooooooooooooooooon');
     cb(null, 'don');
   }, 6000);
 };

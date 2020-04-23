@@ -58,10 +58,7 @@ app.get('/sendNotification', (req, res) => {
 //--------------- arout to generat json file and send it to the mobile app --------------------------------//
 //---------------------------------------------------------------------------------------------------------//
 app.post('/WriteSocialIconsData', function (req, res) {
-  var file = path.join(
-    __dirname,
-    '../src/Components/userSettings/FooterData.json'
-  );
+  var file = path.join(__dirname, '../data', 'FooterData.json');
   var data = req.body.data;
   fs.writeFile(file, JSON.stringify(data), (error) => {
     if (error) {
@@ -123,6 +120,33 @@ app.get('/JSONFile', async function (req, res) {
   //------------------------------------------ get json from file -----------------------------------------//
 });
 
+//---------------------------------- Get Footer Json -------------------------------------------------------//
+app.get('/GetFooterJson', function (req, res) {
+  //----------------------------------------- get the file position ---------------------------------------//
+  var file = path.join(__dirname, '../data', 'FooterData.json');
+  //----------------------------------------- read file from server ---------------------------------------//
+  var json = fs.readFileSync(file);
+  //------------------------------------------ get json from file -----------------------------------------//
+  res.status(200).send(JSON.parse(json)).end();
+});
+
+// //------------------------------------ Set Footer json ------------------------------------------------------//
+// app.post('/UpdateFooterJson', (req, res) => {
+//   //----------------------------------------- get the file position ---------------------------------------//
+//   var file = path.join(__dirname, '../data', 'FooterData.json');
+
+//   var data = req.body.data;
+
+//   fs.writeFile(file, JSON.stringify(data), (error) => {
+//     if (error) {
+//       console.log(error);
+//       res.status(500).send('حدث خطأ أثناء معالجة').end();
+//     } else {
+//       //------------------------------------------ get json from file -------------------------------------//
+//       res.status(200).send('done').end();
+//     }
+//   });
+// });
 //------------------------------------- for any other request ----------------------------------------------//
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));

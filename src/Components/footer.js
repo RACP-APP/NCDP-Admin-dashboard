@@ -1,74 +1,46 @@
 import React from 'react';
-import $ from 'jquery';
 import config from '../config';
+import axios from 'axios';
+import { Icon, Table } from 'semantic-ui-react';
 
 class Footer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: [],
+    };
   }
 
+  componentDidMount() {
+    axios.get(config[0].server + 'GetFooterJson').then((result) => {
+      this.setState({
+        data: result.data,
+      });
+
+      console.log('4444444444444444444444444444', this.state.data);
+    });
+  }
   render() {
     return (
       <div className=" footer shawBackground borderTop">
-        <div className="row"></div>
-        <div className="row">
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-twitter"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-google-plus-g"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-instagram"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-pinterest"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-vk"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-stack-overflow"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-youtube"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-slack-hash"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-github"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-dribbble"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-reddit-alien"></i>
-          </a>
-
-          <a class="socialicons" type="button" role="button">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-        </div>
-        <div className="row">© 2020 | About | Contact</div>
+        <Table>
+          <Table.Row>
+            {this.state.data.map((item, i) => {
+              if (item.active) {
+                // if(item.Icon)
+                return (
+                  <Table.Cell>
+                    <div className="socialicons">
+                      <a href={item.linke}>
+                        <Icon name={item['Icon']} size="large" />
+                      </a>
+                    </div>
+                  </Table.Cell>
+                );
+              }
+            })}
+          </Table.Row>
+        </Table>
       </div>
     );
   }

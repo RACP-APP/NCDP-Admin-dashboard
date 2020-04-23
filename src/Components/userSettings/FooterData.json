@@ -1,10 +1,1 @@
-[
-  { "Icon": "facebook", "active": true, "linke": "hhhhh" },
-  { "Icon": "twitter", "active": true, "linke": "hhhhh" },
-  { "Icon": "google plus", "active": true, "linke": "hhhhh" },
-  { "Icon": "linkedin", "active": false, "linke": "5555555555555555" },
-  { "Icon": "vk", "active": true, "linke": "hhhhh" },
-  { "Icon": "youtube", "active": false, "linke": "hhhhh" },
-  { "Icon": "github", "active": true, "linke": "hhhhh" },
-  { "Icon": "whatsapp square", "active": true, "linke": "hhhhh" }
-]
+[{"Icon":"facebook","active":false,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"},{"Icon":"twitter","active":true,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"},{"Icon":"google plus","active":true,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"},{"Icon":"linkedin","active":true,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"},{"Icon":"vk","active":false,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"},{"Icon":"youtube","active":true,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"},{"Icon":"github","active":true,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"},{"Icon":"whatsapp square","active":true,"linke":"https://app.slack.com/client/TTTLRS46B/GTRV2BDGT/thread/C012GGTS7H7-1587643929.032500"}]

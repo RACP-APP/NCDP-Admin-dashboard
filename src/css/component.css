@@ -842,7 +842,7 @@ i .fab.fa-facebook-f:hover {
   font-size: x-large;
 }
 .socialicons {
-  width: 5%;
+  width: 100%;
   text-align: center;
   align-items: center;
 }
