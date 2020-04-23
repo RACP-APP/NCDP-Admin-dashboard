@@ -98,6 +98,7 @@ class MainDashBoard extends React.Component {
   //-----------------------------------------------------------------------------------//
   goToContentViwer(Contents) {
     // console.log(Contents, this.state.Contents);
+
     this.setState(
       {
         model: [<div>hiiiiiiiiiiiiiii</div>],
@@ -109,6 +110,7 @@ class MainDashBoard extends React.Component {
       },
       () => {
         localStorage.setItem('CurrentNav', 'Content');
+        this.updateNavigator(JSON.parse(localStorage.getItem('navMap')));
       }
     );
     console.log(
@@ -123,10 +125,7 @@ class MainDashBoard extends React.Component {
   //-----------------------------------------------------------------------------------//
   goToTopicsViwer() {
     localStorage.setItem('CurrentNav', 'Topic');
-
     if (JSON.parse(localStorage.getItem('navMap')).length === 3) {
-      console.log(navMap, 'navmap----------------------');
-
       var navMap = JSON.parse(localStorage.getItem('navMap'));
       navMap.pop();
       this.updateNavigator(navMap);
@@ -154,9 +153,6 @@ class MainDashBoard extends React.Component {
         this.setState(
           {
             module: result.data,
-            // ViwerTitle: this.updateNavigator(
-            //   JSON.parse(localStorage.getItem('navMap'))
-            // ),
           },
           () => {
             console.log('module', this.state.module);
