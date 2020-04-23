@@ -383,7 +383,7 @@ class ContentViwer extends React.Component {
         this.setState({
           errorMessage: error.response.data,
           ImageUrl: '',
-          open: false,
+          open: true,
         });
       });
   };
@@ -410,7 +410,7 @@ class ContentViwer extends React.Component {
         this.setState({
           errorMessage: error.response.data,
           loading: false,
-          open: false,
+          open: true,
         });
       });
   };

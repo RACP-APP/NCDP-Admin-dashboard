@@ -108,11 +108,19 @@ app.get('/GetChart', function (req, res) {
 //--------------- arout to generat json file and send it to the mobile app --------------------------------//
 //---------------------------------------------------------------------------------------------------------//
 app.get('/JSONFile', async function (req, res) {
-  const CreatJSON = await require('../db/JsonGenrator').creatJson();
+  const CreatJSON = await require('../db/JsonGenrator').creatJson(
+    (error, result) => {
+      if (error) {
+        res.status(500).send(error).end();
+      } else {
+        res
+          .status(200)
+          .sendFile(path.join(__dirname, '../db/', 'phraseFreqs.json'));
+      }
+    }
+  );
 
   //------------------------------------------ get json from file -----------------------------------------//
-
-  res.sendFile(path.join(__dirname, '../db/', 'phraseFreqs.json')).end();
 });
 
 //------------------------------------- for any other request ----------------------------------------------//

@@ -12,11 +12,14 @@ async function writeotfile(object) {
   try {
     await fs.writeFileSync(file, JSON.stringify(object));
     console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiii2');
-  } catch {
-    console.log('errrrrrrrrrrrrrrror');
-  }
+  } catch {}
+
+  // fs.watch(file, (curr, prev) => {
+  //   console.log(`the current mtime is: ${curr.mtime}`);
+  //   console.log(`the previous mtime was: ${prev.mtime}`);
+  // });
 }
-function theData() {}
+
 async function getData(cb) {
   await db
     .query(
@@ -167,16 +170,17 @@ async function getData(cb) {
                                             }
                                           );
                                         }
-                                        console.log(
-                                          ' contents.length',
-                                          contents.length,
-                                          'articl',
-                                          articl,
-                                          'content',
-                                          content
-                                        );
+                                        // console.log(
+                                        //   ' contents.length',
+                                        //   contents.length,
+                                        //   'articl',
+                                        //   articl,
+                                        //   'content',
+                                        //   content
+                                        // );
 
                                         cb(object);
+                                        // console.log(i);
                                       }
                                     );
                                   }
@@ -187,7 +191,7 @@ async function getData(cb) {
                             );
                           }
                           cc = true;
-                          console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+                          // console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
                         }
                       }
                     );
@@ -195,10 +199,10 @@ async function getData(cb) {
                 }
               }
             );
-            console.log(i, 'i');
+            // console.log(i, 'i');
           }
         } else {
-          console.log(err);
+          // console.log(err);
         }
       }
     )
@@ -207,18 +211,23 @@ async function getData(cb) {
     });
 }
 
-var creatJson = async () => {
-  console.log('hiiiiiiiiiiiiiiiiiiii');
+var creatJson = async (cb) => {
+  // console.log(cb);
   try {
-    await getData(writeotfile).then(() => {
-      console.log('dddddddddddddddddddddddddddooooooooooooooooooon');
-    });
-    console.log('22222222222');
+    await getData(writeotfile)
+      .then(() => {})
+      .catch((error) => {
+        cb(error, null);
+      });
   } catch {}
-  // .catch(error => {
-  //   cb(error, null);
-  // });
+
+  setTimeout(() => {
+    console.log('dddddddddddddddddddddddddddooooooooooooooooooon');
+    cb(null, 'don');
+  }, 6000);
 };
+
+// creatJson();
 module.exports = {
   creatJson: creatJson,
   // iiiiiiiiiiiii

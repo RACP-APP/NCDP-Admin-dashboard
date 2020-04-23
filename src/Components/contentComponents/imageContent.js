@@ -13,7 +13,7 @@ class ImageConten extends React.Component {
       linklist: this.props.link,
       ErrorMessage: '',
       Error: false,
-      open: true,
+      open: false,
     };
   }
 
