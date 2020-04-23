@@ -301,7 +301,6 @@ class ContentViwer extends React.Component {
   //----------------Uplaod Fanctionality //------------------------//
   //---------------------------------------------------------------//
   handleDropdownChange(e) {
-    console.log(e.target.value);
     if (e.target.value === 'non') {
       this.setState({
         type: e.target.value,

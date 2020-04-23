@@ -122,6 +122,17 @@ class MainDashBoard extends React.Component {
   //-------------- a component to swich from Model Viwer to Topics Viewr --------------//
   //-----------------------------------------------------------------------------------//
   goToTopicsViwer() {
+    localStorage.setItem('CurrentNav', 'Topic');
+
+    if (JSON.parse(localStorage.getItem('navMap')).length === 3) {
+      console.log(navMap, 'navmap----------------------');
+
+      var navMap = JSON.parse(localStorage.getItem('navMap'));
+      navMap.pop();
+      this.updateNavigator(navMap);
+    } else {
+      this.updateNavigator(JSON.parse(localStorage.getItem('navMap')));
+    }
     this.setState(
       {
         module: [],
@@ -129,14 +140,9 @@ class MainDashBoard extends React.Component {
         isTpics: true,
         isContent: false,
         currentModel: parseInt(localStorage.getItem('selectedModel')),
-        ViwerTitle: this.updateNavigator(
-          JSON.parse(localStorage.getItem('navMap'))
-        ),
         Updated: false,
       },
-      () => {
-        localStorage.setItem('CurrentNav', 'Topic');
-      }
+      () => {}
     );
 
     console.log('in axios of topic');
@@ -148,6 +154,9 @@ class MainDashBoard extends React.Component {
         this.setState(
           {
             module: result.data,
+            // ViwerTitle: this.updateNavigator(
+            //   JSON.parse(localStorage.getItem('navMap'))
+            // ),
           },
           () => {
             console.log('module', this.state.module);
@@ -216,6 +225,8 @@ class MainDashBoard extends React.Component {
 
   //------------------------------------------Update Navigator -------------------------------------------//
   updateNavigator(newNode) {
+    console.log('updateNavigator updateNavigatorupdateNavigator', newNode);
+
     if (!Array.isArray(newNode)) {
       if (localStorage.getItem('CurrentNav') === 'Model') {
         this.setState(
@@ -228,6 +239,8 @@ class MainDashBoard extends React.Component {
           }
         );
       } else if (localStorage.getItem('CurrentNav') === 'Topic') {
+        // console.log(localStorage.getItem('CurrentNav'), 'currentNav------');
+        console.log(this.state.steps, 'steps array ');
         var d = this.state.steps;
         if (d.length === 3) {
           d.pop();
@@ -257,11 +270,21 @@ class MainDashBoard extends React.Component {
         );
       } //-------------------
     } else {
+      var newArray = JSON.parse(localStorage.getItem('navMap'));
+      // if (localStorage.getItem('CurrentNav') === 'Topic') {
+      //   console.log(localStorage.getItem('navMap'), 'from non array');
+      //   if (newArray.length === 3) {
+      //     newArray.pop();
+      //     localStorage.setItem('navMap', newArray);
+      //     console.log(localStorage.getItem('navMap'), 'from non array');
+      //   }
+      // }
       this.setState(
         {
           steps: newNode,
         },
         () => {
+          console.log(newNode);
           this.createNavPare();
         }
       );
@@ -281,7 +304,9 @@ class MainDashBoard extends React.Component {
   }
   //------------------------------------ Create NavePare -------------------------------------------------//
   createNavPare() {
+    console.log(this.state.steps, 'pppppppppppppppppppppp');
     const sections = this.state.steps.map((item, index) => {
+      console.log(item, 'gggggggggggggggggggggggggggg');
       return {
         id: index,
         key: index,
@@ -290,9 +315,14 @@ class MainDashBoard extends React.Component {
         onClick: this.naveClick.bind(this),
       };
     });
-    this.setState({
-      ViwerTitle: <Breadcrumb sections={sections}></Breadcrumb>,
-    });
+    this.setState(
+      {
+        ViwerTitle: <Breadcrumb sections={sections}></Breadcrumb>,
+      },
+      () => {
+        console.log(this.state.ViwerTitle);
+      }
+    );
   }
   // console.log(localStorage.getItem('CurrentNav'));
 
@@ -366,10 +396,11 @@ class MainDashBoard extends React.Component {
     if (localStorage.getItem('CurrentNav') === 'Model') {
       ArrayModules = this.mapModels();
     } else if (localStorage.getItem('CurrentNav') === 'Topic') {
-      console.log(localStorage.getItem('selectedModel'));
+      console.log('ViwerTitle', this.state.ViwerTitle);
+      // console.log(localStorage.getItem('selectedModel'));
       ArrayModules = this.mapTopics();
     } else if (this.state.isContent) {
-      console.log(localStorage.getItem('CurrentNav'));
+      // console.log(localStorage.getItem('CurrentNav'));
       ArrayModules = this.mapContents();
     } else {
       console.log(localStorage.getItem('CurrentNav'));
@@ -379,12 +410,12 @@ class MainDashBoard extends React.Component {
       <table style={{ width: '100%' }}>
         <div>
           <Menu attached="top" tabular>
-            <Menu.Item
-              name="section1"
-              active={true}
-              onClick={this.handleItemClick}
-            >
+            <Menu.Item active={true} onClick={this.handleItemClick}>
               {this.state.ViwerTitle}
+              {/* {console.log(
+                this.state.ViwerTitle,
+                '------------------------------------'
+              )} */}
             </Menu.Item>
           </Menu>
           <Segment basic>
