@@ -18,6 +18,50 @@ var mammoth = require('mammoth');
 Articles.use(bodyParser.json());
 Articles.use(bodyParser.urlencoded({ extended: true }));
 
+//----------------------- a Function To Update Notification Count ------------------------------------------------------//
+
+var UpdateCount = (res, result) => {
+  var file = path.join(__dirname, '../../data', 'NotifCount.json');
+  var json = fs.readFileSync(file, 'utf8');
+  var countObject = JSON.parse(json);
+  ++countObject.count;
+  fs.writeFile(file, JSON.stringify(countObject), (error) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send('حدث خطأ أثناء معالجة').end();
+    } else {
+      //------------------------------------------ get json from file -------------------------------------//
+      res.status(200).send(result).end();
+    }
+  });
+};
+
+//-------------------------------- get the notification counter -------------------------------------------//
+
+Articles.get('/Articles/getNotificationCount', (req, res) => {
+  var file = path.join(__dirname, '../../data', 'NotifCount.json');
+  var json = fs.readFileSync(file, 'utf8');
+  var countObject = JSON.parse(json);
+  if (countObject === null) {
+    res.status(500).send('حصل مشكله باسترجاع المعلومات');
+  } else res.status(200).send(countObject).end();
+});
+
+//------------------------------ Reset Notification Counter to Zero ----------------------------------------//
+Articles.get('/Articles/ResetNotificationCount', (req, res) => {
+  var file = path.join(__dirname, '../../data', 'NotifCount.json');
+  var json = fs.readFileSync(file, 'utf8');
+  var countObject = JSON.parse(json);
+  countObject.count = 0;
+  fs.writeFileSync(file, JSON.stringify(countObject), (err) => {
+    if (err) {
+      res.status(500).send('حدث خطأ أثناء المعالجه ').end();
+    } else {
+      res.status(200).send('don').end();
+    }
+  });
+});
+
 //--------------------------------------------- ahelper function to convert the Dom to a regular String ---------------------------------------//
 
 convertDomToHtmlString = (HTMLContent) => {
@@ -109,7 +153,9 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
     (eror, result) => {
       if (eror) {
         res.status(500).send('خطأ بمعالجة البيانات').end();
-      } else res.status(200).send(result).end();
+      } else {
+        res.status(200).send(result).end();
+      }
     }
   );
 });
@@ -260,7 +306,8 @@ Articles.post('/Articles/DeleteArticle', (req, res) => {
     if (err) {
       res.status(500).send('خطأ بمعالجة البانات').end();
     } else {
-      res.status(200).send(result).end();
+      UpdateCount(res, result);
+      // res.status(200).send(result).end();
     }
   });
 });
@@ -359,7 +406,7 @@ Articles.post('/Articles/InsertText', (req, res) => {
       if (error) {
         res.status(500).send('فشل العمليه').end();
       } else {
-        res.status(200).send(result).end();
+        UpdateCount(res, result);
       }
     }
   );
@@ -403,7 +450,7 @@ Articles.post('/Articles/DeletetTexts', (req, res) => {
     if (error) {
       res.status(500).send('خطأ في معالجة البيانات').end();
     } else {
-      res.status(200).send(result).end();
+      UpdateCount(res, result);
     }
   });
 });
@@ -419,7 +466,7 @@ Articles.post('/Articles/InsertMedia', (req, res) => {
       if (error) {
         res.status(500).send(' خطأ في معالجة البيانات').end();
       } else {
-        res.status(200).send(result).end();
+        UpdateCount(res, result);
       }
     }
   );
@@ -430,7 +477,7 @@ Articles.post('/Articles/DeleteMedia', (req, res) => {
     if (error) {
       res.status(500).send('خطأ في معالجة البيانات ').end();
     } else {
-      res.status(200).send(result).end();
+      UpdateCount(res, result);
     }
   });
 });
@@ -452,7 +499,7 @@ Articles.post('/Articles/UpdateTex', (req, res) => {
       console.log(error);
       res.status(500).send('خطأ في معالجة البيانات').end();
     } else {
-      res.status(200).send(result).end();
+      UpdateCount(res, result);
     }
   });
 });
@@ -470,7 +517,7 @@ Articles.post('/Articles/ReOrder', (req, res) => {
       console.log(error);
       res.status(500).send(error).end();
     } else {
-      console.log(result);
+      // UpdateCount(res.result);
       res.status(200).send('تم ').end();
     }
   });

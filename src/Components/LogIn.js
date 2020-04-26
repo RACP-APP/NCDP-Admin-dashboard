@@ -98,61 +98,66 @@ class LogIn extends React.Component {
     return (
       <div className="container loouncontainer rowCenter">
         <div className="row" style={{ maxWidth: '600px' }}>
-          <Segment inverted>
-            <h4 className="card-title">مرحبًا بك في لوحة تحكم NCDP</h4>
-            <Divider inverted />
-            <Grid columns={2} relaxed="very" stackable>
-              <Grid.Column>
-                <Form>
-                  <Form.Input
-                    icon="mail"
-                    iconPosition="right"
-                    placeholder="email@example.com Or UserName"
-                    name="email"
-                    onChange={this.validateEmaile.bind(this)}
-                  />
-                  <Form.Input
-                    icon="lock"
-                    iconPosition="right"
-                    type="password"
-                    id="inputPassword"
-                    placeholder="Password"
-                    name="password"
-                    onChange={(e) => {
-                      this.setState({
-                        password: e.target.value,
-                      });
-                    }}
-                  />
+          <Segment color="blue" raised>
+            <h5 className="card-title">مرحبًا بك في لوحة تحكم NCDP</h5>
+            <Segment placeholder>
+              <Grid columns={2} relaxed="very" stackable>
+                <Grid.Column>
+                  <Form>
+                    <Form.Input
+                      icon="mail"
+                      iconPosition="right"
+                      placeholder="email@example.com Or UserName"
+                      name="email"
+                      onChange={this.validateEmaile.bind(this)}
+                    />
+                    <Form.Input
+                      icon="lock"
+                      iconPosition="right"
+                      type="password"
+                      id="inputPassword"
+                      placeholder="Password"
+                      name="password"
+                      onChange={(e) => {
+                        this.setState({
+                          password: e.target.value,
+                        });
+                      }}
+                    />
 
-                  {this.state.HasError ? (
-                    <div class="alert alert-danger" role="alert">
-                      {this.state.ErrorMessage}
-                    </div>
-                  ) : null}
-                  <Button
-                    content=" تسجيل الدخول"
-                    onClick={this.LoginFun.bind(this)}
-                    primary
-                  />
-                </Form>
-              </Grid.Column>
+                    {this.state.HasError ? (
+                      <div class="alert alert-danger" role="alert">
+                        {this.state.ErrorMessage}
+                      </div>
+                    ) : null}
+                    <Button
+                      content=" تسجيل الدخول"
+                      onClick={this.LoginFun.bind(this)}
+                      primary
+                    />
+                  </Form>
+                </Grid.Column>
 
-              <Grid.Column verticalAlign="middle">
-                <input
-                  type="image"
-                  className="img-row  "
-                  src={
-                    config[0].logo ||
-                    'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/closeup-1579990437761-8340.jpg?alt=media&token=6e7f628c-f0a9-4f3a-bad8-be2706549f60'
-                  }
-                ></input>
-              </Grid.Column>
-            </Grid>
-
-            <Divider vertical>
-              <Icon name="hand point right" loading circular size="huge"></Icon>
-            </Divider>
+                <Grid.Column verticalAlign="middle">
+                  <input
+                    type="image"
+                    className="img-row  "
+                    src={
+                      config[0].logo ||
+                      'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/closeup-1579990437761-8340.jpg?alt=media&token=6e7f628c-f0a9-4f3a-bad8-be2706549f60'
+                    }
+                  ></input>
+                </Grid.Column>
+              </Grid>
+              <Divider vertical>
+                <Icon
+                  name="hand point right"
+                  loading
+                  circular
+                  size="huge"
+                ></Icon>
+              </Divider>
+            </Segment>
           </Segment>
           {/* <div className=" row border">
             <div className="col-4 shangpassword">

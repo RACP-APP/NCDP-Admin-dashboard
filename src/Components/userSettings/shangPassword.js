@@ -6,6 +6,7 @@ import axios from 'axios';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase';
 import ErrorMessage from '../../Components/ErroeDialog';
+import { Button, Icon, Label } from 'semantic-ui-react';
 
 class ChangePassword extends React.Component {
   constructor(props) {
@@ -176,7 +177,7 @@ class ChangePassword extends React.Component {
                         'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/closeup-1579990437761-8340.jpg?alt=media&token=6e7f628c-f0a9-4f3a-bad8-be2706549f60'
                       }
                     ></input>
-                    <label>
+                    {/* <label>
                       <FileUploader
                         hidden
                         accept="image/*"
@@ -187,7 +188,7 @@ class ChangePassword extends React.Component {
                         onProgress={this.onProgress.bind(this)}
                       ></FileUploader>
                       <span className=" glyphicon glyphicon-upload	 ItemIcons "></span>
-                    </label>
+                    </label> */}
                   </div>
                 </tr>
                 <tr>
@@ -217,12 +218,12 @@ class ChangePassword extends React.Component {
                   <div className="row">
                     <br></br>
                     <br></br>
-                    <div className="col">
+                    {/* <div className="col">
                       <span
                         class="glyphicon glyphicon-ok ItemIcons"
                         onClick={this.saveUser.bind(this)}
                       ></span>
-                    </div>
+                    </div> */}
                   </div>
                 </tr>
               </table>
@@ -313,6 +314,17 @@ class ChangePassword extends React.Component {
                 ></input>
               </div>
             </div>
+          </div>
+          <div className="row">
+            <Button
+              circular
+              icon="exchange"
+              onClick={this.saveUser.bind(this)}
+            />
+            {/* <span
+              class="glyphicon glyphicon-ok ItemIcons"
+              onClick={this.saveUser.bind(this)}
+            ></span> */}
           </div>
         </div>
       </div>

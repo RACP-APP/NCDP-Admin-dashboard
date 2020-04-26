@@ -119,7 +119,6 @@ class ContentViwer extends React.Component {
   isReordered() {
     this.getAllContentText();
     this.getAllMedia();
-    localStorage.setItem('ContentUpdate', '1');
   }
   //-----------------------------------------------Get all Media agine ------------------------------------------//
   getAllMedia() {
@@ -160,7 +159,6 @@ class ContentViwer extends React.Component {
         })
         .then((result) => {
           this.getAllContentText();
-          localStorage.setItem('ContentUpdate', '1');
 
           console.log('تم');
           this.setState({ open: false, errorMessage: '' });
@@ -190,7 +188,7 @@ class ContentViwer extends React.Component {
         })
         .then((result) => {
           this.getAllContentText();
-          localStorage.setItem('ContentUpdate', '1');
+
           this.setState({
             open: false,
             errorMessage: '',
@@ -256,7 +254,7 @@ class ContentViwer extends React.Component {
       })
       .then((result) => {
         this.getAllContentText();
-        localStorage.setItem('ContentUpdate', '1');
+
         this.setState({
           open: false,
           errorMessage: '',
@@ -284,7 +282,7 @@ class ContentViwer extends React.Component {
       })
       .then((result) => {
         this.getAllContentText();
-        localStorage.setItem('ContentUpdate', '1');
+
         this.setState({
           open: false,
           errorMessage: '',
@@ -317,14 +315,9 @@ class ContentViwer extends React.Component {
     });
   };
   onClickHandlerForAudio = () => {
-    this.setState(
-      {
-        loading: true,
-      },
-      () => {
-        localStorage.setItem('ContentUpdate', '1');
-      }
-    );
+    this.setState({
+      loading: true,
+    });
 
     var path = this.state.audioURL;
 
@@ -338,8 +331,6 @@ class ContentViwer extends React.Component {
         MediaType: 'audio',
       })
       .then((reslt) => {
-        localStorage.setItem('ContentUpdate', '1');
-
         this.getAllMedia();
       })
       .catch((error) => {
@@ -351,14 +342,9 @@ class ContentViwer extends React.Component {
   };
 
   onClickHandlerForImages = (e) => {
-    this.setState(
-      {
-        loading: true,
-      },
-      () => {
-        localStorage.setItem('ContentUpdate', '1');
-      }
-    );
+    this.setState({
+      loading: true,
+    });
 
     console.log("this.props.data['ContentID']", this.props.data['contentID']);
     var path = this.state.ImageUrl;
@@ -374,8 +360,6 @@ class ContentViwer extends React.Component {
         MediaType: 'Image',
       })
       .then((reslt) => {
-        localStorage.setItem('ContentUpdate', '1');
-
         this.getAllMedia();
       })
       .catch((error) => {
@@ -387,8 +371,6 @@ class ContentViwer extends React.Component {
       });
   };
   onVedioSucsessHandler = () => {
-    // then print response status
-
     var path = this.state.vedioURL;
 
     var order =
@@ -401,8 +383,6 @@ class ContentViwer extends React.Component {
         MediaType: 'vedio',
       })
       .then((reslt) => {
-        localStorage.setItem('ContentUpdate', '1');
-
         this.getAllMedia();
       })
       .catch((error) => {

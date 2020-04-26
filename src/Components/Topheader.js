@@ -17,39 +17,98 @@ class TopHeader extends React.Component {
   }
 
   sendTheNewNoticication() {
-    if (localStorage.getItem('ContentUpdate') === null) {
-      this.setState({
-        open: true,
-        Message: 'لا يوجد اي تغيير على المحتوى .. لا يمكن ارسال اشعار جديد',
-        title: ' لم يتم الإرسال ',
-        error: false,
+    axios
+      .get(config[0].server + 'Articles/getNotificationCount')
+      .then((result) => {
+        console.log(result.data);
+
+        if (
+          result === null ||
+          result.data === null ||
+          result.data.count === 0
+        ) {
+          this.setState({
+            open: true,
+            Message: 'لا يوجد اي تغيير على المحتوى .. لا يمكن ارسال اشعار جديد',
+            title: ' لم يتم الإرسال ',
+            error: false,
+          });
+        } else {
+          axios
+            .get(config[0].server + 'sendNotification')
+            .then((result) => {
+              console.log(result.data);
+              this.setState(
+                {
+                  Message: result.data,
+                  error: false,
+                  title: 'نجاح العمليه',
+                },
+                () => {
+                  console.log(
+                    'fffffffffffffffffffffffffffffppppppppppppppppppppppppprrrrrrrrrrrrrrrrrrrrrr'
+                  );
+                  //----------------------------------------------- here we need to reset the notification counter --------------------------------------//
+                  axios
+                    .get(config[0].server + 'Articles/ResetNotificationCount')
+                    .then((result) => {
+                      console.log(result);
+                    });
+                }
+              );
+            })
+            .catch((error) => {
+              this.setState({
+                open: true,
+                title: ' خطأ بالإرسال',
+                Message: error.response.data,
+                error: true,
+              });
+            });
+        }
+      })
+      .catch((error) => {
+        this.setState({
+          open: true,
+          title: ' خطأ بالإرسال',
+          Message: error.response.data,
+          error: true,
+        });
       });
 
-      console.log(
-        'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
-        " .get(config[0].server + 'sendNotification')"
-      );
-    } else {
-      axios
-        .get(config[0].server + 'sendNotification')
-        .then((result) => {
-          console.log(result.data);
-          this.setState({
-            open: true,
-            Message: result.data,
-            error: false,
-            title: 'نجاح العمليه',
-          });
-        })
-        .catch((error) => {
-          this.setState({
-            open: true,
-            title: ' خطأ بالإرسال',
-            Message: error.response.data,
-            error: true,
-          });
-        });
-    }
+    // if (localStorage.getItem('ContentUpdate') === null) {
+    //   this.setState({
+    //     open: true,
+    //     Message: 'لا يوجد اي تغيير على المحتوى .. لا يمكن ارسال اشعار جديد',
+    //     title: ' لم يتم الإرسال ',
+    //     error: false,
+    //   });
+
+    //   console.log(
+    //     'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh',
+    //     " .get(config[0].server + 'sendNotification')"
+    //   );
+    // } else {
+    //   axios
+    //     .get(config[0].server + 'sendNotification')
+    //     .then((result) => {
+    //       console.log(result.data);
+    //       this.setState({
+    //         open: true,
+    //         Message: result.data,
+    //         error: false,
+    //         title: 'نجاح العمليه',
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       this.setState({
+    //         open: true,
+    //         title: ' خطأ بالإرسال',
+    //         Message: error.response.data,
+    //         error: true,
+    //       });
+    //     });
+    // }
   }
   handleOpen = () => this.setState({ open: true });
   handleClose = () => this.setState({ open: false });

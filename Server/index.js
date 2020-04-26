@@ -32,7 +32,26 @@ app.use(require('./Routs/LogIn'));
 app.use(require('./Routs/Articles'));
 app.use(require('./Routs/Dashbord'));
 
-//-------------------------------------------------------------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------//
+//------------------------  Save Updates for Notifications ------------------------------------------------//
+//---------------------------------------------------------------------------------------------------------//
+
+app.get('/UpdateNotifiCount', (req, res) => {
+  var file = path.join(__dirname, '../data', 'NotifCount.json');
+  var json = fs.readFileSync(file, 'utf8');
+  var countObject = JSON.parse(json);
+  ++countObject.count;
+  fs.writeFile(file, JSON.stringify(countObject), (error) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send('حدث خطأ أثناء معالجة').end();
+    } else {
+      //------------------------------------------ get json from file -------------------------------------//
+      res.status(200).send('done').end();
+    }
+  });
+});
+//--------------------------------------------------------------------------------------------------------//
 //------------------------- A rout to send a notifications to all reigistered Mobile ---------------------//
 //--------------------------------------------------------------------------------------------------------//
 app.get('/sendNotification', (req, res) => {
