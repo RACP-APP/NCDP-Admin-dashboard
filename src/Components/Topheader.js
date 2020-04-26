@@ -13,15 +13,19 @@ import axios from 'axios';
 class TopHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { open: false, Message: '', error: false, title: '' };
+    this.state = {
+      open: false,
+      Message: '',
+      error: false,
+      title: '',
+      counter: 0,
+    };
   }
 
   sendTheNewNoticication() {
     axios
       .get(config[0].server + 'Articles/getNotificationCount')
       .then((result) => {
-        console.log(result.data);
-
         if (
           result === null ||
           result.data === null ||
@@ -37,7 +41,6 @@ class TopHeader extends React.Component {
           axios
             .get(config[0].server + 'sendNotification')
             .then((result) => {
-              console.log(result.data);
               this.setState(
                 {
                   Message: result.data,
@@ -45,24 +48,15 @@ class TopHeader extends React.Component {
                   title: 'نجاح العمليه',
                 },
                 () => {
-                  console.log(
-                    'fffffffffffffffffffffffffffffppppppppppppppppppppppppprrrrrrrrrrrrrrrrrrrrrr'
-                  );
                   //----------------------------------------------- here we need to reset the notification counter --------------------------------------//
                   axios
                     .get(config[0].server + 'Articles/ResetNotificationCount')
                     .then((result) => {
-                      console.log(
-                        'fffffffffffffffffffffffffffffppppppppppppppppppppppppprrrrrrrrrrrrrrrrrrrrrr'
-                      );
                       this.setState({
                         open: true,
                       });
                     })
                     .catch((error) => {
-                      console.log(
-                        'fffffffffffffffffffffffffffffppppppppppppppppppppppppprrrrrrrrrrrrrrrrrrrrrr111111111111111111111111111'
-                      );
                       this.setState({
                         open: true,
                         title: ' خطأ بالإرسال',
@@ -171,6 +165,16 @@ class TopHeader extends React.Component {
                 content="لارسال اشعار بالمحتوى الجديد اضغط هنا"
                 trigger={<Icon name="bell" size="large" />}
               />
+              <label
+                style={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: 4,
+                  backgroundColor: 'red',
+                }}
+              >
+                {this.state.counter}
+              </label>
             </a>
             {/* Send Notification */}
           </Menu.Item>
