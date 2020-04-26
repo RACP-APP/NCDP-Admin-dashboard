@@ -52,7 +52,23 @@ class TopHeader extends React.Component {
                   axios
                     .get(config[0].server + 'Articles/ResetNotificationCount')
                     .then((result) => {
-                      console.log(result);
+                      console.log(
+                        'fffffffffffffffffffffffffffffppppppppppppppppppppppppprrrrrrrrrrrrrrrrrrrrrr'
+                      );
+                      this.setState({
+                        open: true,
+                      });
+                    })
+                    .catch((error) => {
+                      console.log(
+                        'fffffffffffffffffffffffffffffppppppppppppppppppppppppprrrrrrrrrrrrrrrrrrrrrr111111111111111111111111111'
+                      );
+                      this.setState({
+                        open: true,
+                        title: ' خطأ بالإرسال',
+                        Message: error.response.data,
+                        error: true,
+                      });
                     });
                 }
               );

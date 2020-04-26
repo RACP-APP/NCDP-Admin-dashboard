@@ -53,10 +53,13 @@ Articles.get('/Articles/ResetNotificationCount', (req, res) => {
   var json = fs.readFileSync(file, 'utf8');
   var countObject = JSON.parse(json);
   countObject.count = 0;
-  fs.writeFileSync(file, JSON.stringify(countObject), (err) => {
+  console.log('in Error ');
+  fs.writeFile(file, JSON.stringify(countObject), (err) => {
     if (err) {
+      console.log('in Error ', err);
       res.status(500).send('حدث خطأ أثناء المعالجه ').end();
     } else {
+      console.log('In done');
       res.status(200).send('don').end();
     }
   });
