@@ -13,7 +13,7 @@ export default class ManageSocialIcons extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: data,
+      data: [],
       Error: false,
       ErrorMessage: '',
       Updated: false,
@@ -78,6 +78,20 @@ export default class ManageSocialIcons extends React.Component {
           ErrorMessage: error.response.data,
           Updated: false,
           open: true,
+        });
+      });
+  }
+  componentDidMount() {
+    axios
+      .get(config[0].server + 'GetFooterJson')
+      .then((result) => {
+        console.log(result.data, '8888888888888888888888888');
+        this.setState({ data: result.data, ErrorMessage: '', open: false });
+      })
+      .catch((error) => {
+        this.setState({
+          open: true,
+          ErrorMessage: error.response.data,
         });
       });
   }
