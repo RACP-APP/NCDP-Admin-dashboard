@@ -161,7 +161,9 @@ class ContentViwer extends React.Component {
           this.getAllContentText();
 
           console.log('تم');
-          this.setState({ open: false, errorMessage: '' });
+          this.setState({ open: false, errorMessage: '' }, () => {
+            this.props.UpdateNotification();
+          });
         })
         .catch((error) => {
           this.setState({
@@ -188,11 +190,15 @@ class ContentViwer extends React.Component {
         })
         .then((result) => {
           this.getAllContentText();
-
-          this.setState({
-            open: false,
-            errorMessage: '',
-          });
+          this.setState(
+            {
+              open: false,
+              errorMessage: '',
+            },
+            () => {
+              this.props.UpdateNotification();
+            }
+          );
         })
         .catch((error) => {
           this.setState({
@@ -254,11 +260,15 @@ class ContentViwer extends React.Component {
       })
       .then((result) => {
         this.getAllContentText();
-
-        this.setState({
-          open: false,
-          errorMessage: '',
-        });
+        this.setState(
+          {
+            open: false,
+            errorMessage: '',
+          },
+          () => {
+            this.props.UpdateNotification();
+          }
+        );
       })
       .catch((error) => {
         this.setState({
@@ -283,10 +293,15 @@ class ContentViwer extends React.Component {
       .then((result) => {
         this.getAllContentText();
 
-        this.setState({
-          open: false,
-          errorMessage: '',
-        });
+        this.setState(
+          {
+            open: false,
+            errorMessage: '',
+          },
+          () => {
+            this.props.UpdateNotification();
+          }
+        );
       })
       .catch((error) => {
         this.setState({
@@ -315,9 +330,12 @@ class ContentViwer extends React.Component {
     });
   };
   onClickHandlerForAudio = () => {
-    this.setState({
-      loading: true,
-    });
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {}
+    );
 
     var path = this.state.audioURL;
 
@@ -332,6 +350,7 @@ class ContentViwer extends React.Component {
       })
       .then((reslt) => {
         this.getAllMedia();
+        this.props.UpdateNotification();
       })
       .catch((error) => {
         this.setState({
@@ -342,9 +361,12 @@ class ContentViwer extends React.Component {
   };
 
   onClickHandlerForImages = (e) => {
-    this.setState({
-      loading: true,
-    });
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {}
+    );
 
     console.log("this.props.data['ContentID']", this.props.data['contentID']);
     var path = this.state.ImageUrl;
@@ -361,6 +383,7 @@ class ContentViwer extends React.Component {
       })
       .then((reslt) => {
         this.getAllMedia();
+        this.props.UpdateNotification();
       })
       .catch((error) => {
         this.setState({
@@ -384,6 +407,7 @@ class ContentViwer extends React.Component {
       })
       .then((reslt) => {
         this.getAllMedia();
+        this.props.UpdateNotification();
       })
       .catch((error) => {
         this.setState({

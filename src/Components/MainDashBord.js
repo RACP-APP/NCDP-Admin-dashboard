@@ -14,6 +14,9 @@ class MainDashBoard extends React.Component {
     this.ArrangDashControles = this.ArrangDashControles.bind(this);
   }
 
+  UpdateNotification() {
+    this.props.UpdatCounter();
+  }
   componentDidMount() {
     //  localStorage.setItem('NavePointer', 'Content');
   }
@@ -33,7 +36,10 @@ class MainDashBoard extends React.Component {
         {/* {this.state.viwerSatte['ViwerTitle']} */}
 
         <div className="row">
-          <Viwer viwerSatte={this.ArrangDashControles.bind(this)} />
+          <Viwer
+            viwerSatte={this.ArrangDashControles.bind(this)}
+            UpdateNotification={this.UpdateNotification.bind(this)}
+          />
         </div>
       </div>
     );

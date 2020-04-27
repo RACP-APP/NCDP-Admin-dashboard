@@ -7,6 +7,8 @@ import firebase from 'firebase';
 import Footer from './Components/footer';
 import TopHeader from './Components/Topheader';
 import ImgUploader from './Components/uploadimage';
+import xaios from 'axios';
+import config from './config.json';
 import AdminSettings from './Components/userSettings/AdminAddUser';
 import MainAnalatic from './Components/Analytics/mailAnalyticBoard';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
@@ -30,9 +32,22 @@ class App extends React.Component {
     this.state = {
       LoggetIn: false,
       redirect: '',
+      counter: 0,
     };
     this.logOut = this.logOut.bind(this);
     this.loggedIn = this.loggedIn.bind(this);
+  }
+
+  UpdateNotificationCount() {
+    xaios
+      .get(config[0].server + 'Articles/getNotificationCount')
+      .then((result) => {
+        console.log(result.data.count + 'counter --------------');
+        this.setState({ counter: result.data.count });
+      })
+      .catch((error) => {
+        console.log('error');
+      });
   }
 
   loggedIn() {
@@ -58,21 +73,17 @@ class App extends React.Component {
         localStorage.setItem('CurrentnavNode', 'LogIn');
       }
     );
-    console.log(
-      localStorage.getItem('CurrentnavNode'),
-      'CurrentnavNode----------------'
-    );
   }
 
   redirectto(Node) {
     localStorage.setItem('CurrentnavNode', Node);
-    console.log(Node, 'kkkk');
 
     this.setState({
       redirect: Node,
     });
   }
   componentDidMount() {
+    this.UpdateNotificationCount();
     if (localStorage.getItem('user')) {
       this.setState(
         {
@@ -99,7 +110,7 @@ class App extends React.Component {
     return (
       <div>
         <div className="row">
-          <TopHeader></TopHeader>
+          <TopHeader counter={this.state.counter}></TopHeader>
         </div>
         {this.state.LoggetIn ? (
           <Header
@@ -113,7 +124,17 @@ class App extends React.Component {
               <Redirect to={localStorage.getItem('CurrentnavNode')}></Redirect>
             </Route>
 
-            <Route exact path="/" component={DashBoard}></Route>
+            <Route
+              exact
+              path="/"
+              render={() => {
+                return (
+                  <DashBoard
+                    UpdatCounter={this.UpdateNotificationCount.bind(this)}
+                  />
+                );
+              }}
+            ></Route>
             <Route
               exact
               path="/LogIn"

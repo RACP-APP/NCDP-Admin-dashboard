@@ -18,8 +18,14 @@ class TopHeader extends React.Component {
       Message: '',
       error: false,
       title: '',
-      counter: 0,
+      counter: this.props.counter,
     };
+  }
+
+  updateNotificationCount(counter) {
+    this.setState({
+      counter: counter,
+    });
   }
 
   sendTheNewNoticication() {
@@ -36,6 +42,7 @@ class TopHeader extends React.Component {
             Message: 'لا يوجد اي تغيير على المحتوى .. لا يمكن ارسال اشعار جديد',
             title: ' لم يتم الإرسال ',
             error: false,
+            counter: result.data.count,
           });
         } else {
           axios
@@ -54,6 +61,7 @@ class TopHeader extends React.Component {
                     .then((result) => {
                       this.setState({
                         open: true,
+                        counter: 0,
                       });
                     })
                     .catch((error) => {
@@ -123,6 +131,18 @@ class TopHeader extends React.Component {
   handleOpen = () => this.setState({ open: true });
   handleClose = () => this.setState({ open: false });
 
+  componentWillReceiveProps(nextProps) {
+    console.log(
+      nextProps,
+      '------------------------',
+      nextProps.counter,
+      this.props.counter
+    );
+
+    this.setState({
+      counter: nextProps.counter,
+    });
+  }
   render() {
     return (
       <div className="Mainheader " style={{ left: '20px' }}>

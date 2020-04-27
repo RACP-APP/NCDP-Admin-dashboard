@@ -49,6 +49,11 @@ class MainDashBoard extends React.Component {
     this.goToContentViwer = this.goToContentViwer.bind(this);
   }
 
+  //--------------------------------------------------------------------------------//
+  UpdateNotification() {
+    this.props.UpdateNotification();
+  }
+
   //-------------------- Return Back To module List ----------------------------------//
   backToModules() {
     this.setState(
@@ -381,6 +386,7 @@ class MainDashBoard extends React.Component {
         convertToTopic={this.goToTopicsViwer.bind(this)}
         updateNavigator={this.updateNavigator.bind(this)}
         UpdateListafterDelete={this.UpdateListafterDelete.bind(this)}
+        UpdateNotification={this.UpdateNotification.bind(this)}
       />
     );
   }
