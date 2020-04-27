@@ -12,11 +12,6 @@ async function writeotfile(object) {
   try {
     await fs.writeFileSync(file, JSON.stringify(object));
   } catch {}
-
-  // fs.watch(file, (curr, prev) => {
-  //   console.log(`the current mtime is: ${curr.mtime}`);
-  //   console.log(`the previous mtime was: ${prev.mtime}`);
-  // })
 }
 
 async function getData(cb) {

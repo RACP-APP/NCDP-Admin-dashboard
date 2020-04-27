@@ -143,6 +143,17 @@ class TopHeader extends React.Component {
       counter: nextProps.counter,
     });
   }
+  componentDidMount() {
+    axios
+      .get(config[0].server + 'Articles/getNotificationCount')
+      .then((result) => {
+        console.log(result.data.count + 'counter --------------');
+        this.setState({ counter: result.data.count });
+      })
+      .catch((error) => {
+        console.log('error');
+      });
+  }
   render() {
     return (
       <div className="Mainheader " style={{ left: '20px' }}>

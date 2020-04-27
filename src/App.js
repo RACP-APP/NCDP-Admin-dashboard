@@ -7,11 +7,11 @@ import firebase from 'firebase';
 import Footer from './Components/footer';
 import TopHeader from './Components/Topheader';
 import ImgUploader from './Components/uploadimage';
-import xaios from 'axios';
-import config from './config.json';
 import AdminSettings from './Components/userSettings/AdminAddUser';
 import MainAnalatic from './Components/Analytics/mailAnalyticBoard';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import xaios from 'axios';
+import config from './config.json';
 var firebaseConfig = {
   apiKey: 'AIzaSyAFSTEpX_9R0pzLQ36zBFYxKs19hjxKytA',
   authDomain: 'ncdp-270519.firebaseapp.com',
@@ -30,24 +30,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      counter: 0,
       LoggetIn: false,
       redirect: '',
-      counter: 0,
     };
     this.logOut = this.logOut.bind(this);
     this.loggedIn = this.loggedIn.bind(this);
-  }
-
-  UpdateNotificationCount() {
-    xaios
-      .get(config[0].server + 'Articles/getNotificationCount')
-      .then((result) => {
-        console.log(result.data.count + 'counter --------------');
-        this.setState({ counter: result.data.count });
-      })
-      .catch((error) => {
-        console.log('error');
-      });
   }
 
   loggedIn() {
@@ -73,17 +61,21 @@ class App extends React.Component {
         localStorage.setItem('CurrentnavNode', 'LogIn');
       }
     );
+    console.log(
+      localStorage.getItem('CurrentnavNode'),
+      'CurrentnavNode----------------'
+    );
   }
 
   redirectto(Node) {
     localStorage.setItem('CurrentnavNode', Node);
+    console.log(Node, 'kkkk');
 
     this.setState({
       redirect: Node,
     });
   }
   componentDidMount() {
-    this.UpdateNotificationCount();
     if (localStorage.getItem('user')) {
       this.setState(
         {
@@ -104,6 +96,20 @@ class App extends React.Component {
         }
       );
     }
+  }
+
+  //------------------------------------------------------------------------------------------//
+
+  UpdateNotificationCount() {
+    xaios
+      .get(config[0].server + 'Articles/getNotificationCount')
+      .then((result) => {
+        console.log(result.data.count + 'counter --------------');
+        this.setState({ counter: result.data.count });
+      })
+      .catch((error) => {
+        console.log('error');
+      });
   }
 
   render() {
