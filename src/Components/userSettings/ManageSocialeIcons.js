@@ -30,7 +30,6 @@ export default class ManageSocialIcons extends React.Component {
       .parent()
       .attr('data-key');
     for (var i = 0; i < temp.length; i++) {
-      //   console.log(temp[i]['Icon']);
       if (temp[i]['Icon'].split(' ').join('') === e.target.id) {
         temp[i]['active'] = !temp[i]['active'];
         if (temp[i]['active']) {
@@ -49,12 +48,9 @@ export default class ManageSocialIcons extends React.Component {
   ChangeLink(e) {
     var temp = this.state.data;
     temp[parseInt(e.target.id[0])]['linke'] = e.target.value;
-    this.setState(
-      {
-        data: temp,
-      },
-      console.log(this.state.data)
-    );
+    this.setState({
+      data: temp,
+    });
   }
 
   saveFooterIcons(e) {
@@ -64,7 +60,6 @@ export default class ManageSocialIcons extends React.Component {
         data: this.state.data,
       })
       .then((result) => {
-        console.log('done');
         this.setState({
           error: false,
           ErrorMessage: '',
@@ -85,7 +80,6 @@ export default class ManageSocialIcons extends React.Component {
     axios
       .get(config[0].server + 'GetFooterJson')
       .then((result) => {
-        console.log(result.data, '8888888888888888888888888');
         this.setState({ data: result.data, ErrorMessage: '', open: false });
       })
       .catch((error) => {

@@ -431,7 +431,7 @@ class MainDashBoard extends React.Component {
                 role="tabpanel"
                 aria-labelledby="nav-home-tab"
               >
-                {this.state.isModule ? (
+                {localStorage.getItem('CurrentNav') === 'Model' ? (
                   <ModuleControlPanel
                     mapModels={this.UpdateListafterDelete.bind(this)}
                   ></ModuleControlPanel>

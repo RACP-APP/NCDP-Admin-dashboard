@@ -84,6 +84,7 @@ class MyList extends React.Component {
       <div className="row border component ">
         <div className="row ">
           <Segment
+            inverted
             raised
             style={{
               width: '100%',

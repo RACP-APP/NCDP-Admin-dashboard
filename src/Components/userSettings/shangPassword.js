@@ -42,29 +42,18 @@ class ChangePassword extends React.Component {
       .child(e)
       .getDownloadURL()
       .then((url) => {
-        console.log(url);
         this.setState({ url: url });
       });
   }
 
   componentDidMount() {
-    this.setState(
-      {
-        oldPassword: '',
-        userID: JSON.parse(localStorage.getItem('user'))['userID'],
-        userName: JSON.parse(localStorage.getItem('user'))[
-          'userName'
-        ].toString(),
-        aEmail: JSON.parse(localStorage.getItem('user'))['Email'],
-        url: JSON.parse(localStorage.getItem('user'))['Image'],
-      },
-      () => {
-        console.log(
-          JSON.parse(localStorage.getItem('user'))['userName'].toString(),
-          'username'
-        );
-      }
-    );
+    this.setState({
+      oldPassword: '',
+      userID: JSON.parse(localStorage.getItem('user'))['userID'],
+      userName: JSON.parse(localStorage.getItem('user'))['userName'].toString(),
+      aEmail: JSON.parse(localStorage.getItem('user'))['Email'],
+      url: JSON.parse(localStorage.getItem('user'))['Image'],
+    });
   }
 
   //------------------------------------------- Save User Data ----------------------------------------------//
@@ -80,7 +69,6 @@ class ChangePassword extends React.Component {
       this.state.url || JSON.parse(localStorage.getItem('user'))['Image'];
     obj.userID =
       this.state.userID || JSON.parse(localStorage.getItem('user'))['userID'];
-    console.log(this.state.Newpassword, this.state.confirmPassword);
     obj.password = this.state.oldPassword;
     obj.Newpassword = this.state.Newpassword;
 
@@ -110,7 +98,6 @@ class ChangePassword extends React.Component {
             );
           })
           .catch((error) => {
-            console.log(error.response.data);
             this.setState({
               ErrorMessage: error.response.data,
               open: true,
@@ -138,7 +125,6 @@ class ChangePassword extends React.Component {
       //------------------ if password dose not match then return false and show error ------------------//
     }
 
-    console.log(this.state.Newpassword, this.state.confirmPassword);
     if (this.state.Newpassword === '' && this.state.confirmPassword === '') {
       this.setState({
         error: true,
@@ -177,18 +163,6 @@ class ChangePassword extends React.Component {
                         'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/closeup-1579990437761-8340.jpg?alt=media&token=6e7f628c-f0a9-4f3a-bad8-be2706549f60'
                       }
                     ></input>
-                    {/* <label>
-                      <FileUploader
-                        hidden
-                        accept="image/*"
-                        name="image"
-                        storageRef={firebase.storage().ref()}
-                        onUploadStart={this.handelloadStart.bind(this)}
-                        onUploadSuccess={this.handelSucces.bind(this)}
-                        onProgress={this.onProgress.bind(this)}
-                      ></FileUploader>
-                      <span className=" glyphicon glyphicon-upload	 ItemIcons "></span>
-                    </label> */}
                   </div>
                 </tr>
                 <tr>
@@ -203,7 +177,6 @@ class ChangePassword extends React.Component {
                         placeholder={this.state.userName}
                         value={this.state.userName}
                         onChange={(e) => {
-                          console.log(e.target.value);
                           this.setState({
                             userName: e.target.value,
                           });
@@ -218,12 +191,6 @@ class ChangePassword extends React.Component {
                   <div className="row">
                     <br></br>
                     <br></br>
-                    {/* <div className="col">
-                      <span
-                        class="glyphicon glyphicon-ok ItemIcons"
-                        onClick={this.saveUser.bind(this)}
-                      ></span>
-                    </div> */}
                   </div>
                 </tr>
               </table>
@@ -246,7 +213,6 @@ class ChangePassword extends React.Component {
                   placeholder={this.state.aEmail}
                   value={this.state.aEmail}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     this.setState({
                       aEmail: e.target.value,
                     });
@@ -266,7 +232,6 @@ class ChangePassword extends React.Component {
                   type="password"
                   placeholder={this.state.oldPassword}
                   onChange={(e) => {
-                    console.log(this.state.oldPassword);
                     this.setState({
                       oldPassword: e.target.value,
                       oldPasswordHasChanged: true,

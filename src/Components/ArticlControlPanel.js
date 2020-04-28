@@ -120,12 +120,14 @@ class ControlPanel extends React.Component {
       <div>
         <Button
           circular
+          inverted
           icon="add circle"
           onClick={this.addNewArticle.bind(this)}
         ></Button>
 
         <Button
           circular
+          inverted
           icon="step backward"
           onClick={(e) => {
             localStorage.removeItem('CurrentTpic');

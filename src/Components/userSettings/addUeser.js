@@ -35,14 +35,12 @@ class AddUser extends React.Component {
     });
   }
   handelSucces(e) {
-    // console.log(firebase.storage);
     firebase
       .storage()
       .ref()
       .child(e)
       .getDownloadURL()
       .then((url) => {
-        console.log(url);
         this.setState({ url });
       });
   }
@@ -80,7 +78,6 @@ class AddUser extends React.Component {
   //-------------------------------------------- a function to add a user to dataBase ---------------------------//
   //-------------------------------------------------------------------------------------------------------------//
   InsertUser() {
-    console.log(this.state.aEmail, this.state.userName);
     //------------------------------------------ send data to database ------------------------------------------//
     if (
       this.state.aEmail === '' ||
@@ -101,7 +98,6 @@ class AddUser extends React.Component {
           ErrorMessage: ' ',
         },
         () => {
-          console.log(this.state.url, 'url');
           //-------------------------------------------------------------------------------------------------//
           axios
             .post(config[0].server + 'User/AddUser', {
@@ -171,7 +167,6 @@ class AddUser extends React.Component {
                   placeholder="الرجاء ادخال اسم المستخدم هنا "
                   onChange={(e) => {
                     this.state.userName = e.target.value;
-                    console.log(this.state.userName);
                   }}
                 ></input>
               </td>
@@ -193,7 +188,6 @@ class AddUser extends React.Component {
                   placeholder="الرجاء إدخال كلمة المرور هنا"
                   onChange={(e) => {
                     this.state.password = e.target.value;
-                    console.log(this.state.password);
                   }}
                 ></input>
               </td>

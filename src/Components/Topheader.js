@@ -193,7 +193,7 @@ class TopHeader extends React.Component {
           >
             <a>
               <Popup
-                content="لارسال اشعار بالمحتوى الجديد اضغط هنا"
+                content={`لديك ${this.state.counter} اشعارات . لارسال الإشعرات الجديده اضغط هنا `}
                 trigger={<Icon name="bell" size="large" />}
               />
               <label

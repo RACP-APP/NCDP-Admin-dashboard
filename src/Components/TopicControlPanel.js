@@ -80,12 +80,13 @@ class TopicControlPanel extends React.Component {
   render() {
     if (!this.state.addMode) {
       return (
-        <Segment>
+        <Segment raised inverted>
           <div className="row">
             {/* --------------------- Showing plus ------------------ */}
 
             <Button
               circular
+              inverted
               icon="add circle"
               onClick={(e) => {
                 this.setState({
@@ -111,7 +112,7 @@ class TopicControlPanel extends React.Component {
             open={this.state.open}
             onClose={this.close}
           >
-            <Modal.Header>إضافة وحده جديده</Modal.Header>
+            <Modal.Header>إضافة </Modal.Header>
             <Modal.Content image>
               <Image
                 wrapped

@@ -155,7 +155,9 @@ class AllToghterConmponent extends React.Component {
         if (this.state.data[i]['MediaType'] === 'Image') {
           myComponents[i] = (
             <Grid.Row>
-              <ImagViweing data={this.state.data[i]} />
+              <Grid.Column size={14}>
+                <ImagViweing data={this.state.data[i]} />
+              </Grid.Column>
             </Grid.Row>
           );
         }
@@ -164,7 +166,9 @@ class AllToghterConmponent extends React.Component {
         if (this.state.data[i]['MediaType'] === 'Text') {
           myComponents[i] = (
             <Grid.Row>
-              <TextViweing data={this.state.data[i]} />
+              <Grid.Column size={14}>
+                <TextViweing data={this.state.data[i]} />
+              </Grid.Column>
             </Grid.Row>
           );
         }
@@ -174,7 +178,9 @@ class AllToghterConmponent extends React.Component {
         if (this.state.data[i]['MediaType'] === 'vedio') {
           myComponents[i] = (
             <Grid.Row>
-              <VedioViewing data={this.state.data[i]} />
+              <Grid.Column size={14}>
+                <VedioViewing data={this.state.data[i]} />
+              </Grid.Column>
             </Grid.Row>
           );
         }
@@ -184,7 +190,9 @@ class AllToghterConmponent extends React.Component {
         if (this.state.data[i]['MediaType'] === 'audio') {
           myComponents[i] = (
             <Grid.Row>
-              <AudioViewing data={this.state.data[i]} />
+              <Grid.Column size={14}>
+                <AudioViewing data={this.state.data[i]} />
+              </Grid.Column>
             </Grid.Row>
           );
         }

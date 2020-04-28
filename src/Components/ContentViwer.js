@@ -453,9 +453,10 @@ class ContentViwer extends React.Component {
         <Grid style={{ width: '100%' }}>
           <Grid.Row>
             <Grid.Column width={16}>
-              <Segment raised>
+              <Segment raised inverted>
                 <div className="row">
                   <Button
+                    inverted
                     circular
                     icon="step backward"
                     onClick={(e) => {

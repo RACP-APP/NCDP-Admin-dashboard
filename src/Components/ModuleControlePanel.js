@@ -137,11 +137,12 @@ class ModuleControlPanel extends React.Component {
 
   render() {
     return (
-      <Segment raised>
+      <Segment raised inverted>
         <div className="row">
           {/* --------------------- Showing plus ------------------ */}
 
           <Button
+            inverted
             circular
             icon="add circle"
             onClick={this.show.bind(this)}
