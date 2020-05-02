@@ -6,7 +6,15 @@ import config from '../config.json';
 import $ from 'jquery';
 import FileUploader from '../Components/uploadimage';
 import firebase from 'firebase';
-import { Segment, Button, Grid, Image, Input, Modal } from 'semantic-ui-react';
+import {
+  Segment,
+  Button,
+  Grid,
+  Image,
+  Input,
+  Modal,
+  Popup,
+} from 'semantic-ui-react';
 
 class TopicControlPanel extends React.Component {
   constructor(props) {
@@ -83,18 +91,22 @@ class TopicControlPanel extends React.Component {
         <Segment raised inverted>
           <div className="row">
             {/* --------------------- Showing plus ------------------ */}
-
-            <Button
-              circular
-              inverted
-              icon="add circle"
-              onClick={(e) => {
-                this.setState({
-                  // addMode: true,
-                  open: true,
-                  //---------------//
-                });
-              }}
+            <Popup
+              content="إضافة "
+              trigger={
+                <Button
+                  circular
+                  inverted
+                  icon="add circle"
+                  onClick={(e) => {
+                    this.setState({
+                      // addMode: true,
+                      open: true,
+                      //---------------//
+                    });
+                  }}
+                />
+              }
             />
           </div>
           <Modal
