@@ -52,10 +52,19 @@ body {
   margin: 0 auto;
   text-align: center;
 }
+#cke_editor1 {
+  min-height: 600px;
+}
 
 .editortextbox {
   background-color: #f5fafa;
+  height: 100%;
+  min-height: 600px;
 }
+.cke_contents {
+  height: 500px !important;
+}
+
 h1 {
   text-align: center;
 }
@@ -73,8 +82,11 @@ div.DraftEditor-root {
   font-size: 18px;
   font-family: 'calibri', sans-serif;
 }
+#cke_editor1 {
+  min-height: 500px;
+}
 .editor {
-  height: 100%;
+  min-height: 100%;
   width: 0;
   position: fixed;
   z-index: 200;

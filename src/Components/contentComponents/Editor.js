@@ -353,7 +353,6 @@ class editor extends Component {
       <div className="  editor">
         <div className="editortextbox">
           <CKEditor
-            style={{ height: '100%' }}
             onChange={(e) => {
               this.setState(
                 {
