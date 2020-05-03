@@ -63,6 +63,7 @@ CREATE TABLE Article
     CreatedByUser int not null,
     CreatedDate DATETIME,
     TimesViewd int ,
+    TimeSpendOnArticle:int,
     Notes varchar(500),
     FOREIGN KEY (TopicID) REFERENCES Topics(TopicID) ON DELETE CASCADE
 
@@ -111,6 +112,7 @@ DROP TABLE IF EXISTS TEXT;
     ID INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     MobID varchar(300),
     Token varchar(500)
+    registrationDate DATETIME,
   
   );
 
