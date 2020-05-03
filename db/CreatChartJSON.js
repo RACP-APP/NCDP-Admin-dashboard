@@ -5,7 +5,8 @@ const path = require('path');
 var modules = [];
 var cc = false;
 
-var object = {};
+var appDownload = {};
+var TimeReviwed = [];
 
 //-------------------------- Creat an inital value to all Months of the Year --------------------------------//
 var jan = {
@@ -177,7 +178,7 @@ function arrangDays(month, day) {
 // -------------------------------------------------------------------------------------------------------------------------------------------------//
 //----------------------------------- afunction to create a ne object contains the number of downloads for each month and week ---------------------//
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
-function getRegisteration(year) {
+function getRegisteration(year, cb) {
   db.query(
     'SELECT * FROM MobRegistration WHERE YEAR(registrationDate)=' + year,
     (error, result) => {
@@ -236,7 +237,7 @@ function getRegisteration(year) {
         }
 
         //---------------------- end of the for --------------------------------------------------//
-        object = {
+        appDownload = {
           jan,
           Feb,
           Mar,
@@ -250,16 +251,86 @@ function getRegisteration(year) {
           nov,
           dec,
         };
-        console.log(object);
+        cb(appDownload);
+        // console.log({ appDownload });
       }
     }
   );
 }
 
-getRegisteration(2020);
+//---------------------------------------------------------------------------------------------------------------------------------------//
+//-------------------------------------- create the TimeViewed  & TimeSpendOnArticle from Articles --------------------------------------//
+//---------------------------------------------------------------------------------------------------------------------------------------//
 
-// arrangDays(jan, 7);
-// arrangDays(jan, 5);
-// arrangDays(jan, 2);
-// arrangDays(jan, 4);
-// arrangDays(jan, 3);
+function GetTimeandTimeSpent() {
+  db.query(
+    'SELECT Article.TimesViewd,Article.TimeSpendOnArticle,Topics.TopicID,MODELS.ModelID,Article.ArticleID,Article.Title AS Article, Topics.Title AS Topic ,MODELS.Title AS MODEL FROM `Article` INNER JOIN Topics ON Topics.TopicID = Article.TopicID INNER JOIN MODELS ON Topics.ModelID = MODELS.ModelID',
+    (error, result) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(result, 'result');
+        //-------------------------------------------- Arrange the result Here -----------------------------------------------------//
+        for (var i = 0; i < result.length; i++) {
+          var ob = {
+            ModelID: result[i]['ModelID'],
+            ModelTitle: result[i]['MODEL'],
+            TopicID: result[i]['TopicID'],
+            TopicTiele: result[i]['Topic'],
+          };
+
+          var artObjeect = {
+            ArticleID: result[i]['ArticleID'],
+            ArticlTitle: result[i]['Article'],
+            TimeViewed: result[i]['TimesViewd'],
+            TimeSpendOnArticle: result[i]['TimeSpendOnArticle'],
+          };
+          serchObject(ob, artObjeect);
+        }
+      }
+    }
+  );
+}
+
+function serchObject(ob, artObjeect) {
+  if (TimeReviwed.length === 0) {
+    ob.Articles = [artObjeect];
+    TimeReviwed.push(ob);
+  } else {
+    for (var i = 0; i < TimeReviwed.length; i++) {
+      if (
+        TimeReviwed[i].ModelID === ob.ModelID &&
+        TimeReviwed[i].ModelTitle === ob.ModelTitle &&
+        TimeReviwed[i].TopicID === ob.TopicID &&
+        TimeReviwed[i].TopicTiele === ob.TopicTiele
+      ) {
+        //----------------------- if there is a model in this object then look for the articles inside it -------------------------------//
+        if (TimeReviwed[i].hasOwnProperty('Articles')) {
+          //---------------- HERE we check if the Object is Exist ------------------------------------------------------------------//
+          if (!TimeReviwed[i].Articles.includes(artObjeect)) {
+            console.log(
+              '----------------------------not includede ------------------------'
+            );
+            TimeReviwed[i]['Articles'].push(artObjeect);
+            console.log(TimeReviwed[i]);
+          }
+        } else {
+          //------------------ if there is no articles array then create one --------------------------------------//
+          TimeReviwed[i]['Articles'] = [];
+          TimeReviwed[i]['Articles'].push(artObjeect);
+        }
+      } else {
+        ob.Articles = [artObjeect];
+        TimeReviwed.push(ob);
+      }
+    }
+    // console.log(TimeReviwed, 'TimeReviwed');
+  }
+
+  console.log(TimeReviwed, 'TimeReviwed');
+}
+
+GetTimeandTimeSpent();
+// getRegisteration(2020, (appDownload) => {
+//   console.log('don', appDownload);
+// });
