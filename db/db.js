@@ -6,12 +6,15 @@ var mysql = require('mysql');
 //------------------------------------------------------//
 //-------------Connect to Ouer Database ----------------//
 //------------------------------------------------------//
+// Remote Connection//
 // var connection = mysql.createConnection({
-//   host: '162.247.76.211',
-//   port: '3306',
-//   // password: '^{duZzswf!.d',
-//   database: 'h1622477_NCDP'
+//   host: 'localhost',
+//   user: 'h1622477_user',
+//   password: 'R06LvHUx%^[x',
+//   database: 'h1622477_NCDP',
 // });
+
+// Local Connection//
 var connection = mysql.createConnection({
   user: 'root',
   password: '1111',
