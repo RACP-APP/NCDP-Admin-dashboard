@@ -156,60 +156,65 @@ class TopHeader extends React.Component {
   }
   render() {
     return (
-      <div className="Mainheader " style={{ left: '20px' }}>
-        <Menu color={'black'} inverted icon="labeled">
-          <Menu.Item>
-            <div style={{ minWidth: '30px', minHeight: '40px' }}></div>
-            {/* <img
+      <div className=" " style={{ left: '20px' }}>
+        {this.props.loggedIn ? (
+          <Menu color={'black'} inverted icon="labeled">
+            <Menu.Item>
+              <div style={{ minWidth: '30px', minHeight: '40px' }}></div>
+              {/* <img
               style={{ borderRadius: '20px' }}
               src={
                 JSON.parse(localStorage.getItem('user'))['Image'] ||
                 'https://react.semantic-ui.com/logo.png'
               }
             /> */}
-          </Menu.Item>
+            </Menu.Item>
 
-          <Menu.Item
-            name="features"
-            // active={activeItem === 'features'}
-            onClick={() => {
-              localStorage.setItem('CurrentnavNode', '/');
-              localStorage.setItem('CurrentNav', 'Model');
-              localStorage.setItem('navMap', JSON.stringify(['عارض النماذج']));
-            }}
-          >
-            <a href={config[0].server}>
-              <Popup
-                content="الصفحة الرئيسيه "
-                trigger={<Icon name="home" size="large" />}
-              />
-            </a>
-          </Menu.Item>
+            <Menu.Item
+              name="features"
+              // active={activeItem === 'features'}
+              onClick={() => {
+                localStorage.setItem('CurrentnavNode', '/');
+                localStorage.setItem('CurrentNav', 'Model');
+                localStorage.setItem(
+                  'navMap',
+                  JSON.stringify(['عارض النماذج'])
+                );
+              }}
+            >
+              <a href={config[0].server}>
+                <Popup
+                  content="الصفحة الرئيسيه "
+                  trigger={<Icon name="home" size="large" />}
+                />
+              </a>
+            </Menu.Item>
 
-          <Menu.Item
-            name="Notification"
-            // active={activeItem === 'testimonials'}
-            onClick={this.sendTheNewNoticication.bind(this)}
-          >
-            <a>
-              <Popup
-                content={`لديك ${this.state.counter} اشعارات . لارسال الإشعرات الجديده اضغط هنا `}
-                trigger={<Icon name="bell" size="large" />}
-              />
-              <label
-                style={{
-                  position: 'absolute',
-                  left: '50%',
-                  top: 4,
-                  backgroundColor: 'red',
-                }}
-              >
-                {this.state.counter}
-              </label>
-            </a>
-            {/* Send Notification */}
-          </Menu.Item>
-        </Menu>
+            <Menu.Item
+              name="Notification"
+              // active={activeItem === 'testimonials'}
+              onClick={this.sendTheNewNoticication.bind(this)}
+            >
+              <a>
+                <Popup
+                  content={`لديك ${this.state.counter} اشعارات . لارسال الإشعرات الجديده اضغط هنا `}
+                  trigger={<Icon name="bell" size="large" />}
+                />
+                <label
+                  style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: 4,
+                    backgroundColor: 'red',
+                  }}
+                >
+                  {this.state.counter}
+                </label>
+              </a>
+              {/* Send Notification */}
+            </Menu.Item>
+          </Menu>
+        ) : null}
         <Portal onClose={this.handleClose} open={this.state.open}>
           <Segment
             style={{

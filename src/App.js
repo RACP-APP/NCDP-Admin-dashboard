@@ -115,8 +115,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div className="row">
-          <TopHeader counter={this.state.counter}></TopHeader>
+        <div className="Mainheader">
+          <TopHeader
+            counter={this.state.counter}
+            loggedIn={this.state.LoggetIn}
+          ></TopHeader>
         </div>
         {this.state.LoggetIn ? (
           <Header
@@ -124,7 +127,7 @@ class App extends React.Component {
             redirect={this.redirectto.bind(this)}
           ></Header>
         ) : null}
-        <div className="row" style={{ float: 'left' }}>
+        <div className="row" style={{ float: 'left', marginTop: '100px' }}>
           <Router>
             <Route>
               <Redirect to={localStorage.getItem('CurrentnavNode')}></Redirect>

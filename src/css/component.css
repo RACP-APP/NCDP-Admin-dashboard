@@ -793,8 +793,8 @@ li {
   text-align: center;
 }
 .Mainheader {
-  position: static;
-  margin: 0 auto;
+  position: fixed;
+  z-index: 3;
   padding: 0;
   top: 0;
   width: 100%;

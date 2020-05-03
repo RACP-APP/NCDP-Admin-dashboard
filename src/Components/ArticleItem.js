@@ -267,9 +267,9 @@ class ArticlesItem extends React.Component {
                 انشأ من قبل :
                 {new Date(this.props.data.CreatedDate).toLocaleDateString()}
               </div>
-              <div className="ItemInfo">
+              {/* <div className="ItemInfo">
                 عدد المشاهدات:{this.props.data.TimesViewd}
-              </div>
+              </div> */}
               <div className="ItemInfo">الملاحظات :{this.props.data.Notes}</div>
             </div>
             <div className="col-1" style={{ marginTop: '22px' }}>
