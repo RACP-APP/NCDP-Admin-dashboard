@@ -52,27 +52,28 @@ body {
   margin: 0 auto;
   text-align: center;
 }
-#cke_editor1 {
-  min-height: 600px;
-}
+/* #cke_editor1 {
+  min-height: 100%;
+} */
 
 .editortextbox {
   background-color: #f5fafa;
-  height: 100%;
-  min-height: 600px;
+  min-height: 100%;
 }
-.cke_contents {
-  height: 500px !important;
-}
+/* .cke_contents {
+  min-height: 100% !important;
+} */
 
 h1 {
   text-align: center;
+}
+.maximazing {
+  min-height: fit-content;
 }
 
 div.DraftEditor-root {
   background-color: #fffef7;
   width: 100%;
-
   margin: auto;
   box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.5);
   height: 300px;
@@ -82,14 +83,12 @@ div.DraftEditor-root {
   font-size: 18px;
   font-family: 'calibri', sans-serif;
 }
-#cke_editor1 {
-  min-height: 500px;
-}
+
 .editor {
   min-height: 100%;
   width: 0;
   position: fixed;
-  z-index: 200;
+  z-index: 1002;
   top: 0;
   right: 0;
   background-color: #111;

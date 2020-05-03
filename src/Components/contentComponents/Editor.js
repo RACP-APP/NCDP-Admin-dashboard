@@ -350,7 +350,7 @@ class editor extends Component {
   }
   render() {
     return (
-      <div className="  editor">
+      <div className="maximazing" style={{ minHeight: '100%' }}>
         <div className="editortextbox">
           <CKEditor
             onChange={(e) => {

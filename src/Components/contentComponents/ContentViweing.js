@@ -286,8 +286,12 @@ class TextViweing extends React.Component {
           رقم : {this.state.data['MediaOrder']}
         </Label>
 
-        <div id={'T' + this.state.data['TextID']} style={{ width: '100%' }}>
-          <div class="row">
+        <div
+          id={'T' + this.state.data['TextID']}
+          style={{ width: '100%', textAlign: 'unset' }}
+          dir="rtl"
+        >
+          <div class="row" style={{ textAlign: 'unset' }}>
             {parse(this.convertHTMLStringToDom(this.state.data['ContentText']))}
           </div>
         </div>
