@@ -172,7 +172,6 @@ function arrangDays(month, day) {
       month.Week4.days[day - 1] = 1;
     }
   }
-  console.log(month);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -193,11 +192,11 @@ function getRegisteration(year, cb) {
           switch (month) {
             case 1:
               arrangDays(jan, day);
-              console.log('jan');
+
               break;
             case 2:
               arrangDays(Feb, day);
-              console.log('Feb');
+
               break;
             case 3:
               arrangDays(Mar, day);
@@ -262,14 +261,14 @@ function getRegisteration(year, cb) {
 //-------------------------------------- create the TimeViewed  & TimeSpendOnArticle from Articles --------------------------------------//
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
-function GetTimeandTimeSpent() {
+function GetTimeandTimeSpent(cb) {
   db.query(
     'SELECT Article.TimesViewd,Article.TimeSpendOnArticle,Topics.TopicID,MODELS.ModelID,Article.ArticleID,Article.Title AS Article, Topics.Title AS Topic ,MODELS.Title AS MODEL FROM `Article` INNER JOIN Topics ON Topics.TopicID = Article.TopicID INNER JOIN MODELS ON Topics.ModelID = MODELS.ModelID',
     (error, result) => {
       if (error) {
         console.log(error);
       } else {
-        console.log(result, 'result');
+        // console.log(result, 'result');
         //-------------------------------------------- Arrange the result Here -----------------------------------------------------//
         for (var i = 0; i < result.length; i++) {
           var ob = {
@@ -287,6 +286,7 @@ function GetTimeandTimeSpent() {
           };
           serchObject(ob, artObjeect);
         }
+        cb(TimeReviwed);
       }
     }
   );
@@ -298,12 +298,14 @@ function serchObject(ob, artObjeect) {
     TimeReviwed.push(ob);
   } else {
     for (var i = 0; i < TimeReviwed.length; i++) {
+      var exist = false;
       if (
         TimeReviwed[i].ModelID === ob.ModelID &&
         TimeReviwed[i].ModelTitle === ob.ModelTitle &&
         TimeReviwed[i].TopicID === ob.TopicID &&
         TimeReviwed[i].TopicTiele === ob.TopicTiele
       ) {
+        exist = true;
         //----------------------- if there is a model in this object then look for the articles inside it -------------------------------//
         if (TimeReviwed[i].hasOwnProperty('Articles')) {
           //---------------- HERE we check if the Object is Exist ------------------------------------------------------------------//
@@ -319,18 +321,36 @@ function serchObject(ob, artObjeect) {
           TimeReviwed[i]['Articles'] = [];
           TimeReviwed[i]['Articles'].push(artObjeect);
         }
-      } else {
-        ob.Articles = [artObjeect];
-        TimeReviwed.push(ob);
       }
+    }
+    if (!exist) {
+      ob.Articles = [artObjeect];
+      TimeReviwed.push(ob);
     }
     // console.log(TimeReviwed, 'TimeReviwed');
   }
 
   console.log(TimeReviwed, 'TimeReviwed');
+  //   cb(TimeReviwed);
 }
 
-GetTimeandTimeSpent();
-// getRegisteration(2020, (appDownload) => {
-//   console.log('don', appDownload);
-// });
+// GetTimeandTimeSpent();
+var jsonObject = {};
+getRegisteration(2020, (appDownload) => {
+  jsonObject.appDownload = appDownload;
+  GetTimeandTimeSpent((TimeReviwed) => {
+    console.log(appDownload);
+    jsonObject.TimeReviwed = TimeReviwed;
+    console.log('don', jsonObject);
+    //----------------------------------------------------------//
+    var file = path.join(__dirname, '../data/ChartData.json');
+
+    fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('doooooooooooooooooone');
+      }
+    });
+  });
+});

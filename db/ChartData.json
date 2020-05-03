@@ -91,19 +91,19 @@
         {
           "ArticleID": 137,
           "ArticlTitle": "44444444444",
-          "TimeViewed": 80,
+          "TimeViewed": 0,
           "TimeSpendOnArticle": null
         },
         {
           "ArticleID": 139,
           "ArticlTitle": "7777",
-          "TimeViewed": 80,
+          "TimeViewed": 0,
           "TimeSpendOnArticle": null
         },
         {
           "ArticleID": 145,
           "ArticlTitle": "مقال جديد للموضوع56-1587351142145",
-          "TimeViewed": 60,
+          "TimeViewed": 0,
           "TimeSpendOnArticle": null
         }
       ]
@@ -117,14 +117,14 @@
         {
           "ArticleID": 134,
           "ArticlTitle": "New Article for Topic 78-1585259236529",
-          "TimeViewed": 5,
-          "TimeSpendOnArticle": 15
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         },
         {
           "ArticleID": 143,
           "ArticlTitle": "مقال جديد للموضوع78-1586944491029",
-          "TimeViewed": 10,
-          "TimeSpendOnArticle": 50
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -138,13 +138,13 @@
           "ArticleID": 136,
           "ArticlTitle": "مقال جديد للموضوع92-1586868469210",
           "TimeViewed": 0,
-          "TimeSpendOnArticle": 50
+          "TimeSpendOnArticle": null
         },
         {
           "ArticleID": 146,
           "ArticlTitle": "مقال جديد للموضوع92-1587351213381",
-          "TimeViewed": 300,
-          "TimeSpendOnArticle": 50
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -157,20 +157,20 @@
         {
           "ArticleID": 137,
           "ArticlTitle": "44444444444",
-          "TimeViewed": 10,
-          "TimeSpendOnArticle": 16
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         },
         {
           "ArticleID": 139,
           "ArticlTitle": "7777",
-          "TimeViewed": 20,
-          "TimeSpendOnArticle": 30
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         },
         {
           "ArticleID": 145,
           "ArticlTitle": "مقال جديد للموضوع56-1587351142145",
-          "TimeViewed": 10,
-          "TimeSpendOnArticle": 100
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -183,8 +183,8 @@
         {
           "ArticleID": 142,
           "ArticlTitle": "baby",
-          "TimeViewed": 60,
-          "TimeSpendOnArticle": 80
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -197,8 +197,8 @@
         {
           "ArticleID": 143,
           "ArticlTitle": "مقال جديد للموضوع78-1586944491029",
-          "TimeViewed": 7,
-          "TimeSpendOnArticle": 18
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -211,14 +211,14 @@
         {
           "ArticleID": 144,
           "ArticlTitle": "مقال جديد للموضوع86-1586944506388",
-          "TimeViewed": 22,
-          "TimeSpendOnArticle": 22
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         },
         {
           "ArticleID": 151,
           "ArticlTitle": "مقال جديد للموضوع86-1588521153231",
-          "TimeViewed": 5,
-          "TimeSpendOnArticle": 10
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -231,8 +231,8 @@
         {
           "ArticleID": 145,
           "ArticlTitle": "مقال جديد للموضوع56-1587351142145",
-          "TimeViewed": 13,
-          "TimeSpendOnArticle": 150
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -245,8 +245,8 @@
         {
           "ArticleID": 146,
           "ArticlTitle": "مقال جديد للموضوع92-1587351213381",
-          "TimeViewed": 8,
-          "TimeSpendOnArticle": 9
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -259,8 +259,8 @@
         {
           "ArticleID": 147,
           "ArticlTitle": "نن",
-          "TimeViewed": 16,
-          "TimeSpendOnArticle": 30
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     },
@@ -273,8 +273,8 @@
         {
           "ArticleID": 151,
           "ArticlTitle": "مقال جديد للموضوع86-1588521153231",
-          "TimeViewed": 9,
-          "TimeSpendOnArticle": 30
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
         }
       ]
     }
