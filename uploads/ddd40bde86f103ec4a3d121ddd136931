@@ -1,0 +1,38 @@
+{
+  "savedToDb": false,
+  "deviceId": "7e7903f24583c36f",
+  "data": [
+    {
+      "ModelID": 13,
+      "TopicID": 11,
+      "ArticleID": 45,
+      "TimesViewed": 55,
+      "DurationViewd": 5,
+      "DateViewd": 0
+    },
+    {
+      "ModelID": 12,
+      "TopicID": 11,
+      "ArticleID": 45,
+      "TimesViewed": 55,
+      "DurationViewd": 5,
+      "DateViewd": 0
+    },
+    {
+      "ModelID": 12,
+      "TopicID": 8,
+      "ArticleID": 45,
+      "TimesViewed": 55,
+      "DurationViewd": 5,
+      "DateViewd": 0
+    },
+    {
+      "ModelID": 12,
+      "TopicID": 8,
+      "ArticleID": 45,
+      "TimesViewed": 66,
+      "DurationViewd": 5,
+      "DateViewd": 0
+    }
+  ]
+}

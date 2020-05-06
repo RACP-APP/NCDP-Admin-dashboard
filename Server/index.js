@@ -11,16 +11,19 @@ var multer = require('multer');
 const favicon = require('express-favicon');
 const fs = require('fs');
 const db = require('../db/models');
+var multer = require('multer');
 
 const messaging = require('./send');
 
 const cssPath = path.join(__dirname, '../public');
-
+var upload = multer({ dest: 'uploads/' });
 // Get a reference to the storage service, which is used to create references in your storage bucket
 
 app.use('/public', express.static(cssPath));
 app.use(express.static(path.join(__dirname, '../build')));
 app.use(favicon(__dirname + '../build/favicon.ico'));
+var multer = require('multer');
+var upload = multer({ dest: 'uploads/' });
 
 // app.get('/contactus', (req, res) => {
 //   // res.render(path.join(__dirname, '../public/views/contact'));
@@ -35,6 +38,28 @@ app.use(require('./Routs/Dashbord'));
 //---------------------------------------------------------------------------------------------------------//
 //------------------------  Save Updates for Notifications ------------------------------------------------//
 //---------------------------------------------------------------------------------------------------------//
+
+app.post('/UpdateNotification', upload.single('file'), (req, res) => {
+  // console.log(req.files[0]);
+  var myFile = path.join(__dirname, '../uploads', req.file.filename);
+  try {
+    var json = JSON.parse(fs.readFileSync(myFile, 'utf8'));
+    console.log(json['data']);
+    db.UpdateNotification(json.data, (error, result) => {
+      if (error) {
+        res
+          .status(500)
+          .send('An Error Happend While processing the data')
+          .end();
+      } else {
+        res.status(200).send('Done').end();
+      }
+    });
+    // res.status(200).send(json).end();
+  } catch (err) {
+    res.send(400);
+  }
+});
 
 app.get('/UpdateNotifiCount', (req, res) => {
   var file = path.join(__dirname, '../data', 'NotifCount.json');

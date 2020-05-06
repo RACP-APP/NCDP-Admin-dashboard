@@ -971,8 +971,57 @@ var getRegistrationTokens = (cb) => {
   });
 };
 
+//--------------------------------------------- Update Notification Table -----------------------------------------------------//
+var UpdateNotification = (data, cb) => {
+  async
+    .forEachOf(data, (element, i, callback) => {
+      console.log('ddd-', element);
+      db.query(
+        'UPDATE `Article` SET `TimeSpendOnArticle`=`TimeSpendOnArticle` +' +
+          element.DurationViewd +
+          ', `TimesViewd`= `TimesViewd` +' +
+          element.DurationViewd +
+          ' WHERE `ArticleID` =' +
+          element.ArticleID,
+        (error, result) => {
+          if (error) {
+            callback(error);
+            return;
+          } else {
+            // ++count;
+            callback();
+          }
+        }
+      );
+    })
+    .catch((error) => {
+      cb(error, null);
+      // console.log(error);
+    })
+    .then((result) => {
+      cb(null, result);
+      // console.log('done');
+    });
+  // db.query(
+  //   'UPDATE `Article` SET `TimeSpendOnArticle`=`TimeSpendOnArticle` +' +
+  //     TimeSpendOnArticle +
+  //     ', `TimesViewd`= `TimesViewd` +' +
+  //     DurationViewd +
+  //     ' WHER ArticleID =' +
+  //     ArticleID,
+  //   (error, result, fields) => {
+  //     if (error) {
+  //       cb(error, result);
+  //     } else {
+  //       cb(null, result);
+  //     }
+  //   }
+  // );
+};
+
 //-----------------------------------------------------------------------------------------------------------------------------//
 module.exports = {
+  UpdateNotification,
   AddNewToken,
   getRegistrationTokens,
   ReorderContent,
