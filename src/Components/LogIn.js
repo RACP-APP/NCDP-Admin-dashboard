@@ -77,6 +77,7 @@ class LogIn extends React.Component {
               }
             );
           } else {
+            //--------------------------------------//
             console.log(result, 'result.data[0]');
             localStorage.setItem('user', JSON.stringify(result.data[0]));
             this.props.LogeedIn();
