@@ -941,12 +941,14 @@ var updateUser = (userName, Email, Image, password, userID, cb) => {
 };
 
 //------------------------------- Insert The Token Of  A new Rigistered Mobile for the Application ----------------------//
-var AddNewToken = (Token, MobID, cb) => {
+var AddNewToken = (Token, MobID, date, cb) => {
   db.query(
-    ' INSERT INTO MobRegistration (MobID, Token ) VALUES ("' +
+    ' INSERT INTO MobRegistration (MobID, Token,registrationDate ) VALUES ("' +
       MobID +
       '","' +
       Token +
+      '" , "' +
+      date +
       '")',
     (error, result, fields) => {
       if (error) {

@@ -62,29 +62,36 @@ class LogIn extends React.Component {
           password: this.state.password,
         })
         .then((result) => {
+          console.log('----------------------------');
           if (result.data.length === 0) {
-            this.setState({
-              ErrorMessage:
-                'اسم المستخدم أو كلمة المرور غير صحيحة ، يرجى المحاولة مرة أخرى',
-              HasError: true,
-            });
+            console.log('----------------------------1');
+
+            this.setState(
+              {
+                ErrorMessage:
+                  'اسم المستخدم أو كلمة المرور غير صحيحة ، يرجى المحاولة مرة أخرى',
+                HasError: true,
+              },
+              () => {
+                console.log('----------------------------3');
+              }
+            );
           } else {
             console.log(result, 'result.data[0]');
             localStorage.setItem('user', JSON.stringify(result.data[0]));
-
             this.props.LogeedIn();
           }
         })
         .catch((error) => {
+          console.log('eror -----------------------------');
           this.setState({
-            ErrorMessage: error,
-            error: true,
+            ErrorMessage: error.response.data,
+            HasError: true,
           });
           console.log(error);
         });
 
       //---------- if there is no Errors in the page make a request ----------//
-      console.log('no Errors');
     } else {
       this.setState({
         ErrorMessage:

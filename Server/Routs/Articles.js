@@ -169,7 +169,8 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
 Articles.post('/Articles/Registration', (req, res) => {
   var token = req.body.token;
   var id = req.body.id;
-  db.AddNewToken(token, id, (err, result) => {
+  var date = req.body.date;
+  db.AddNewToken(token, id, date, (err, result) => {
     if (err) {
       res.status(500).send('حصل مشكله بعملية التسجيل ').end();
     } else {
