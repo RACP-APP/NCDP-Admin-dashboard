@@ -238,6 +238,7 @@ class MainDashBoard extends React.Component {
             localStorage.setItem('navMap', JSON.stringify(this.state.steps));
             this.createNavPare();
           }
+          //------------
         );
       } else if (localStorage.getItem('CurrentNav') === 'Topic') {
         // console.log(localStorage.getItem('CurrentNav'), 'currentNav------');
