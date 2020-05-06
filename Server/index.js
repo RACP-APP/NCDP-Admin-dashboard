@@ -52,6 +52,11 @@ app.post('/UpdateNotification', upload.single('file'), (req, res) => {
           .send('An Error Happend While processing the data')
           .end();
       } else {
+        fs.unlink(myFile, function (err) {
+          if (err) console.log('File not deleted!');
+          // if no error, file has been deleted successfully
+          console.log('File deleted!');
+        });
         res.status(200).send('Done').end();
       }
     });
