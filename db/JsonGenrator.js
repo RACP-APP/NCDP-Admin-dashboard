@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 var modules = [];
 var cc = false;
+async = require('async');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -83,7 +84,7 @@ async function getData(cb) {
                                 result[content]['ArticleID'],
                               async function (error, result) {
                                 if (error) {
-                                  // console.log('error in content');
+                                  console.log('error in content');
                                 } else {
                                   // console.log(result);
                                   var contents = [];
@@ -99,86 +100,209 @@ async function getData(cb) {
                                     return;
                                   }
                                   //--------------------------------get Text -----------------------------------------------//
-                                  for (
-                                    let medi = 0;
-                                    medi < contents.length;
-                                    medi++
-                                  ) {
-                                    cc = false;
-                                    await db.query(
-                                      '  SELECT Text.* from  `Text` Text  Where Text.ContentID =' +
-                                        contents[medi]['contentID'],
-                                      async (err, result) => {
-                                        if (err) {
-                                          // console.log(err);
-                                        } else {
-                                          var Text = [];
-                                          for (
-                                            var t = 0;
-                                            t < result.length;
-                                            t++
-                                          ) {
-                                            var d = JSON.stringify(result[t]);
-                                            Text.push(JSON.parse(d));
-                                          }
-                                          object[i]['Topics'][articl][
-                                            'Article'
-                                          ][content]['content'][medi][
-                                            'text'
-                                          ] = Text;
-                                        }
 
-                                        // ----------------------------------------------//
-                                        // ----------------------------------------------//
-                                        for (
-                                          let m = 0;
-                                          m < contents.length;
-                                          m++
-                                        ) {
-                                          cc = false;
+                                  // async
+                                  //   .forEach(
+                                  //     contents,
+                                  //     (element, medi, callback) => {
+                                  //       db.query(
+                                  //         '  SELECT Text.* from  `Text` Text  Where Text.ContentID =' +
+                                  //           element['contentID'],
+                                  //         async (err, result) => {
+                                  //           if (err) {
+                                  //             callback(err);
+                                  //           } else {
+                                  //             callback();
+                                  //           }
+                                  //         }
+                                  //       );
+                                  //     }
+                                  //   )
+                                  //   .then(() => {
+                                  //     console.log('done form text');
+                                  //   });
+                                  // for (
+                                  //   let medi = 0;
+                                  //   medi < contents.length;
+                                  //   medi++
+                                  // ) {
+                                  //   cc = false;
+                                  //   await db.query(
+                                  //     '  SELECT Text.* from  `Text` Text  Where Text.ContentID =' +
+                                  //       contents[medi]['contentID'],
+                                  //     async (err, result) => {
+                                  //       if (err) {
+                                  //         // console.log(err);
+                                  //       } else {
+                                  //         var Text = [];
+                                  //         for (
+                                  //           var t = 0;
+                                  //           t < result.length;
+                                  //           t++
+                                  //         ) {
+                                  //           var d = JSON.stringify(result[t]);
+                                  //           Text.push(JSON.parse(d));
+                                  //         }
+                                  //         object[i]['Topics'][articl][
+                                  //           'Article'
+                                  //         ][content]['content'][medi][
+                                  //           'text'
+                                  //         ] = Text;
+                                  //       }
+                                  //     }
+                                  //   );
+                                  // }
 
-                                          await db.query(
-                                            'SELECT Media.* from  Media  Where Media.ContentID =' +
-                                              contents[m]['contentID'],
-                                            function (err, res) {
-                                              if (err) {
-                                                // console.log(err);
+                                  // ----------------------------------------------//
+                                  // ----------------------------------------------//
+                                  async
+                                    .forEachOf(
+                                      contents,
+                                      (element, mid, callback) => {
+                                        console.log(element, 'element', mid);
+                                        db.query(
+                                          'SELECT * from  `Text`   Where Text.ContentID =' +
+                                            element['contentID'],
+                                          function (error, myres) {
+                                            if (err) {
+                                              callback(err);
+                                            } else {
+                                              var Text = [];
+                                              if (
+                                                myres === undefined ||
+                                                myres === null
+                                              ) {
+                                                callback();
                                               } else {
-                                                var MyMedia = [];
                                                 for (
                                                   var t = 0;
-                                                  t < res.length;
+                                                  t < myres.length;
                                                   t++
                                                 ) {
                                                   var d = JSON.stringify(
-                                                    res[t]
+                                                    myres[t]
                                                   );
-                                                  MyMedia.push(JSON.parse(d));
+                                                  Text.push(JSON.parse(d));
                                                 }
                                                 object[i]['Topics'][articl][
                                                   'Article'
-                                                ][content]['content'][m][
-                                                  'Media'
-                                                ] = MyMedia;
+                                                ][content]['content'][mid][
+                                                  'text'
+                                                ] = Text;
+                                                // cb(object);
                                               }
+                                              callback();
                                             }
-                                          );
-                                        }
-                                        // console.log(
-                                        //   ' contents.length',
-                                        //   contents.length,
-                                        //   'articl',
-                                        //   articl,
-                                        //   'content',
-                                        //   content
-                                        // );
-
-                                        cb(object);
-                                        // console.log(i);
+                                          }
+                                        );
                                       }
-                                    );
-                                  }
+                                    )
+                                    .then(() => {
+                                      cb(object);
+                                    })
+                                    .catch((err) => {
+                                      console.log(err);
+                                    });
+                                  //--------------------------------------------------------------------------//
+                                  async
+                                    .forEachOf(
+                                      contents,
+                                      (element, m, callback) => {
+                                        db.query(
+                                          'SELECT Media.* from  Media  Where Media.ContentID =' +
+                                            contents[m]['contentID'],
+                                          function (err, res) {
+                                            if (err) {
+                                              callback(err);
+                                            } else {
+                                              var MyMedia = [];
 
+                                              for (
+                                                var t = 0;
+                                                t < res.length;
+                                                t++
+                                              ) {
+                                                var d = JSON.stringify(res[t]);
+                                                MyMedia.push(JSON.parse(d));
+                                              }
+                                              object[i]['Topics'][articl][
+                                                'Article'
+                                              ][content]['content'][m][
+                                                'Media'
+                                              ] = MyMedia;
+                                            }
+                                            callback();
+                                          }
+                                        );
+                                      }
+                                    )
+                                    .then(() => {
+                                      console.log('done-------- form for Each');
+                                      cb(object);
+                                    })
+                                    .catch((err) => {
+                                      console.log(err);
+                                    });
+                                  // for (
+                                  //   let m = 0;
+                                  //   m < contents.length;
+                                  //   m++
+                                  // ) {
+                                  //   cc = false;
+
+                                  //   await db.query(
+                                  //     'SELECT Media.* from  Media  Where Media.ContentID =' +
+                                  //       contents[m]['contentID'],
+                                  //     function (err, res) {
+                                  //       if (err) {
+                                  //         // console.log(err);
+                                  //       } else {
+                                  //         var MyMedia = [];
+
+                                  //         // async.forEachOf(
+                                  //         //   data,
+                                  //         //   (element, t, callback) => {
+                                  //         //     var d = JSON.stringify(
+                                  //         //       res[t]
+                                  //         //     );
+                                  //         //     MyMedia.push(JSON.parse(d));
+                                  //         //   }
+                                  //         // );
+                                  //         for (
+                                  //           var t = 0;
+                                  //           t < res.length;
+                                  //           t++
+                                  //         ) {
+                                  //           var d = JSON.stringify(
+                                  //             res[t]
+                                  //           );
+                                  //           MyMedia.push(JSON.parse(d));
+                                  //         }
+                                  //         object[i]['Topics'][articl][
+                                  //           'Article'
+                                  //         ][content]['content'][m][
+                                  //           'Media'
+                                  //         ] = MyMedia;
+                                  //         cb(object);
+                                  //       }
+                                  //     }
+                                  //   );
+                                  //   // console.log(object);
+                                  // }
+                                  // console.log(
+                                  //   ' contents.length',
+                                  //   contents.length,
+                                  //   'articl',
+                                  //   articl,
+                                  //   'content',
+                                  //   content
+                                  // );
+
+                                  // console.log(i);
+                                  //   }
+                                  // );
+
+                                  // cb(object);
                                   //------------------------------- get media ------------------------------------------//
                                 }
                               }
@@ -204,7 +328,8 @@ async function getData(cb) {
 }
 
 var creatJson = async (cb) => {
-  // console.log(cb);
+  console.log(cb);
+  // await getData(writeotfile).then()
   try {
     await getData(writeotfile)
       .then(() => {})
@@ -215,7 +340,8 @@ var creatJson = async (cb) => {
 
   setTimeout(() => {
     cb(null, 'don');
-  }, 6000);
+    // console.log('doooooooooooooooooooooooooooooon');
+  }, 8000);
 };
 
 // creatJson();

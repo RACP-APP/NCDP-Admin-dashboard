@@ -166,6 +166,8 @@ app.get('/JSONFile', async function (req, res) {
     }
   );
 
+  setTimeout(600, () => {});
+
   //------------------------------------------ get json from file -----------------------------------------//
 });
 
