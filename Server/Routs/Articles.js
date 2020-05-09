@@ -166,10 +166,10 @@ Articles.post('/Articles/UpdateArticle', (req, res) => {
 //-------------------------------------------------------------------------------------------------------------//
 //------------------------------- Update Mobile Data in Database ----------------------------------------------//
 //-------------------------------------------------------------------------------------------------------------//
-Articles.post('/Articles/NotificationUpdate', (req, res) => {
-  console.log(req.files, 'ttttttttt');
-  res.json(req.body.file);
-});
+// Articles.post('/Articles/NotificationUpdate', (req, res) => {
+//   console.log(req.files, 'ttttttttt');
+//   res.json(req.body.file);
+// });
 
 // Articles.get('/Articles/test', (req, res) => {
 //   res.status(200).sendFile(path.join(__dirname, '../db/', 'phraseFreqs.json'));

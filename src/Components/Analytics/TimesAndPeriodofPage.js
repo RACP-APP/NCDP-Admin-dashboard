@@ -9,7 +9,8 @@ import ErrorDialog from '../../Components/ErroeDialog';
 import { Grid, Segment, Header, Table } from 'semantic-ui-react';
 
 // const TimeReviwed = require('../../ChartData.json')['TimeReviwed'];
-
+const nowDate = new Date().getFullYear();
+console.log(nowDate, 'newdate');
 export default class TimesRevied extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ export default class TimesRevied extends React.Component {
       open: false,
       ErrorMessage: '',
       dropDownVlues: [],
-      selectedValue: '2020',
+      selectedValue: nowDate.toString(),
       color: [],
       data: {
         datasets: [

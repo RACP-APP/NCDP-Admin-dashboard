@@ -6,7 +6,7 @@ var modules = [];
 var cc = false;
 
 var appDownload = {};
-var TimeReviwed = [];
+// var TimeReviwed = [];
 
 //-------------------------- Creat an inital value to all Months of the Year --------------------------------//
 var jan = {
@@ -178,8 +178,10 @@ function arrangDays(month, day) {
 //----------------------------------- afunction to create a ne object contains the number of downloads for each month and week ---------------------//
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 function getRegisteration(year, cb) {
+  console.log(year);
   db.query(
-    'SELECT * FROM MobRegistration WHERE YEAR(registrationDate)=' + year,
+    'SELECT * FROM MobRegistration WHERE YEAR(registrationDate)=' +
+      year.toString(),
     (error, result) => {
       if (error) {
         console.log(error);
@@ -235,6 +237,7 @@ function getRegisteration(year, cb) {
           }
         }
 
+        // console.log('1111111111111');
         //---------------------- end of the for --------------------------------------------------//
         appDownload = {
           jan,
@@ -262,12 +265,14 @@ function getRegisteration(year, cb) {
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
 function GetTimeandTimeSpent(cb) {
+  var TimeReviwed = [];
   db.query(
     'SELECT Article.TimesViewd,Article.TimeSpendOnArticle,Topics.TopicID,MODELS.ModelID,Article.ArticleID,Article.Title AS Article, Topics.Title AS Topic ,MODELS.Title AS MODEL FROM `Article` INNER JOIN Topics ON Topics.TopicID = Article.TopicID INNER JOIN MODELS ON Topics.ModelID = MODELS.ModelID',
     (error, result) => {
       if (error) {
         console.log(error);
       } else {
+        // console.log(result, 'result');
         // console.log(result, 'result');
         //-------------------------------------------- Arrange the result Here -----------------------------------------------------//
         for (var i = 0; i < result.length; i++) {
@@ -284,19 +289,26 @@ function GetTimeandTimeSpent(cb) {
             TimeViewed: result[i]['TimesViewd'],
             TimeSpendOnArticle: result[i]['TimeSpendOnArticle'],
           };
-          serchObject(ob, artObjeect);
+          serchObject(ob, artObjeect, TimeReviwed);
         }
+        // console.log(TimeReviwed, 'TimeReviwed');
         cb(TimeReviwed);
       }
     }
   );
 }
 
-function serchObject(ob, artObjeect) {
+function serchObject(ob, artObjeect, TimeReviwed) {
   if (TimeReviwed.length === 0) {
     ob.Articles = [artObjeect];
     TimeReviwed.push(ob);
   } else {
+    console.log(
+      TimeReviwed,
+      'TimeReviwed',
+      TimeReviwed.length,
+      'TimeReviwed.length -------------------------'
+    );
     for (var i = 0; i < TimeReviwed.length; i++) {
       var exist = false;
       if (
@@ -314,7 +326,7 @@ function serchObject(ob, artObjeect) {
               '----------------------------not includede ------------------------'
             );
             TimeReviwed[i]['Articles'].push(artObjeect);
-            console.log(TimeReviwed[i]);
+            // console.log(TimeReviwed[i]);
           }
         } else {
           //------------------ if there is no articles array then create one --------------------------------------//
@@ -330,27 +342,65 @@ function serchObject(ob, artObjeect) {
     // console.log(TimeReviwed, 'TimeReviwed');
   }
 
-  console.log(TimeReviwed, 'TimeReviwed');
-  //   cb(TimeReviwed);
+  // console.log(TimeReviwed, 'TimeReviwed');
+  // cb(TimeReviwed);
 }
 
 // GetTimeandTimeSpent();
 var jsonObject = {};
-getRegisteration(2020, (appDownload) => {
-  jsonObject.appDownload = appDownload;
-  GetTimeandTimeSpent((TimeReviwed) => {
-    console.log(appDownload);
-    jsonObject.TimeReviwed = TimeReviwed;
-    console.log('don', jsonObject);
-    //----------------------------------------------------------//
-    var file = path.join(__dirname, '../data/ChartData.json');
+// getRegisteration(2020, (appDownload) => {
+//   jsonObject.appDownload = appDownload;
+//   GetTimeandTimeSpent((TimeReviwed) => {
+//     // console.log(appDownload);
+//     jsonObject.TimeReviwed = TimeReviwed;
+//     console.log('don', jsonObject);
+//     //----------------------------------------------------------//
+//     var file = path.join(__dirname, '../data/ChartData.json');
 
-    fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('doooooooooooooooooone');
-      }
+//     fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
+//       if (error) {
+//         console.log(error);
+//       } else {
+//         console.log('doooooooooooooooooone');
+//       }
+//     });
+//   });
+// });
+
+function wirteJsonFile(year) {
+  var file = path.join(__dirname, '../data/ChartData.json');
+
+  // fs.writeFile(file, JSON.stringify({}), (error) => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log('doooooooooooooooooone');
+  //   }
+  // });
+
+  console.log(year, 'year-----------------');
+  getRegisteration(year, (appDownload) => {
+    jsonObject.appDownload = appDownload;
+    console.log('//////////////////////////////////');
+    GetTimeandTimeSpent((TimeReviwed) => {
+      // console.log(appDownload);
+      jsonObject.TimeReviwed = TimeReviwed;
+      console.log('don');
+      //----------------------------------------------------------//
+
+      fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          appDownload = {};
+          TimeReviwed = [];
+          jsonObject = {};
+          console.log('doooooooooooooooooone');
+        }
+      });
     });
   });
-});
+}
+
+// wirteJsonFile('2020');
+module.exports = { wirteJsonFile: wirteJsonFile };

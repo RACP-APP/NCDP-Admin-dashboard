@@ -3,14 +3,24 @@ import '../../css/component.css';
 import '../../css/buttonStyles.css';
 import AppDownload from './AppDownloads';
 import SecreenReviwes from './TimesAndPeriodofPage';
+import Config from '../../config.json';
 import { Grid, Label, Segment } from 'semantic-ui-react';
-
+import axios from 'axios';
+// import JsonCreator from "../"
 class MainAnalytic extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   componentDidMount() {
+    axios
+      .get(Config[0].server + 'CreraJsonChart')
+      .then((result) => {
+        console.log('don');
+      })
+      .catch((error) => {
+        console.log('error');
+      });
     localStorage.setItem('CurrentnavNode', 'Analytics');
   }
   render() {

@@ -14,7 +14,7 @@ const db = require('../db/models');
 var multer = require('multer');
 
 const messaging = require('./send');
-
+const creatChartjson = require('../db/CreatChartJSON');
 const cssPath = path.join(__dirname, '../public');
 var upload = multer({ dest: 'uploads/' });
 // Get a reference to the storage service, which is used to create references in your storage bucket
@@ -138,6 +138,11 @@ app.post('/Chart', function (req, res) {
   });
 });
 
+//--------------------------------------------------------------------------------------------------------//
+
+app.get('/CreraJsonChart', (req, res) => {
+  creatChartjson.wirteJsonFile('2020');
+});
 //---------------------------------------------------------------------------------------------------------//
 //--------------------- arout to generat json file and to View Charts -------------------------------------//
 //---------------------------------------------------------------------------------------------------------//
