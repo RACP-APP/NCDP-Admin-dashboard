@@ -1,1 +1,122 @@
-{"appDownload":{"jan":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"Feb":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"Mar":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"aprile":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"may":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"jun":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"jul":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"ogst":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"sept":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"oct":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"nov":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}},"dec":{"Week1":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week2":{"tatal":0,"days":[0,0,0,0,0,0,0]},"Week3":{"tatal":0,"days":[0,0,0,0,0,0,0,0,0]}}},"TimeReviwed":[{"ModelID":125,"ModelTitle":"New Model1587345258577","TopicID":95,"TopicTiele":"1587345258608-New Topic - 125","Articles":[{"ArticleID":152,"ArticlTitle":"مقال جديد للموضوع95-1589059435472","TimeViewed":0,"TimeSpendOnArticle":null}]},{"ModelID":126,"ModelTitle":"عنوان جديد ........ ","TopicID":96,"TopicTiele":"ن","Articles":[{"ArticleID":147,"ArticlTitle":"نن","TimeViewed":0,"TimeSpendOnArticle":0}]}]}
+{
+  "appDownload": {
+    "jan": {
+      "Week1": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week2": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week3": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0] },
+      "Week4": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+    },
+    "Feb": {
+      "Week1": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week2": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week3": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0] },
+      "Week4": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+    },
+    "Mar": {
+      "Week1": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week2": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week3": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0] },
+      "Week4": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+    },
+    "aprile": {
+      "Week1": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week2": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week3": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0] },
+      "Week4": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+    },
+    "may": {
+      "Week1": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week2": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0] },
+      "Week3": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0] },
+      "Week4": { "tatal": 0, "days": [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+    }
+  },
+  "TimeReviwed": [
+    {
+      "ModelID": 125,
+      "ModelTitle": "New Model1587345258577",
+      "TopicID": 95,
+      "TopicTiele": "1587345258608-New Topic - 125",
+      "Articles": [
+        {
+          "ArticleID": 152,
+          "ArticlTitle": "مقال جديد للموضوع95-1589059435472",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        },
+        {
+          "ArticleID": 154,
+          "ArticlTitle": "مقال جديد للموضوع95-1589064207323",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        },
+        {
+          "ArticleID": 156,
+          "ArticlTitle": "مقال جديد للموضوع95-1589064833132",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        }
+      ]
+    },
+    {
+      "ModelID": 126,
+      "ModelTitle": "عنوان جديد ........ ",
+      "TopicID": 96,
+      "TopicTiele": "ن",
+      "Articles": [
+        {
+          "ArticleID": 147,
+          "ArticlTitle": "نن",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": 0
+        },
+        {
+          "ArticleID": 153,
+          "ArticlTitle": "مقال جديد للموضوع96-1589064174301",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        }
+      ]
+    },
+    {
+      "ModelID": 126,
+      "ModelTitle": "عنوان جديد ........ ",
+      "TopicID": 103,
+      "TopicTiele": "New Topic for -126-1589064599674",
+      "Articles": [
+        {
+          "ArticleID": 155,
+          "ArticlTitle": "مقال جديد للموضوع103-1589064604474",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        }
+      ]
+    },
+    {
+      "ModelID": 125,
+      "ModelTitle": "New Model1587345258577",
+      "TopicID": 104,
+      "TopicTiele": "New Topic for -125-1589064836804",
+      "Articles": [
+        {
+          "ArticleID": 157,
+          "ArticlTitle": "1",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        },
+        {
+          "ArticleID": 158,
+          "ArticlTitle": "2",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        },
+        {
+          "ArticleID": 159,
+          "ArticlTitle": "66",
+          "TimeViewed": 0,
+          "TimeSpendOnArticle": null
+        }
+      ]
+    }
+  ]
+}

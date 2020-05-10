@@ -13,14 +13,6 @@ class MainAnalytic extends React.Component {
     this.state = {};
   }
   componentDidMount() {
-    axios
-      .get(Config[0].server + 'CreraJsonChart')
-      .then((result) => {
-        console.log('don');
-      })
-      .catch((error) => {
-        console.log('error');
-      });
     localStorage.setItem('CurrentnavNode', 'Analytics');
   }
   render() {

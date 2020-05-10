@@ -13,73 +13,73 @@ var jan = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var Feb = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var Mar = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var aprile = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var may = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var jun = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var jul = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var ogst = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var sept = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var oct = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var nov = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 var dec = {
   Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
   Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
 };
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------//
@@ -178,7 +178,7 @@ function arrangDays(month, day) {
 //----------------------------------- afunction to create a ne object contains the number of downloads for each month and week ---------------------//
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 function getRegisteration(year, cb) {
-  console.log(year);
+  //   console.log(year);
   db.query(
     'SELECT * FROM MobRegistration WHERE YEAR(registrationDate)=' +
       year.toString(),
@@ -239,20 +239,52 @@ function getRegisteration(year, cb) {
 
         // console.log('1111111111111');
         //---------------------- end of the for --------------------------------------------------//
-        appDownload = {
-          jan,
-          Feb,
-          Mar,
-          aprile,
-          may,
-          jun,
-          jul,
-          ogst,
-          sept,
-          oct,
-          nov,
-          dec,
-        };
+
+        //------------------------ if the year is for this existance year the we need reach to the now month ---------------------//
+        var nowYear = new Date().getFullYear();
+        var CurrentMonth = new Date().getMonth() + 1;
+        if (year == nowYear) {
+          //   console.log(new Date().getMonth() + 1);
+
+          var monthArray = {
+            jan,
+            Feb,
+            Mar,
+            aprile,
+            may,
+            jun,
+            jul,
+            ogst,
+            sept,
+            oct,
+            nov,
+            dec,
+          };
+          var count = 0;
+          for (var key in monthArray) {
+            if (count < CurrentMonth) {
+              appDownload[key] = monthArray[key];
+              ++count;
+            } else {
+              break;
+            }
+          }
+        } else if (parseInt(year) < parseInt(nowYear)) {
+          appDownload = {
+            jan,
+            Feb,
+            Mar,
+            aprile,
+            may,
+            jun,
+            jul,
+            ogst,
+            sept,
+            oct,
+            nov,
+            dec,
+          };
+        }
         cb(appDownload);
         // console.log({ appDownload });
       }
@@ -270,10 +302,10 @@ function GetTimeandTimeSpent(cb) {
     'SELECT Article.TimesViewd,Article.TimeSpendOnArticle,Topics.TopicID,MODELS.ModelID,Article.ArticleID,Article.Title AS Article, Topics.Title AS Topic ,MODELS.Title AS MODEL FROM `Article` INNER JOIN Topics ON Topics.TopicID = Article.TopicID INNER JOIN MODELS ON Topics.ModelID = MODELS.ModelID',
     (error, result) => {
       if (error) {
-        console.log(error);
+        cb();
       } else {
         // console.log(result, 'result');
-        // console.log(result, 'result');
+        console.log(result, 'result');
         //-------------------------------------------- Arrange the result Here -----------------------------------------------------//
         for (var i = 0; i < result.length; i++) {
           var ob = {
@@ -292,36 +324,42 @@ function GetTimeandTimeSpent(cb) {
           serchObject(ob, artObjeect, TimeReviwed);
         }
         // console.log(TimeReviwed, 'TimeReviwed');
-        cb(TimeReviwed);
       }
+      cb(TimeReviwed);
     }
   );
 }
 
 function serchObject(ob, artObjeect, TimeReviwed) {
+  var exist = false;
   if (TimeReviwed.length === 0) {
     ob.Articles = [artObjeect];
     TimeReviwed.push(ob);
   } else {
-    console.log(
-      TimeReviwed,
-      'TimeReviwed',
-      TimeReviwed.length,
-      'TimeReviwed.length -------------------------'
-    );
+    // console.log(
+    //   TimeReviwed,
+    //   'TimeReviwed',
+    //   TimeReviwed.length,
+    //   'TimeReviwed.length -------------------------'
+    // );
     for (var i = 0; i < TimeReviwed.length; i++) {
-      var exist = false;
       if (
-        TimeReviwed[i].ModelID === ob.ModelID &&
-        TimeReviwed[i].ModelTitle === ob.ModelTitle &&
-        TimeReviwed[i].TopicID === ob.TopicID &&
-        TimeReviwed[i].TopicTiele === ob.TopicTiele
+        TimeReviwed[i].ModelID.toString() === ob.ModelID.toString() &&
+        TimeReviwed[i].ModelTitle.trim() === ob.ModelTitle.trim() &&
+        TimeReviwed[i].TopicID.toString() === ob.TopicID.toString() &&
+        TimeReviwed[i].TopicTiele.trim() === ob.TopicTiele.trim()
       ) {
         exist = true;
+        console.log(
+          TimeReviwed[i].ModelID + ' ' + ob.ModelID.toString(),
+          TimeReviwed[i].ModelTitle + ' ' + ob.ModelTitle,
+          TimeReviwed[i]
+        );
         //----------------------- if there is a model in this object then look for the articles inside it -------------------------------//
         if (TimeReviwed[i].hasOwnProperty('Articles')) {
           //---------------- HERE we check if the Object is Exist ------------------------------------------------------------------//
-          if (!TimeReviwed[i].Articles.includes(artObjeect)) {
+          // TimeReviwed[i].Articles.includes(artObjeect);
+          if (!isExist(TimeReviwed[i].Articles, artObjeect)) {
             console.log(
               '----------------------------not includede ------------------------'
             );
@@ -346,8 +384,21 @@ function serchObject(ob, artObjeect, TimeReviwed) {
   // cb(TimeReviwed);
 }
 
+function isExist(array, obect) {
+  var included = false;
+  for (var i = 0; i < array.length; i++) {
+    for (var key in obect) {
+      included = included && array[i][key] === obect[key];
+    }
+    // console.log(array[i], obect, included);
+    if (included) {
+      return included;
+    }
+  }
+  return false;
+}
 // GetTimeandTimeSpent();
-var jsonObject = {};
+
 // getRegisteration(2020, (appDownload) => {
 //   jsonObject.appDownload = appDownload;
 //   GetTimeandTimeSpent((TimeReviwed) => {
@@ -367,7 +418,8 @@ var jsonObject = {};
 //   });
 // });
 
-function wirteJsonFile(year) {
+function wirteJsonFile(year, cb) {
+  var jsonObject = {};
   var file = path.join(__dirname, '../data/ChartData.json');
 
   // fs.writeFile(file, JSON.stringify({}), (error) => {
@@ -378,20 +430,22 @@ function wirteJsonFile(year) {
   //   }
   // });
 
-  console.log(year, 'year-----------------');
+  // console.log(year, 'year-----------------');
   getRegisteration(year, (appDownload) => {
     jsonObject.appDownload = appDownload;
-    console.log('//////////////////////////////////');
+    // console.log('//////////////////////////////////');
     GetTimeandTimeSpent((TimeReviwed) => {
       // console.log(appDownload);
       jsonObject.TimeReviwed = TimeReviwed;
-      console.log('don');
+      // console.log('don');
       //----------------------------------------------------------//
 
       fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
         if (error) {
           console.log(error);
+          cb(error);
         } else {
+          cb();
           appDownload = {};
           TimeReviwed = [];
           jsonObject = {};
@@ -403,4 +457,7 @@ function wirteJsonFile(year) {
 }
 
 // wirteJsonFile('2020');
-module.exports = { wirteJsonFile: wirteJsonFile };
+module.exports = {
+  wirteJsonFile: wirteJsonFile,
+  GetTimeandTimeSpent: GetTimeandTimeSpent,
+};

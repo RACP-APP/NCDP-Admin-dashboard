@@ -69,7 +69,7 @@ export default class TimesRevied extends React.Component {
     var backgroundColor = [];
 
     axios
-      .get(config[0].server + 'GetChart')
+      .post(config[0].server + 'CreraJsonChart', { type: 'TimeReviwed' })
       .then((result) => {
         for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
           if (
@@ -115,6 +115,53 @@ export default class TimesRevied extends React.Component {
           ErrorMessage: error.response.data,
         });
       });
+    // axios
+    //   .get(config[0].server + 'GetChart')
+    //   .then((result) => {
+    //     for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
+    //       if (
+    //         result.data['TimeReviwed'][i]['ModelTitle'] +
+    //           '-' +
+    //           result.data['TimeReviwed'][i]['TopicTiele'] ===
+    //         value
+    //       ) {
+    //         for (
+    //           var j = 0;
+    //           j < result.data['TimeReviwed'][i]['Articles'].length;
+    //           j++
+    //         ) {
+    //           console.log(
+    //             result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
+    //           );
+    //           labels.push(
+    //             result.data['TimeReviwed'][i]['Articles'][j]['ArticlTitle']
+    //           );
+    //           datasets.push(
+    //             result.data['TimeReviwed'][i]['Articles'][j][this.props.filter]
+    //           );
+    //           backgroundColor.push(this.random_rgba());
+    //         }
+
+    //         break;
+    //       }
+    //     }
+
+    //     this.setState({
+    //       ErrorMessage: '',
+    //       open: false,
+    //       color: backgroundColor,
+    //       data: {
+    //         datasets: [{ data: datasets, backgroundColor: backgroundColor }],
+    //         labels: labels,
+    //       },
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     this.setState({
+    //       open: true,
+    //       ErrorMessage: error.response.data,
+    //     });
+    //   });
 
     //----------------- Implement the functionality and then set the state here --------------------------------------//
   }
@@ -157,9 +204,16 @@ export default class TimesRevied extends React.Component {
   componentDidMount() {
     //-------------------- fill our drop downlist with values -------------------//
     var dropDownVluesTemp = [];
+
     axios
-      .get(config[0].server + 'GetChart')
+      .post(config[0].server + 'CreraJsonChart', { type: 'TimeReviwed' })
       .then((result) => {
+        // var TimeReviwed = { TimeReviwed :};
+        // console.log(
+        //   result.data['TimeReviwed'],
+        //   '---------------------------------------------'
+        // );
+
         for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
           dropDownVluesTemp.push({
             key:
@@ -193,6 +247,43 @@ export default class TimesRevied extends React.Component {
       .catch((error) => {
         this.setState({ open: false, ErrorMessage: error.response.data });
       });
+
+    // axios
+    //   .get(config[0].server + 'GetChart')
+    //   .then((result) => {
+    //     for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
+    //       dropDownVluesTemp.push({
+    //         key:
+    //           result.data['TimeReviwed'][i]['ModelTitle'] +
+    //           '-' +
+    //           result.data['TimeReviwed'][i]['TopicTiele'],
+    //         text:
+    //           result.data['TimeReviwed'][i]['ModelTitle'] +
+    //           '-' +
+    //           result.data['TimeReviwed'][i]['TopicTiele'],
+    //         value:
+    //           result.data['TimeReviwed'][i]['ModelTitle'] +
+    //           '-' +
+    //           result.data['TimeReviwed'][i]['TopicTiele'],
+    //       });
+    //     }
+
+    //     this.ChangeDataSet(dropDownVluesTemp[0]['key']);
+
+    //     this.setState(
+    //       {
+    //         dropDownVlues: dropDownVluesTemp,
+    //         open: false,
+    //         ErrorMessage: '',
+    //       },
+    //       () => {
+    //         console.log(this.createInfoData());
+    //       }
+    //     );
+    //   })
+    //   .catch((error) => {
+    //     this.setState({ open: false, ErrorMessage: error.response.data });
+    //   });
   }
 
   render() {
