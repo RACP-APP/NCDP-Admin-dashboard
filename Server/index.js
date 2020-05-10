@@ -74,7 +74,7 @@ app.get('/UpdateNotifiCount', (req, res) => {
   fs.writeFile(file, JSON.stringify(countObject), (error) => {
     if (error) {
       console.log(error);
-      res.status(500).send('حدث خطأ أثناء معالجة').end();
+      res.sendStatus(500).send('حدث خطأ أثناء معالجة').end();
     } else {
       //------------------------------------------ get json from file -------------------------------------//
       res.status(200).send('done').end();

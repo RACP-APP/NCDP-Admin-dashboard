@@ -9,79 +9,92 @@ var appDownload = {};
 // var TimeReviwed = [];
 
 //-------------------------- Creat an inital value to all Months of the Year --------------------------------//
-var jan = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var Feb = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var Mar = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var aprile = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var may = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var jun = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var jul = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var ogst = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var sept = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var oct = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var nov = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
-var dec = {
-  Week1: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week2: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0] },
-  Week3: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0] },
-  Week4: { tatal: 0, days: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-};
+var jan = { d: '0' };
+var Feb = {};
+var Mar = {};
+var aprile = {};
+var may = {};
+var jun = {};
+var jul = {};
+var ogst = {};
+var sept = {};
+var oct = {};
+var nov = {};
+var dec = {};
 
+//------------------------------ afunction to create all ouer month Object contents --------------------------//
+function fillMonthsWithWeeks(year) {
+  var count = 0;
+  for (var i = 0; i < 12; i++) {
+    creatMonthsArray(i + 1, daysCountForaMonthinaYear(i + 1, year));
+    console.log(jan);
+  }
+}
+
+//--------------------------- a function to return number of days for each month within a year --------------//
+function daysCountForaMonthinaYear(month, year) {
+  return new Date(year, month, 0).getDate();
+}
+
+// -------------------------- a function to fill all weeks and day for each month array's --------------------//
+function creatMonthsArray(month, daysCount) {
+  console.log(daysCount);
+  debugger;
+  var month2 = new Object({
+    Week1: new Array(7).fill(0),
+    Week2: new Array(7).fill(0),
+    Week3: new Array(7).fill(0),
+  });
+  if (daysCount === 31) {
+    month2.Week4 = new Array(10).fill(0);
+  } else if (daysCount === 30) {
+    month2.Week4 = new Array(9).fill(0);
+  } else if (daysCount === 29) {
+    month2.Week4 = new Array(8).fill(0);
+  } else if (daysCount === 28) {
+    month2.Week4 = new Array(7).fill(0);
+  }
+
+  switch (month) {
+    case 1:
+      console.log(jan, 'month');
+      jan = month2;
+      break;
+    case 2:
+      Feb = month2;
+      break;
+    case 3:
+      Mar = month2;
+      break;
+    case 4:
+      aprile = month2;
+      break;
+    case 5:
+      may = month2;
+      break;
+    case 6:
+      jun = month2;
+      break;
+    case 7:
+      jul = month2;
+      break;
+    case 8:
+      ogst = month2;
+      break;
+    case 9:
+      sept = month2;
+      break;
+    case 10:
+      oct = month2;
+      break;
+    case 11:
+      nov = month2;
+      break;
+    case 12:
+      dec = month2;
+      break;
+  }
+}
 //-----------------------------------------------------------------------------------------------------------------------------------------------//
 //----------------------------------- a helper function to arrang the days of each week in a month ----------------------------------------------//
 //-----------------------------------------------------------------------------------------------------------------------------------------------//
@@ -178,6 +191,7 @@ function arrangDays(month, day) {
 //----------------------------------- afunction to create a ne object contains the number of downloads for each month and week ---------------------//
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 function getRegisteration(year, cb) {
+  fillMonthsWithWeeks(parseInt(year));
   //   console.log(year);
   db.query(
     'SELECT * FROM MobRegistration WHERE YEAR(registrationDate)=' +
@@ -431,32 +445,33 @@ function wirteJsonFile(year, cb) {
   // });
 
   // console.log(year, 'year-----------------');
-  getRegisteration(year, (appDownload) => {
-    jsonObject.appDownload = appDownload;
+  // getRegisteration(year, (appDownload) => {
+    // jsonObject.appDownload = appDownload;
+    // console.log(appDownload);
     // console.log('//////////////////////////////////');
-    GetTimeandTimeSpent((TimeReviwed) => {
-      // console.log(appDownload);
-      jsonObject.TimeReviwed = TimeReviwed;
-      // console.log('don');
-      //----------------------------------------------------------//
+    // GetTimeandTimeSpent((TimeReviwed) => {
+    //   // console.log(appDownload);
+    //   jsonObject.TimeReviwed = TimeReviwed;
+    //   // console.log('don');
+    //   //----------------------------------------------------------//
 
-      fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
-        if (error) {
-          console.log(error);
-          cb(error);
-        } else {
-          cb();
-          appDownload = {};
-          TimeReviwed = [];
-          jsonObject = {};
-          console.log('doooooooooooooooooone');
-        }
-      });
-    });
-  });
-}
+    //   fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
+    //     if (error) {
+    //       console.log(error);
+    //       cb(error);
+    //     } else {
+    //       cb();
+    //       appDownload = {};
+    //       TimeReviwed = [];
+    //       jsonObject = {};
+    //       console.log('doooooooooooooooooone');
+    //     }
+    //   });
+    // });
+  // });
+// }
 
-// wirteJsonFile('2020');
+wirteJsonFile('2020');
 module.exports = {
   wirteJsonFile: wirteJsonFile,
   GetTimeandTimeSpent: GetTimeandTimeSpent,
