@@ -7,7 +7,7 @@ var appDownload = {};
 // var TimeReviwed = [];
 
 //-------------------------- Creat an inital value to all Months of the Year --------------------------------//
-var jan = { d: '0' };
+var jan = {};
 var Feb = {};
 var Mar = {};
 var aprile = {};
@@ -214,8 +214,6 @@ function getRegisteration(year, cb) {
           }
         }
 
-        //---------------------- end of the for --------------------------------------------------//
-
         //------------------------ if the year is for this existance year the we need reach to the now month ---------------------//
         var nowYear = new Date().getFullYear();
         var CurrentMonth = new Date().getMonth() + 1;
@@ -277,7 +275,6 @@ function GetTimeandTimeSpent(cb) {
       if (error) {
         cb();
       } else {
-        // console.log(result, 'result');
         console.log(result, 'result');
         //-------------------------------------------- Arrange the result Here -----------------------------------------------------//
         for (var i = 0; i < result.length; i++) {
@@ -296,7 +293,6 @@ function GetTimeandTimeSpent(cb) {
           };
           serchObject(ob, artObjeect, TimeReviwed);
         }
-        // console.log(TimeReviwed, 'TimeReviwed');
       }
       cb(TimeReviwed);
     }
@@ -309,12 +305,6 @@ function serchObject(ob, artObjeect, TimeReviwed) {
     ob.Articles = [artObjeect];
     TimeReviwed.push(ob);
   } else {
-    // console.log(
-    //   TimeReviwed,
-    //   'TimeReviwed',
-    //   TimeReviwed.length,
-    //   'TimeReviwed.length -------------------------'
-    // );
     for (var i = 0; i < TimeReviwed.length; i++) {
       if (
         TimeReviwed[i].ModelID.toString() === ob.ModelID.toString() &&
@@ -331,13 +321,11 @@ function serchObject(ob, artObjeect, TimeReviwed) {
         //----------------------- if there is a model in this object then look for the articles inside it -------------------------------//
         if (TimeReviwed[i].hasOwnProperty('Articles')) {
           //---------------- HERE we check if the Object is Exist ------------------------------------------------------------------//
-          // TimeReviwed[i].Articles.includes(artObjeect);
           if (!isExist(TimeReviwed[i].Articles, artObjeect)) {
             console.log(
               '----------------------------not includede ------------------------'
             );
             TimeReviwed[i]['Articles'].push(artObjeect);
-            // console.log(TimeReviwed[i]);
           }
         } else {
           //------------------ if there is no articles array then create one --------------------------------------//
@@ -350,11 +338,7 @@ function serchObject(ob, artObjeect, TimeReviwed) {
       ob.Articles = [artObjeect];
       TimeReviwed.push(ob);
     }
-    // console.log(TimeReviwed, 'TimeReviwed');
   }
-
-  // console.log(TimeReviwed, 'TimeReviwed');
-  // cb(TimeReviwed);
 }
 
 function isExist(array, obect) {
@@ -370,67 +354,7 @@ function isExist(array, obect) {
   }
   return false;
 }
-// GetTimeandTimeSpent();
 
-// getRegisteration(2020, (appDownload) => {
-//   jsonObject.appDownload = appDownload;
-//   GetTimeandTimeSpent((TimeReviwed) => {
-//     // console.log(appDownload);
-//     jsonObject.TimeReviwed = TimeReviwed;
-//     console.log('don', jsonObject);
-//     //----------------------------------------------------------//
-//     var file = path.join(__dirname, '../data/ChartData.json');
-
-//     fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
-//       if (error) {
-//         console.log(error);
-//       } else {
-//         console.log('doooooooooooooooooone');
-//       }
-//     });
-//   });
-// });
-
-// function wirteJsonFile(year, cb) {
-// var jsonObject = {};
-// var file = path.join(__dirname, '../data/ChartData.json');
-
-// fs.writeFile(file, JSON.stringify({}), (error) => {
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log('doooooooooooooooooone');
-//   }
-// });
-
-// console.log(year, 'year-----------------');
-// getRegisteration(year, (appDownload) => {
-// jsonObject.appDownload = appDownload;
-// console.log(appDownload);
-// console.log('//////////////////////////////////');
-// GetTimeandTimeSpent((TimeReviwed) => {
-//   // console.log(appDownload);
-//   jsonObject.TimeReviwed = TimeReviwed;
-//   // console.log('don');
-//   //----------------------------------------------------------//
-
-//   fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
-//     if (error) {
-//       console.log(error);
-//       cb(error);
-//     } else {
-//       cb();
-//       appDownload = {};
-//       TimeReviwed = [];
-//       jsonObject = {};
-//       console.log('doooooooooooooooooone');
-//     }
-//   });
-// });
-// });
-// }
-
-// wirteJsonFile('2020');
 module.exports = {
   getRegisteration: getRegisteration,
   GetTimeandTimeSpent: GetTimeandTimeSpent,
