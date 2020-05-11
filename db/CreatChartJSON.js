@@ -2,8 +2,6 @@
 const db = require('./db');
 const fs = require('fs');
 const path = require('path');
-var modules = [];
-var cc = false;
 
 var appDownload = {};
 // var TimeReviwed = [];
@@ -41,18 +39,18 @@ function creatMonthsArray(month, daysCount) {
   console.log(daysCount);
   debugger;
   var month2 = new Object({
-    Week1: new Array(7).fill(0),
-    Week2: new Array(7).fill(0),
-    Week3: new Array(7).fill(0),
+    Week1: { days: new Array(7).fill(0), tatal: 0 },
+    Week2: { days: new Array(7).fill(0), tatal: 0 },
+    Week3: { days: new Array(7).fill(0), tatal: 0 },
   });
   if (daysCount === 31) {
-    month2.Week4 = new Array(10).fill(0);
+    month2.Week4 = { days: new Array(10).fill(0), tatal: 0 };
   } else if (daysCount === 30) {
-    month2.Week4 = new Array(9).fill(0);
+    month2.Week4 = { days: new Array(9).fill(0), tatal: 0 };
   } else if (daysCount === 29) {
-    month2.Week4 = new Array(8).fill(0);
+    month2.Week4 = { days: new Array(8).fill(0), tatal: 0 };
   } else if (daysCount === 28) {
-    month2.Week4 = new Array(7).fill(0);
+    month2.Week4 = { days: new Array(7).fill(0), tatal: 0 };
   }
 
   switch (month) {
@@ -107,17 +105,8 @@ function arrangDays(month, day) {
     if (month.hasOwnProperty('Week1')) {
       month.Week1.tatal += 1;
       //------------------------- week 1 and have a value for thisday then add 1
-      if (month.Week1.days[day - 1] !== undefined) {
-        month.Week1.days[day - 1] += 1;
-      } else {
-        //------------------------- week 1 and dose not have this a value for thisday then =1
-        month.Week1.days[day - 1] = 1;
-      }
-    } else {
-      //------------------------ create if not exist ------------------------------//
-      month.Week1 = { tatal: 1 };
-      month.Week1.days = new Array(7).fill(0);
-      month.Week1.days[day - 1] = 1;
+
+      month.Week1.days[day - 1] += 1;
     }
   }
   //-------------------------------------------------------------------------------//
@@ -128,17 +117,8 @@ function arrangDays(month, day) {
     if (month.hasOwnProperty('Week2')) {
       month.Week2.tatal += 1;
       //------------------------- week 2 and have a value for thisday then add 1
-      if (month.Week2.days[day - 1] !== undefined) {
-        month.Week2.days[day - 1] += 1;
-      } else {
-        //------------------------- week 2 and dose not have this a value for thisday then =1
-        month.Week2.days[day - 1] = 1;
-      }
-    } else {
-      //------------------------ create if not exist ---------------------------------//
-      month.Week2 = { tatal: 1 };
-      month.Week2.days = new Array(7).fill(0);
-      month.Week2.days[day - 1] = 1;
+
+      month.Week2.days[day - 8] += 1;
     }
   }
 
@@ -150,17 +130,8 @@ function arrangDays(month, day) {
     if (month.hasOwnProperty('Week3')) {
       month.Week2.tatal += 1;
       //------------------------- week 3 and have a value for thisday then add 1
-      if (month.Week3.days[day - 1] !== undefined) {
-        month.Week3.days[day - 1] += 1;
-      } else {
-        //------------------------- week 3 and dose not have this a value for thisday then =1
-        month.Week3.days[day - 1] = 1;
-      }
-    } else {
-      //------------------------ create if not exist --------------------------------//
-      month.Week3 = { tatal: 1 };
-      month.Week3.days = new Array(8).fill(0);
-      month.Week3.days[day - 1] = 1;
+
+      month.Week3.days[day - 15] += 1;
     }
   }
 
@@ -172,17 +143,10 @@ function arrangDays(month, day) {
     if (month.hasOwnProperty('Week4')) {
       month.Week2.tatal += 1;
       //------------------------- week 4 and have a value for thisday then add 1
-      if (month.Week4.days[day - 1] !== undefined) {
-        month.Week4.days[day - 1] += 1;
-      } else {
-        //------------------------- week 4 and dose not have this a value for thisday then =1
-        month.Week4.days[day - 1] = 1;
-      }
-    } else {
-      //------------------------ create if not exist --------------------------------//
-      month.Week4 = { tatal: 1 };
-      month.Week4.days = new Array(9).fill(0);
-      month.Week4.days[day - 1] = 1;
+
+      month.Week4.days[day - 22] += 1;
+
+      //------------------------- week 4 and dose not have this a value for thisday then =1
     }
   }
 }
@@ -192,7 +156,6 @@ function arrangDays(month, day) {
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 function getRegisteration(year, cb) {
   fillMonthsWithWeeks(parseInt(year));
-  //   console.log(year);
   db.query(
     'SELECT * FROM MobRegistration WHERE YEAR(registrationDate)=' +
       year.toString(),
@@ -251,15 +214,12 @@ function getRegisteration(year, cb) {
           }
         }
 
-        // console.log('1111111111111');
         //---------------------- end of the for --------------------------------------------------//
 
         //------------------------ if the year is for this existance year the we need reach to the now month ---------------------//
         var nowYear = new Date().getFullYear();
         var CurrentMonth = new Date().getMonth() + 1;
         if (year == nowYear) {
-          //   console.log(new Date().getMonth() + 1);
-
           var monthArray = {
             jan,
             Feb,
@@ -300,7 +260,7 @@ function getRegisteration(year, cb) {
           };
         }
         cb(appDownload);
-        // console.log({ appDownload });
+        console.log({ appDownload });
       }
     }
   );
@@ -309,7 +269,6 @@ function getRegisteration(year, cb) {
 //---------------------------------------------------------------------------------------------------------------------------------------//
 //-------------------------------------- create the TimeViewed  & TimeSpendOnArticle from Articles --------------------------------------//
 //---------------------------------------------------------------------------------------------------------------------------------------//
-
 function GetTimeandTimeSpent(cb) {
   var TimeReviwed = [];
   db.query(
@@ -432,47 +391,47 @@ function isExist(array, obect) {
 //   });
 // });
 
-function wirteJsonFile(year, cb) {
-  var jsonObject = {};
-  var file = path.join(__dirname, '../data/ChartData.json');
+// function wirteJsonFile(year, cb) {
+// var jsonObject = {};
+// var file = path.join(__dirname, '../data/ChartData.json');
 
-  // fs.writeFile(file, JSON.stringify({}), (error) => {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log('doooooooooooooooooone');
-  //   }
-  // });
+// fs.writeFile(file, JSON.stringify({}), (error) => {
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('doooooooooooooooooone');
+//   }
+// });
 
-  // console.log(year, 'year-----------------');
-  // getRegisteration(year, (appDownload) => {
-    // jsonObject.appDownload = appDownload;
-    // console.log(appDownload);
-    // console.log('//////////////////////////////////');
-    // GetTimeandTimeSpent((TimeReviwed) => {
-    //   // console.log(appDownload);
-    //   jsonObject.TimeReviwed = TimeReviwed;
-    //   // console.log('don');
-    //   //----------------------------------------------------------//
+// console.log(year, 'year-----------------');
+// getRegisteration(year, (appDownload) => {
+// jsonObject.appDownload = appDownload;
+// console.log(appDownload);
+// console.log('//////////////////////////////////');
+// GetTimeandTimeSpent((TimeReviwed) => {
+//   // console.log(appDownload);
+//   jsonObject.TimeReviwed = TimeReviwed;
+//   // console.log('don');
+//   //----------------------------------------------------------//
 
-    //   fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
-    //     if (error) {
-    //       console.log(error);
-    //       cb(error);
-    //     } else {
-    //       cb();
-    //       appDownload = {};
-    //       TimeReviwed = [];
-    //       jsonObject = {};
-    //       console.log('doooooooooooooooooone');
-    //     }
-    //   });
-    // });
-  // });
+//   fs.writeFile(file, JSON.stringify(jsonObject), (error) => {
+//     if (error) {
+//       console.log(error);
+//       cb(error);
+//     } else {
+//       cb();
+//       appDownload = {};
+//       TimeReviwed = [];
+//       jsonObject = {};
+//       console.log('doooooooooooooooooone');
+//     }
+//   });
+// });
+// });
 // }
 
-wirteJsonFile('2020');
+// wirteJsonFile('2020');
 module.exports = {
-  wirteJsonFile: wirteJsonFile,
+  getRegisteration: getRegisteration,
   GetTimeandTimeSpent: GetTimeandTimeSpent,
 };

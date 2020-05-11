@@ -141,20 +141,23 @@ app.post('/Chart', function (req, res) {
 //--------------------------------------------------------------------------------------------------------//
 
 app.post('/CreraJsonChart', (req, res) => {
-  console.log('ddddddddddddddddd', req.body.type);
   if (req.body.type === 'TimeReviwed') {
     creatChartjson.GetTimeandTimeSpent((TimeReviwed) => {
-      console.log(TimeReviwed, 'TimeReviwed');
-      res.status(200).send({ TimeReviwed: TimeReviwed }).end();
+      if (!!TimeReviwed) {
+        res.status(200).send({ TimeReviwed: TimeReviwed }).end();
+      } else {
+        res.status(500).send('error');
+      }
+    });
+  } else if (req.body.type === 'appDownload') {
+    creatChartjson.getRegisteration('2020', (appDownload) => {
+      if (!!appDownload) {
+        res.status(200).send({ appDownload: appDownload }).end();
+      } else {
+        res.status(500).send('error').end();
+      }
     });
   }
-  // creatChartjson.wirteJsonFile('2020', (err) => {
-  //   if (err) {
-  //     res.status(500).send('error').end();
-  //   } else {
-  //     res.status(200).send('don').end();
-  //   }
-  // });
 });
 //---------------------------------------------------------------------------------------------------------//
 //--------------------- arout to generat json file and to View Charts -------------------------------------//

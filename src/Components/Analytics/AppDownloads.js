@@ -56,8 +56,9 @@ class MainAnalytic extends React.Component {
     var count = 1;
 
     axios
-      .get(config[0].server + 'GetChart')
+      .post(config[0].server + 'CreraJsonChart', { type: 'appDownload' })
       .then((result) => {
+        console.log(result.data['appDownload'][value], value);
         for (var week in result.data['appDownload'][value]) {
           for (
             var i = 0;
@@ -70,7 +71,6 @@ class MainAnalytic extends React.Component {
             count++;
           }
         }
-
         //--------------------------------------------------------------------------------------------------------------//
         var data = {
           labels: labels,
@@ -113,9 +113,11 @@ class MainAnalytic extends React.Component {
 
     //--------------- get the data -----------------------//
     axios
-      .get(config[0].server + 'GetChart')
+      .post(config[0].server + 'CreraJsonChart', { type: 'appDownload' })
       .then((result) => {
-        console.log(result.data, 'result');
+        console.log(result.data);
+
+        // console.log(result.data, 'result');
         for (var month in result.data['appDownload']) {
           var data = [];
           for (var week in result.data['appDownload'][month]) {
@@ -127,10 +129,8 @@ class MainAnalytic extends React.Component {
             label: month,
             backgroundColor: this.random_rgba(),
           };
-
           count++;
         }
-
         this.setState({
           data: {
             labels: labels,
@@ -155,11 +155,14 @@ class MainAnalytic extends React.Component {
     this.initialValueForChart();
     //---------------------------------------------------------------------------------------------------------//
     //--------------- get the data -----------------------//
+    console.log("result.data['appDownload'], ");
     axios
-      .get(config[0].server + 'GetChart')
+      .post(config[0].server + 'CreraJsonChart', { type: 'appDownload' })
       .then((result) => {
+        // console.log(result.data, 'result');
         //---------------------------------------------------------------------------------------------------------//
         for (var Month in result.data['appDownload']) {
+          console.log(result.data['appDownload'], Month);
           dropDownVluesTemp.push({
             key: Month,
             text: Month,
