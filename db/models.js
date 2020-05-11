@@ -980,7 +980,7 @@ var UpdateNotification = (data, cb) => {
         'UPDATE `Article` SET `TimeSpendOnArticle`=`TimeSpendOnArticle` +' +
           element.DurationViewd +
           ', `TimesViewd`= `TimesViewd` +' +
-          element.DurationViewd +
+          element.TimesViewed +
           ' WHERE `ArticleID` =' +
           element.ArticleID,
         (error, result) => {

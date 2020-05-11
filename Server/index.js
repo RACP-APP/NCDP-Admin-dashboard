@@ -41,29 +41,24 @@ app.use(require('./Routs/Dashbord'));
 
 app.post('/UpdateNotification', upload.single('file'), (req, res) => {
   // console.log(req.files[0]);
-  var myFile = path.join(__dirname, '../uploads', req.file.filename);
-  try {
-    var json = JSON.parse(fs.readFileSync(myFile, 'utf8'));
-    console.log(json['data']);
-    db.UpdateNotification(json.data, (error, result) => {
-      if (error) {
-        res
-          .status(500)
-          .send('An Error Happend While processing the data')
-          .end();
-      } else {
-        fs.unlink(myFile, function (err) {
-          if (err) console.log('File not deleted!');
-          // if no error, file has been deleted successfully
-          console.log('File deleted!');
-        });
-        res.status(200).send('Done').end();
-      }
-    });
-    // res.status(200).send(json).end();
-  } catch (err) {
-    res.send(400);
-  }
+  // var myFile = path.join(__dirname, '../uploads', req.file.filename);
+
+  console.log(req.body, 'fffffffffffff');
+  // var json = JSON.parse(fs.readFileSync(myFile, 'utf8'));
+  // console.log(json['data']);
+  db.UpdateNotification(req.body['data'], (error, result) => {
+    if (error) {
+      res.status(500).send('An Error Happend While processing the data').end();
+    } else {
+      // fs.unlink(myFile, function (err) {
+      //   if (err) console.log('File not deleted!');
+      //   // if no error, file has been deleted successfully
+      //   console.log('File deleted!');
+      // });
+      res.status(200).send('Done').end();
+    }
+  });
+  // res.status(200).send(json).end();
 });
 
 app.get('/UpdateNotifiCount', (req, res) => {
