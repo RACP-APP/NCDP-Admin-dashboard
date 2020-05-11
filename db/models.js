@@ -7,10 +7,8 @@ var async = require('async');
 var GetUsers = (cb) => {
   db.query('select * from `USERS`', (error, rsult, fields) => {
     if (error) {
-      console.log('Query Error');
       cb(error);
     }
-    console.log(rsult, 'result');
     cb(rsult);
   });
 };
@@ -19,7 +17,6 @@ var GetUsers = (cb) => {
 //--------- A function to get all one user depend in its password and username ----------//
 //---------------------------------------------------------------------------------------//
 var GetUserByUserName = (Email, cb) => {
-  console.log('ggggggggggggggggggggggggggg', Email);
   db.query(
     'SELECT userID ,userName ,Email, password,Image  FROM `USERS` WHERE    Email="' +
       Email +
@@ -27,9 +24,7 @@ var GetUserByUserName = (Email, cb) => {
     (error, result, fields) => {
       if (error) {
         cb(error, null);
-        console.log(error);
       } else {
-        console.log(result);
         cb(null, result);
       }
     }
@@ -44,11 +39,8 @@ var getAllModules = (cb) => {
     'SELECT  MODELS.* ,USERS.userName USERS FROM MODELS INNER JOIN USERS ON MODELS.CreatedBy =USERS.userID ',
     (error, result, fields) => {
       if (error) {
-        console.log(error);
-
         cb(error, null);
       }
-      // console.log(result);
       cb(null, result);
     }
   );
@@ -62,11 +54,8 @@ var getUserByID = (userID, cb) => {
     'SELECT  userName FROM   `USERS` where userID = "' + userID + '"',
     (error, result, fields) => {
       if (error) {
-        console.log(error);
-
         cb(error, null);
       }
-      // console.log(result);
       cb(null, result);
     }
   );
@@ -92,7 +81,6 @@ var addUser = (userName, Email, Image, password, cb) => {
             cb('Just One Adim Is Allowed', null);
             return;
           } else {
-            console.log(result);
             db.query(
               'INSERT INTO `USERS` (salt,userName, Email,Image, password) VALUES ("' +
                 password +
@@ -145,7 +133,6 @@ var deleteUser = (userID, userName, cb) => {
 //------------------------ a fun to Update a model using its ID --------------------------//
 //----------------------------------------------------------------------------------------//
 var UpdateModule = (ModelID, Title, Icon, cb) => {
-  console.log(ModelID, Title, Icon, 'model');
   db.query(
     'UPDATE  MODELS SET Title ="' +
       Title +
@@ -155,8 +142,6 @@ var UpdateModule = (ModelID, Title, Icon, cb) => {
       ModelID,
     (error, result, fields) => {
       if (error) {
-        console.log(error);
-
         cb(error, null);
       }
       cb(null, result);
@@ -172,8 +157,6 @@ var DeleteeModule = (ModelID, cb) => {
     'Delete from  MODELS  where ModelID = ' + ModelID,
     (error, result, fields) => {
       if (error) {
-        console.log(error);
-
         cb(error, null);
       }
       cb(null, result);
@@ -189,7 +172,6 @@ getAllTopicOfModels = (ID, cb) => {
     'SELECT  * FROM   Topics where ModelID = "' + ID + '"',
     (error, result, fields) => {
       if (error) {
-        console.log(error);
         cb(error, null);
       } else {
         cb(null, result);
@@ -208,11 +190,9 @@ getAllArticleOfTopic = (ID, cb) => {
       '"',
     (error, result, fields) => {
       if (error) {
-        console.log(error);
         cb(error, null);
       } else {
         cb(null, result);
-        console.log(result);
       }
     }
   );
@@ -233,7 +213,6 @@ addTopicToAmodel = (ID, Title, link, cb) => {
         '")',
       (error, result, fields) => {
         if (error) {
-          console.log(error);
           cb(error, null);
         } else {
           cb(null, result);
@@ -250,7 +229,6 @@ addTopicToAmodel = (ID, Title, link, cb) => {
 
       (error, result, fields) => {
         if (error) {
-          console.log(error);
           cb(error, null);
         } else {
           cb(null, result);
@@ -263,9 +241,7 @@ addTopicToAmodel = (ID, Title, link, cb) => {
 //----------------Update An Article Depending on its TopicID --------------//
 //-------------------------------------------------------------------------//
 var UpdateArticle = (ID, Title, notes, icon, UpdateDate, UpdateByUser, cb) => {
-  console.log(UpdateDate);
   if (Title !== '' && notes !== '') {
-    console.log('have both  title and botes');
     db.query(
       'UPDATE  Article SET Title ="' +
         Title +
@@ -281,8 +257,6 @@ var UpdateArticle = (ID, Title, notes, icon, UpdateDate, UpdateByUser, cb) => {
         ID,
       (error, result, fields) => {
         if (error) {
-          console.log(error);
-
           cb(error, null);
         }
         cb(null, result);
@@ -290,7 +264,6 @@ var UpdateArticle = (ID, Title, notes, icon, UpdateDate, UpdateByUser, cb) => {
     );
   } else {
     if (Title === '' && notes !== '') {
-      console.log('have both  title ', notes, 'notes');
       db.query(
         'UPDATE  Article SET Notes ="' +
           notes +
@@ -304,15 +277,12 @@ var UpdateArticle = (ID, Title, notes, icon, UpdateDate, UpdateByUser, cb) => {
           ID,
         (error, result, fields) => {
           if (error) {
-            console.log(error);
-
             cb(error, null);
           }
           cb(null, result);
         }
       );
     } else if (notes === '' && Title !== '') {
-      console.log('have both  notes ');
       db.query(
         'UPDATE  Article SET  Title ="' +
           Title +
@@ -326,22 +296,16 @@ var UpdateArticle = (ID, Title, notes, icon, UpdateDate, UpdateByUser, cb) => {
           ID,
         (error, result, fields) => {
           if (error) {
-            console.log(error);
-
             cb(error, null);
           }
           cb(null, result);
         }
       );
     } else {
-      console.log('have not title no notes ');
-
       db.query(
         'UPDATE  Article SET  Icon ="' + icon + '" where ArticleID = ' + ID,
         (error, result, fields) => {
           if (error) {
-            console.log(error);
-
             cb(error, null);
           }
           cb(null, result);
@@ -357,7 +321,6 @@ var deleteArticle = (ID, cb) => {
   db.query(
     'DELETE FROM Article WHERE ArticleID = ' + ID,
     (error, result, fields) => {
-      console.log(error);
       if (error) {
         cb(error, null);
       } else {
@@ -417,7 +380,6 @@ var addArticle = (data, cb) => {
       "'" +
       '  )',
     (error, result, fields) => {
-      console.log(error);
       if (error) {
         cb(error, null);
       } else {
@@ -431,7 +393,6 @@ var addArticle = (data, cb) => {
 //----------------------- Add an Module ------------------------------------------//
 //--------------------------------------------------------------------------------//
 var addModule = (Title, Icon, CreatedBy, cb) => {
-  console.log(Title, Icon, CreatedBy, 'from db');
   //------------------- Try to Insert the values of the Modules ----------------//
   db.query(
     'INSERT INTO MODELS  (  Title ,Icon ,CreatedBy ) VALUES  ( "' +
@@ -445,7 +406,6 @@ var addModule = (Title, Icon, CreatedBy, cb) => {
       if (error) {
         cb(error, null);
       } else {
-        console.log(result);
         //-------------------- get the module ID that is recently addede -------------//
         db.query('SELECT MAX(ModelID) FROM MODELS', (error, result, fields) => {
           if (error) {
@@ -491,7 +451,6 @@ var addModule = (Title, Icon, CreatedBy, cb) => {
 
 var UpdateTopic = (TopicId, Title, Icon, cb) => {
   if (Icon !== '' || Icon !== undefined) {
-    console.log(TopicId, 'TopicId', Title, 'Title', Icon, 'Icon');
     db.query(
       ' UPDATE  Topics SET  Title = "' +
         Title +
@@ -543,7 +502,6 @@ var getOneTopic = (TpicID, ModuleID, cb) => {
       ModuleID,
     (error, result, fields) => {
       if (error) {
-        console.log(error);
         cb(error, null);
       } else {
         cb(null, result);
@@ -566,7 +524,6 @@ var createContentID = (ArticleID, cb) => {
     'SELECT contentID from  Content where ArticleID= ' + ArticleID,
     (error, result, fields) => {
       if (error) {
-        console.log(error, 'error');
         cb(error, null);
       } else {
         //--------------------------------------------------------------------------------------------------------------------//
@@ -580,7 +537,6 @@ var createContentID = (ArticleID, cb) => {
             ' INSERT INTO Content (ArticleID) VALUES  (' + ArticleID + ')',
             (error, result, fields) => {
               if (error) {
-                console.log(error, 'error');
                 cb(error, null);
               } else {
                 //--------------------------- RE- SELECT THE CONTENT ID TO RETURN IT BACK TO OUR FORM ----------------------//
@@ -589,7 +545,6 @@ var createContentID = (ArticleID, cb) => {
                     ArticleID,
                   (error, result, fields) => {
                     if (error) {
-                      console.log(error, 'error');
                       cb(error, null);
                     } else {
                       //----------------- if ther is a new content return embty arrays with the content is ------------------//
@@ -605,10 +560,6 @@ var createContentID = (ArticleID, cb) => {
           );
         } else {
           //------------------- if there's a result and the id exist the get text and media --------------//
-          console.log(
-            'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-            result[0]['contentID']
-          );
 
           contentID = allContent['contentID'] = result[0]['contentID'];
           db.query(
@@ -645,7 +596,6 @@ var createContentID = (ArticleID, cb) => {
 //------------------------------------ Add TEXT Content --------------------------------------------//
 var AddingText = (contentID, ContentText, MediaOrder, cb) => {
   var max = 0;
-  console.log(contentID, MediaOrder, 'from model');
 
   //-------------------- elect the max from the tow tables so we can get the max -------------------//
   db.query(
@@ -655,20 +605,16 @@ var AddingText = (contentID, ContentText, MediaOrder, cb) => {
       contentID,
     (error, result) => {
       if (error) {
-        console.log(error, 'jkhl;h.; oih;oi;pjkj;');
       } else {
         //---------------- if result is contain on row check if its nul or has a value ---------------------//
-        console.log(result, 'result');
         if (result.length == 1) {
           //------------------------------------------------------------------------------------------------//
           if (result[0]['MAX(MediaOrder)'] !== null) {
-            console.log(result, 'form tow result');
             max = result[0]['MAX(MediaOrder)'] || 1;
           } else {
             max = 1;
           } //------------------ else if the result hase tow values then check wich is greayer --------------//
         } else if (result.length == 2) {
-          console.log(result, 'form tow result');
           max = result[0]['MAX(MediaOrder)'] + 1 || 1;
           if (result[0]['MAX(MediaOrder)'] < result[1]['MAX(MediaOrder)']) {
             max = result[1]['MAX(MediaOrder)'] + 1;
@@ -687,7 +633,6 @@ var AddingText = (contentID, ContentText, MediaOrder, cb) => {
             ',"Text" )',
           (error, result, fields) => {
             if (error) {
-              console.log(error);
               cb(error, null);
             } else {
               cb(null, error);
@@ -724,7 +669,6 @@ var DeleteTextByID = (TextIDs, cb) => {
     }
   }
 
-  console.log(range, 'this the range ------------------');
   db.query(
     'DELETE FROM `TEXT` where TextID IN (' + range + ')',
     (error, result, fields) => {
@@ -748,20 +692,16 @@ var insertToMedia = (ContentID, MediaLink, MediaOrder, MediaType, cb) => {
       ContentID,
     (error, result) => {
       if (error) {
-        console.log(error, 'jkhl;h.; oih;oi;pjkj;');
       } else {
         //---------------- if result is contain on row check if its nul or has a value ---------------------//
-        console.log(result, 'result');
         if (result.length == 1) {
           //------------------------------------------------------------------------------------------------//
           if (result[0]['MAX(MediaOrder)'] !== null) {
-            console.log(result, 'form tow result');
             max = result[0]['MAX(MediaOrder)'] || 1;
           } else {
             max = 1;
           } //------------------ else if the result hase tow values then check wich is greayer --------------//
         } else if (result.length == 2) {
-          console.log(result, 'form tow result');
           max = result[0]['MAX(MediaOrder)'] + 1 || 1;
           if (result[0]['MAX(MediaOrder)'] < result[1]['MAX(MediaOrder)']) {
             max = result[1]['MAX(MediaOrder)'] + 1;
@@ -851,7 +791,6 @@ var ReorderContent = (data, cb) => {
   async
     .forEachOf(data, (element, i, callback) => {
       if (element['data']['MediaType'] === 'Text') {
-        console.log('ddd-', i);
         db.query(
           ' UPDATE Text SET MediaOrder=' +
             (i + 1) +
@@ -862,13 +801,11 @@ var ReorderContent = (data, cb) => {
               callback(error);
               return;
             } else {
-              // ++count;
               callback();
             }
           }
         );
       } else {
-        console.log('ttt-', i);
         db.query(
           'UPDATE Media SET MediaOrder =' +
             (i + 1) +
@@ -898,22 +835,16 @@ var updateUser = (userName, Email, Image, password, userID, cb) => {
     'Select Email,userName,userID from `USERS` Where  Email= "' + Email + '"',
     (error, result, fields) => {
       if (error) {
-        console.log(result, Email, 'model');
       } else {
         // --------------------- if ther is mor than one email send error ----------------//
         if (result.length > 1) {
-          console.log('in dublicat .........', result);
           cb('Duplicat Emails', null);
         } else {
           //------------------------ if we have on row and it's not for this user then its a duplicate email --------------//
           if (result.length === 1 && result[0]['userID'] !== userID) {
-            console.log(result, userID);
-            console.log('not in dublicat .........', result);
             cb('بريد إلكتروني مكرر .', null);
           } else {
-            console.log('not in dublicat .........', result);
             //---------------------- if no Email like this Email ----------------------------//
-            console.log(userID, 'userID');
             db.query(
               ' UPDATE `USERS` SET  userName="' +
                 userName +
@@ -975,7 +906,6 @@ var getRegistrationTokens = (cb) => {
 var UpdateNotification = (data, cb) => {
   async
     .forEachOf(data, (element, i, callback) => {
-      console.log('ddd-', element);
       db.query(
         'UPDATE `Article` SET `TimeSpendOnArticle`=`TimeSpendOnArticle` +' +
           element.DurationViewd +
@@ -988,7 +918,6 @@ var UpdateNotification = (data, cb) => {
             callback(error);
             return;
           } else {
-            // ++count;
             callback();
           }
         }
@@ -996,27 +925,10 @@ var UpdateNotification = (data, cb) => {
     })
     .catch((error) => {
       cb(error, null);
-      // console.log(error);
     })
     .then((result) => {
       cb(null, result);
-      // console.log('done');
     });
-  // db.query(
-  //   'UPDATE `Article` SET `TimeSpendOnArticle`=`TimeSpendOnArticle` +' +
-  //     TimeSpendOnArticle +
-  //     ', `TimesViewd`= `TimesViewd` +' +
-  //     DurationViewd +
-  //     ' WHER ArticleID =' +
-  //     ArticleID,
-  //   (error, result, fields) => {
-  //     if (error) {
-  //       cb(error, result);
-  //     } else {
-  //       cb(null, result);
-  //     }
-  //   }
-  // );
 };
 
 //-----------------------------------------------------------------------------------------------------------------------------//
