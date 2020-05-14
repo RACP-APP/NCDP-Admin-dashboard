@@ -292,6 +292,10 @@ import CKEditor from 'ckeditor4-react';
 //   removePlugins: ['ImageUpload']
 //   // addPlugins: ["InlineEditor"]
 // };
+
+// CKEditor.config.extraPlugins = 'uploadingimages';
+// CKEditor.config.uploadUrl = '/uploader/upload.php';
+
 class editor extends Component {
   constructor(props) {
     super(props);
@@ -344,6 +348,9 @@ class editor extends Component {
     }
   }
 
+  fileUploadRequest = (event) => {
+    console.log('fileUploadRequest, ', event);
+  };
   componentDidMount() {
     let contentState = '<p>مــــرحبــا</p>';
     this.setState({ editorState: contentState });
@@ -353,6 +360,15 @@ class editor extends Component {
       <div className="maximazing" style={{ minHeight: '100%' }}>
         <div className="editortextbox">
           <CKEditor
+            // config={{
+            //   extraPlugins: 'uploadimage',
+            //   uploadUrl: '/uploader/upload.php',
+            // }}
+            // events={{
+            //   fileUploadRequest: this.fileUploadRequest,
+            //   // change: this.onEditorChange,
+            // }}
+            fileUploadRequest={this.fileUploadRequest}
             onChange={(e) => {
               this.setState(
                 {

@@ -60,6 +60,7 @@ class ConvertFromWordToHtml extends React.Component {
     var reader = new FileReader();
     reader.onloadend = function (event) {
       var arrayBuffer = reader.result;
+      console.log(arrayBuffer, "     console.log(image, 'image');");
       // debugger
 
       var options = {
@@ -71,13 +72,19 @@ class ConvertFromWordToHtml extends React.Component {
           'strike => del',
         ],
         convertImage: mammoth.images.imgElement(function (image) {
-          var that = this;
-          this.setState({
-            loaded: true,
-          });
+          console.log(image);
+          // var that = this;
+          // this.setState({
+          //   loaded: true,
+          // });
+          console.log('in the converting image func2');
+
+          console.log('in the converting image func');
 
           return image.read('base64').then(async function (imageBuffer) {
-            console.log(image);
+            console.log(image, 'image');
+            console.log('in the converting image func2');
+
             var src = '';
             try {
               var ref = firebase
@@ -98,6 +105,7 @@ class ConvertFromWordToHtml extends React.Component {
                 .then(async function (snapshot) {
                   await ref.getDownloadURL().then((downlodurl) => {
                     src = downlodurl;
+                    console.log('in the converting image func');
                   });
                 });
 
@@ -117,7 +125,7 @@ class ConvertFromWordToHtml extends React.Component {
         .convertToHtml({ arrayBuffer: arrayBuffer }, options)
         .then(function (resultObject) {
           var result1 = resultObject.value;
-          console.log(result1);
+          // console.log(result1);
           that.setState({
             conertedText: that.convertDomToHtmlString(result1.toString()),
             loaded: false,
@@ -126,7 +134,7 @@ class ConvertFromWordToHtml extends React.Component {
             errorMessage: '',
           });
         });
-      console.timeEnd();
+      // console.timeEnd();
     };
     reader.readAsArrayBuffer(file);
   }; //------------//
@@ -165,7 +173,7 @@ class ConvertFromWordToHtml extends React.Component {
             conertedText: '',
             selectedFile: '',
             errorMessage:
-              'حدث خطأ أثناء حفظ البيانات  n .1 النص طويل جدًا  n 2. لا يوجد اتصال',
+              'حدث خطأ أثناء حفظ البيانات  \\n .1 النص طويل جدًا  \\n 2. لا يوجد اتصال',
             Error: true,
             open: true,
           },
