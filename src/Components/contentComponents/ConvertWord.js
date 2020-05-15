@@ -6,6 +6,8 @@ import $ from 'jquery';
 import firebase from 'firebase';
 import { Loader, Dimmer } from 'semantic-ui-react';
 import ErrorDialogr from '../../Components/ErroeDialog';
+import Resizer from 'react-image-file-resizer';
+
 // const pdf = require('pdf-parse');
 var mammoth = require('mammoth');
 const fs = require('fs');
@@ -57,6 +59,9 @@ class ConvertFromWordToHtml extends React.Component {
     var that = this;
     var file = event.target.files[0];
 
+    //------------------------------------------------//
+    //------------------------------------------------//
+
     var reader = new FileReader();
     reader.onloadend = function (event) {
       var arrayBuffer = reader.result;
@@ -82,8 +87,24 @@ class ConvertFromWordToHtml extends React.Component {
           console.log('in the converting image func');
 
           return image.read('base64').then(async function (imageBuffer) {
-            console.log(image, 'image');
+            console.log(
+              'data:' + image.contentType + ';base64,' + imageBuffer,
+              'image'
+            );
             console.log('in the converting image func2');
+            // let fileReader = new FileReader();
+            // Resizer.imageFileResizer(
+            //   fileReader.readAsDataURL(imageBuffer),
+            //   150,
+            //   150,
+            //   image.type.substring(image.type.indexOf('/') + 1),
+            //   100,
+            //   0,
+            //   (uri) => {
+            //     console.log(uri);
+            //   },
+            //   'base64'
+            // );
 
             var src = '';
             try {

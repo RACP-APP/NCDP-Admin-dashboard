@@ -47,10 +47,11 @@ class ImageUpload extends Component {
       console.log(file);
     }
     if (fileInput) {
+      console.log(file);
       Resizer.imageFileResizer(
         event.target.files[0],
-        300,
-        300,
+        150,
+        150,
         file.type.substring(file.type.indexOf('/') + 1),
         100,
         0,
