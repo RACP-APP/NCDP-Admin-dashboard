@@ -69,7 +69,9 @@ export default class TimesRevied extends React.Component {
     var backgroundColor = [];
 
     axios
-      .post(config[0].server + 'CreraJsonChart', { type: 'TimeReviwed' })
+      .post(config[0].server + 'CreraJsonChart', {
+        type: 'TimeReviwed',
+      })
       .then((result) => {
         for (var i = 0; i < result.data['TimeReviwed'].length; i++) {
           if (
@@ -104,7 +106,12 @@ export default class TimesRevied extends React.Component {
           open: false,
           color: backgroundColor,
           data: {
-            datasets: [{ data: datasets, backgroundColor: backgroundColor }],
+            datasets: [
+              {
+                data: datasets,
+                backgroundColor: backgroundColor,
+              },
+            ],
             labels: labels,
           },
         });
@@ -165,40 +172,63 @@ export default class TimesRevied extends React.Component {
 
     //----------------- Implement the functionality and then set the state here --------------------------------------//
   }
-  createInfoData() {
-    {
-      return this.state.data['datasets'][0]['data'].map((item, index) => {
-        return (
-          <Table.Row>
-            <Table.Cell>
-              <Header
-                as="h4"
-                image
-                style={{ backgroundColor: '#A52A2A !important' }}
-              >
-                <div
-                  style={{
-                    minHeight: '10px',
-                    maxHeight: '10px',
-                    minWidth: '60px',
-                    width: '100%',
-                    backgroundColor:
-                      this.state.color[index] || 'rgba(195,75,198)',
-                  }}
-                ></div>
 
-                <Header.Content>
-                  <Header.Subheader>
-                    {this.state.data['labels'][index]}
-                  </Header.Subheader>
-                </Header.Content>
-              </Header>
-            </Table.Cell>
-            <Table.Cell>{item}</Table.Cell>
-          </Table.Row>
-        );
-      });
+  addCommas(nStr = 0) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+      x1 = x1.replace(rgx, '$1' + ',' + '$2');
     }
+    return x1 + x2;
+  }
+
+  createInfoData() {
+    return this.state.data['datasets'][0]['data'].map((item, index) => {
+      return (
+        <Grid.Row>
+          <Grid.Column width={6}>{this.addCommas(item)}</Grid.Column>
+          <Grid.Column width={10}>
+            <div>
+              <div
+                className="row"
+                style={{
+                  minHeight: '10px',
+                  maxHeight: '10px',
+                  minWidth: '60px',
+                  width: '100%',
+                  backgroundColor:
+                    this.state.color[index] || 'rgba(195,75,198)',
+                }}
+              ></div>
+              <div className="row">{this.state.data['labels'][index]}</div>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      );
+    });
+
+    //------------------ create the grid -----------------------------//
+    // return (
+    //   <Grid celled>
+    //     <Grid.Row>
+    //       <Grid.Column width={10}>
+    //         {/* {this.state.data['labels'][index]} */}
+    //       </Grid.Column>
+    //       <Grid.Column
+    //         width={11}
+    //         style={{
+    //           backgroundColor: '#A52A2A !important',
+    //         }}
+    //       >
+    //         >
+    //       </Grid.Column>
+    //     </Grid.Row>
+    //     <Grid.Row>{items}</Grid.Row>
+    //   </Grid>
+    // );
   }
   //------------------------------- Initalize Our States -------------------------//
   componentDidMount() {
@@ -206,7 +236,9 @@ export default class TimesRevied extends React.Component {
     var dropDownVluesTemp = [];
 
     axios
-      .post(config[0].server + 'CreraJsonChart', { type: 'TimeReviwed' })
+      .post(config[0].server + 'CreraJsonChart', {
+        type: 'TimeReviwed',
+      })
       .then((result) => {
         // var TimeReviwed = { TimeReviwed :};
         // console.log(
@@ -245,7 +277,10 @@ export default class TimesRevied extends React.Component {
         );
       })
       .catch((error) => {
-        this.setState({ open: false, ErrorMessage: error.response.data });
+        this.setState({
+          open: false,
+          ErrorMessage: error.response.data,
+        });
       });
 
     // axios
@@ -295,7 +330,10 @@ export default class TimesRevied extends React.Component {
         />
         <Segment placeholder>
           <Grid columns={2} relaxed="very" stackable>
-            <Grid.Column width={10}>
+            <Grid.Column width={11}>
+              <Pie data={this.state.data}></Pie>
+            </Grid.Column>
+            <Grid.Column width={5}>
               <div className="row">
                 <Dropdown
                   button
@@ -303,6 +341,7 @@ export default class TimesRevied extends React.Component {
                   floating
                   labeled
                   icon="world"
+                  placeholder=" الرجاء اختيار نموذج"
                   options={this.state.dropDownVlues}
                   search
                   // text={this.state.selectedValue}
@@ -310,12 +349,18 @@ export default class TimesRevied extends React.Component {
                   onChange={this.getChartForEachModuleTopics.bind(this)}
                 />
               </div>
-              <div className="row">
-                <Pie data={this.state.data}></Pie>
-              </div>
-            </Grid.Column>
-            <Grid.Column width={6}>
-              <Table celled>
+              <Grid celled>
+                <Grid.Row>
+                  <Grid.Column width={6}>
+                    {this.props.filter === 'TimeViewed'
+                      ? 'Reviews'
+                      : 'Times spent On a Screen'}
+                  </Grid.Column>
+                  <Grid.Column width={10}>Article</Grid.Column>
+                </Grid.Row>
+                {this.createInfoData()}
+              </Grid>
+              {/* <Table celled>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>Article</Table.HeaderCell>
@@ -329,7 +374,7 @@ export default class TimesRevied extends React.Component {
                 {this.createInfoData()}
 
                 <Table.Body></Table.Body>
-              </Table>
+              </Table> */}
             </Grid.Column>
           </Grid>
         </Segment>

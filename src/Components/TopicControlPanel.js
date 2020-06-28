@@ -16,6 +16,7 @@ import {
   Popup,
 } from 'semantic-ui-react';
 
+const firebase2 = require('firebase/storage');
 class TopicControlPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +35,7 @@ class TopicControlPanel extends React.Component {
   handelloadStart(e) {}
   handelSucces(e) {
     this.setState({ url: e });
-    console.log(firebase.storage);
+    console.log(firebase.storage, '-------------------', firebase2);
   }
 
   //-------------------------- the percentege of upl-loading ---------------------//

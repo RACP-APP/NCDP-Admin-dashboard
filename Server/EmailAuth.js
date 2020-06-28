@@ -3,15 +3,15 @@ const readline = require('readline');
 const { google } = require('googleapis');
 const nodemailer = require('nodemailer');
 
-var auth = {
-  type: 'oauth2',
-  user: 'ncdpmailer@gmail.com',
-  clientId:
-    '1016455203993-37gnufv6o4jkfrlj3srufk642s544c9v.apps.googleusercontent.com',
-  clientSecret: 'RGikMN2GyuChyIgiUkdQtrPH',
-  refreshToken:
-    '1//044mApoZHI6yVCgYIARAAGAQSNwF-L9IrwKjnnOVMedlTQXY27XeoNZQ9eqjyCalaUykIwMtYBfXpyNGbw9PHYhj6WvNS62ltHiA',
-};
+// var auth = {
+//   type: 'oauth2',
+//   user: 'ncdpmailer@gmail.com',
+//   clientId:
+//     '1016455203993-37gnufv6o4jkfrlj3srufk642s544c9v.apps.googleusercontent.com',
+//   clientSecret: 'RGikMN2GyuChyIgiUkdQtrPH',
+//   refreshToken:
+//     '1//044mApoZHI6yVCgYIARAAGAQSNwF-L9IrwKjnnOVMedlTQXY27XeoNZQ9eqjyCalaUykIwMtYBfXpyNGbw9PHYhj6WvNS62ltHiA',
+// };
 
 // If modifying these scopes, delete token.json.
 // const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
@@ -125,20 +125,20 @@ function sendMail(compID, post) {
 }
 
 let transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true,
-  auth: {
-    type: 'OAuth2',
-    user: 'ncdpmailer@gmail.com',
-    accessToken:
-      'ya29.a0AfH6SMDVTJL3xzJcC05JEewRk9ebT7UyuMNC6v43Tnjrl1NekNiIVo8u2UZBS-qxveMDxP4BkJgsvTlN2LQW--DakDoTMCzVhuoqEcHrI0IPvB2PH4lOe40VBQKEI4Gxeu8FQUH3-PUzdwdx6Gz2quZa-AkV4HuW1Ps',
-  },
-  // service: 'gmail',
+  // host: 'smtp.gmail.com',
+  // port: 465,
+  // secure: true,
   // auth: {
-  //   user: 'nuhlamasri@gmail.com',
-  //   pass: 'mypassisasoom34'
-  // }
+  //   type: 'OAuth2',
+  //   user: 'ncdpmailer@gmail.com',
+  //   accessToken:
+  //     'ya29.a0AfH6SMDVTJL3xzJcC05JEewRk9ebT7UyuMNC6v43Tnjrl1NekNiIVo8u2UZBS-qxveMDxP4BkJgsvTlN2LQW--DakDoTMCzVhuoqEcHrI0IPvB2PH4lOe40VBQKEI4Gxeu8FQUH3-PUzdwdx6Gz2quZa-AkV4HuW1Ps',
+  // },
+  service: 'gmail',
+  auth: {
+    user: 'ncdpmailer@gmail.com',
+    pass: 'qlynreemvdutawqo',
+  },
 });
 
 let pst = {

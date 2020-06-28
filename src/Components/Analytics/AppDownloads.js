@@ -182,7 +182,19 @@ class MainAnalytic extends React.Component {
         });
       });
   }
+  //---------------------------------------------------------------------------------------------------------------//
 
+  // addCommas(nStr) {
+  //   nStr += '';
+  //   x = nStr.split('.');
+  //   x1 = x[0];
+  //   x2 = x.length > 1 ? '.' + x[1] : '';
+  //   var rgx = /(\d+)(\d{3})/;
+  //   while (rgx.test(x1)) {
+  //     x1 = x1.replace(rgx, '$1' + ',' + '$2');
+  //   }
+  //   return x1 + x2;
+  // }
   render() {
     return (
       <Segment placeholder>
@@ -190,8 +202,18 @@ class MainAnalytic extends React.Component {
           open={this.state.open}
           ErrorMessage={this.state.ErrorMessage}
         ></ErrorDialog>
-        <Grid columns={1} relaxed="very" stackable>
-          <Grid.Column width={12}>
+        <Grid columns={2} relaxed="very" stackable>
+          <Grid.Column width={10}>
+            <div className="row">
+              <Line
+                onElementsClick={(element) => {
+                  console.log(element[0], 'yyyyyyyyyyyyy');
+                }}
+                data={this.state.data}
+              />
+            </div>
+          </Grid.Column>
+          <Grid.Column width={6}>
             <div className="row">
               <Dropdown
                 button
@@ -204,14 +226,6 @@ class MainAnalytic extends React.Component {
                 // text={this.state.selectedValue}
                 renderLabel={this.state.selectedValue}
                 onChange={this.ChangeDataSet.bind(this)}
-              />
-            </div>
-            <div className="row">
-              <Line
-                onElementsClick={(element) => {
-                  console.log(element[0], 'yyyyyyyyyyyyy');
-                }}
-                data={this.state.data}
               />
             </div>
           </Grid.Column>

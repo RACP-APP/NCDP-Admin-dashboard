@@ -7,7 +7,7 @@
     <!-- <script src="/__/firebase/7.10.0/firebase-storage.js"></script> -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-app.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-storage.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
              https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-analytics.js"></script>
@@ -92,6 +92,14 @@
           }
         }
 
+
+        if (window.File && window.FileReader) { //These are the relevant HTML5 objects that we are going to use
+          // document.getElementById('UploadButton').addEventListener('click', StartUpload);
+          // document.getElementById('FileBox').addEventListener('change', FileChosen);
+        }
+        else {
+          document.getElementById('UploadArea').innerHTML = "Your Browser Doesn't Support The File API Please Update Your Browser";
+        }
         // Remember that the browser automatically sets the state to null on the
         // first visit, so if you check for this and find it to be null, you know
         // that the user hasn't been here yet.

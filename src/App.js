@@ -9,6 +9,7 @@ import TopHeader from './Components/Topheader';
 import ImgUploader from './Components/uploadimage';
 import AdminSettings from './Components/userSettings/AdminAddUser';
 import MainAnalatic from './Components/Analytics/mailAnalyticBoard';
+import Uploading from './Components/Uploading/Uploading';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import xaios from 'axios';
 import config from './config.json';
@@ -115,7 +116,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <div className="Mainheader">
+        {/* <div className="Mainheader">
           <TopHeader
             counter={this.state.counter}
             loggedIn={this.state.LoggetIn}
@@ -168,8 +169,9 @@ class App extends React.Component {
           </Router>
         </div>
 
-        {/* <PDfConverter></PDfConverter> */}
-        <Footer />
+       
+        <Footer /> */}
+        <Uploading></Uploading>
       </div>
     );
     // return <D></D>;

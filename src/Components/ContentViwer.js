@@ -16,7 +16,7 @@ import ImageFileUploader from '../Components/uploadimage';
 import ErrorDialog from '../Components/ErroeDialog';
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';
-import { Segment, Button, Table, Grid } from 'semantic-ui-react';
+import { Segment, Button, Table, Grid, Responsive } from 'semantic-ui-react';
 
 class ContentViwer extends React.Component {
   constructor(props) {
@@ -450,6 +450,7 @@ class ContentViwer extends React.Component {
           logoSrc={process.env.PUBLIC_URL + '/' + config[0].logo}
           text="يرجى الانتظار حتى اكتمال التحميل "
         ></LoadingScreen>
+
         <Grid style={{ width: '100%' }}>
           <Grid.Row>
             <Grid.Column width={16}>
@@ -482,7 +483,7 @@ class ContentViwer extends React.Component {
               <div
                 className="accordion"
                 id="accordionExample"
-                style={{ width: '100%' }}
+                style={{ width: '100%', minWidth: '150px' }}
               >
                 <div className="card">
                   <div className="card-header" id="headingOne">

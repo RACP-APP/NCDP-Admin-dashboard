@@ -12,6 +12,178 @@ const favicon = require('express-favicon');
 const fs = require('fs');
 const db = require('../db/models');
 var multer = require('multer');
+var http = require('http');
+var socketIo = require('socket.io');
+const server = http.createServer(app);
+const io = socketIo(server); // < Interesting!
+(exec = require('child_process').exec), (util = require('util'));
+var Files = {};
+//------------------- Connectining the Scoket ---------------------//
+
+// function handler(req, res) {
+//   fs.readFile(__dirname + '/index.html', function (err, data) {
+//     if (err) {
+//       res.writeHead(500);
+//       return res.end('Error loading index.html');
+//     }
+//     res.writeHead(200);
+//     res.end(data);
+//   });
+// }
+
+// let interval;
+io.on('connection', (socket) => {
+  console.log('New client connected');
+  var Files = [];
+
+  // if (interval) {
+  //   clearInterval(interval);
+  // }
+  // interval = setInterval(() => getApiAndEmit(socket), 1000);
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+    // clearInterval(interval);
+  });
+
+  //----------------------------------------------------------------------------------------------//
+
+  socket.on('Start', function (data) {
+    // var Files = [];
+    //data contains the variables that we passed through in the html file
+    var Name = data['Name'];
+
+    Files[Name] = {
+      //Create a new Entry in The Files Variable
+      FileSize: data['Size'],
+      Data: '',
+      Downloaded: 0,
+    };
+    var Place = 0;
+    try {
+      var Stat = fs.statSync('uploads/' + Name);
+      if (Stat.isFile()) {
+        console.log(Files[Name]['Downloaded']);
+        Files[Name]['Downloaded'] = Stat.size;
+        Place = Stat.size / 524288;
+      }
+    } catch (er) {
+      console.log('error', er);
+    } //It's a New File
+    fs.open('uploads/' + Name, 'a', function (err, fd) {
+      if (err) {
+        console.log(err);
+      } else {
+        Files[Name]['Handler'] = fd; //We store the file handler so we can write to it later
+        socket.emit('MoreData', {
+          Place: Place,
+          Percent: 0,
+        });
+      }
+    });
+  });
+  //----------------------------------------------------------------------------------------------//
+
+  socket.on('Upload', function (data) {
+    console.log('uploading -----------------------');
+
+    var Name = data['Name'];
+    // console.log('1111111111111111111', Name, data['Data'].length);
+
+    // if (Files.hasOwnProperty(Name)) {
+    //   console.log('hasprp');
+    //   if (Files[Name].hasOwnProperty('Downloaded')) {
+    //     console.log('hasOwnProperty - Downloaded', data['Data'].length);
+    //     Files[Name]['Downloaded'] += data['Data'].length;
+    //   } else {
+    //     console.log('do not hasOwnProperty - Downloaded');
+    //     Files[Name]['Downloaded'] = data['Data'].length;
+    //   }
+    // } else {
+    //   console.log('do not hasprp');
+    //   Files[Name] = {};
+    // }
+
+    Files[Name]['Downloaded'] += data['Data'].length;
+    Files[Name]['Data'] += data['Data'];
+    console.log(
+      " Files[Name]['Downloaded']",
+      Files[Name]['Downloaded'],
+      " Files[Name]['Data']",
+      Files[Name]['Data'],
+      "data['Data']",
+      data['Data'],
+      '------------------------'
+    );
+    if (Files[Name]['Downloaded'] == Files[Name]['FileSize']) {
+      //If File is Fully Uploaded
+      fs.write(
+        Files[data['Name']]['Handler'],
+        Files[data['Name']]['Data'],
+        null,
+        'Binary',
+        function (err, Writen) {
+          //Get Thumbnail Here
+        }
+      );
+    } else if (Files[Name]['Data'].length > 10485760) {
+      //If the Data Buffer reaches 10MB
+      fs.write(
+        Files[Name]['Handler'],
+        Files[Name]['Data'],
+        null,
+        'Binary',
+        function (err, Writen) {
+          Files[Name]['Data'] = ''; //Reset The Buffer
+          var Place = Files[Name]['Downloaded'] / 524288;
+          var Percent =
+            (Files[Name]['Downloaded'] / Files[Name]['FileSize']) * 100;
+          socket.emit('MoreData', { Place: Place, Percent: Percent });
+        }
+      );
+    } else {
+      console.log('99999999999999999999999', Name);
+
+      var Place = Files[Name]['Downloaded'] / 524288;
+      var Percent = (Files[Name]['Downloaded'] / Files[Name]['FileSize']) * 100;
+      console.log(
+        '99999999999999999999999',
+        Name,
+        Place,
+        Percent
+        // Files[Name]['Downloaded']
+      );
+      socket.emit('MoreData', { Place: Place, Percent: Percent });
+    }
+  });
+
+  //----------------------------------------------------------------------------------------------//
+
+  //-----------------------------------------------------------------------------------//
+
+  // socket.on('MoreData', function (data) {
+  //   UpdateBar(data['Percent']);
+  //   var Place = data['Place'] * 524288; //The Next Blocks Starting Position
+  //   var NewFile; //The Variable that will hold the new Block of Data
+  //   // if (SelectedFile.webkitSlice)
+  //   //   NewFile = SelectedFile.webkitSlice(
+  //   //     Place,
+  //   //     Place + Math.min(524288, SelectedFile.size - Place)
+  //   //   );
+  //   // else
+  //   //   NewFile = SelectedFile.mozSlice(
+  //   //     Place,
+  //   //     Place + Math.min(524288, SelectedFile.size - Place)
+  //   //   );
+  //   FReader.readAsBinaryString(NewFile);
+  // });
+});
+
+var d = 0;
+const getApiAndEmit = async (socket) => {
+  socket.emit('FromAPI', d++);
+};
+
+//--------------------------------//
 
 const messaging = require('./send');
 const creatChartjson = require('../db/CreatChartJSON');
@@ -222,6 +394,6 @@ app.get('*', function (req, res) {
 //-----------------------------------------------------------------------------------------------------------//
 //-----------------------------------Listen to our Port Number ----------------------------------------------//
 //-----------------------------------------------------------------------------------------------------------//
-app.listen(PORT, function () {
+server.listen(PORT, function () {
   console.log('Server is running at PORT:', PORT);
 });
