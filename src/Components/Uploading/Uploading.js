@@ -20,11 +20,25 @@ class UploadingItem extends React.Component {
       response: 'rrrrrrrrrr',
       file: null,
       name: '',
+      uploaded: 0,
+      SelectedFile: null,
     };
   }
 
   componentDidMount() {
     socket = socketIOClient(ENDPOINT);
+    var Path = 'http://localhost/public/uploads';
+
+    socket.on('Done', function (data) {
+      console.log('On Done Event');
+      var Content = 'Video Successfully Uploaded !!';
+
+      document.getElementById('UploadArea').innerHTML = Content;
+      // document.getElementById('Restart').addEventListener('click', Refresh);
+    });
+    function Refresh() {
+      // location.reload(true);
+    }
     var UpdateBar = function (percent) {
       document.getElementById('ProgressBar').style.width = percent + '%';
       document.getElementById('percent').innerHTML =
@@ -36,36 +50,15 @@ class UploadingItem extends React.Component {
     };
 
     socket.on('MoreData', function (data) {
-      console.log(
-        'ffffffffffffffffffff',
-        Math.min(524288, SelectedFile.size - data['Place']),
-        'SelectedFile.size',
-        SelectedFile.size,
-        "data['Place']",
-
-        data['Place'],
-        'Place',
-        Place
-      );
       UpdateBar(data['Percent']);
       var Place = data['Place'] * 524288; //The Next Blocks Starting Position
       var NewFile = Blob; //The Variable that will hold the new Block of Data
       if (SelectedFile.webkitSlice) {
-        console.log(
-          'webkitSlice',
-          'Place',
-          data['Place'],
-          Place + Math.min(524288, SelectedFile.size - data['Place'])
-        );
         NewFile = SelectedFile.webkitSlice(
           Place,
           Place + Math.min(524288, SelectedFile.size - data['Place'])
         );
       } else if (SelectedFile.slice) {
-        console.log(
-          Math.min(524288, SelectedFile.size - data['Place']) +
-            '---------------------'
-        );
         NewFile = SelectedFile.slice(
           Place,
           Place + Math.min(524288, SelectedFile.size - data['Place']),
@@ -80,13 +73,6 @@ class UploadingItem extends React.Component {
           NewFile
         );
       } else if (SelectedFile.mozSlice) {
-        console.log(
-          'mozSlice',
-          'Place',
-          Place,
-          Place + Math.min(524288, SelectedFile.size - data['Place']),
-          SelectedFile.size
-        );
         NewFile = SelectedFile.mozSlice(
           Place,
           Place + Math.min(524288, SelectedFile.size - data['Place'])
@@ -117,7 +103,7 @@ class UploadingItem extends React.Component {
         socket.emit('Upload', { Name: Name, Data: evnt.target.result });
       };
 
-      socket.emit('Start', { Name: Name, Size: SelectedFile.size });
+      socket.emit('Start', { Name: Name, Size: this.state.SelectedFile.size });
       // FReader.readAsArrayBuffer(this.state.file);
     } else {
       alert('Please Select A File');
@@ -126,6 +112,7 @@ class UploadingItem extends React.Component {
 
   setThName(e) {
     console.log(e.target.value);
+
     // this.setState({ name: e.target.value });
   }
   onChange(evnt) {
@@ -133,7 +120,7 @@ class UploadingItem extends React.Component {
     document.getElementById('NameBox').value = SelectedFile.name;
     this.setState({
       name: SelectedFile.name,
-      file: SelectedFile,
+      SelectedFile: SelectedFile,
     });
   }
   render() {

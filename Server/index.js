@@ -20,35 +20,17 @@ const io = socketIo(server); // < Interesting!
 var Files = {};
 //------------------- Connectining the Scoket ---------------------//
 
-// function handler(req, res) {
-//   fs.readFile(__dirname + '/index.html', function (err, data) {
-//     if (err) {
-//       res.writeHead(500);
-//       return res.end('Error loading index.html');
-//     }
-//     res.writeHead(200);
-//     res.end(data);
-//   });
-// }
-
-// let interval;
 io.on('connection', (socket) => {
   console.log('New client connected');
   var Files = [];
 
-  // if (interval) {
-  //   clearInterval(interval);
-  // }
-  // interval = setInterval(() => getApiAndEmit(socket), 1000);
   socket.on('disconnect', () => {
     console.log('Client disconnected');
-    // clearInterval(interval);
   });
 
   //----------------------------------------------------------------------------------------------//
 
   socket.on('Start', function (data) {
-    // var Files = [];
     //data contains the variables that we passed through in the html file
     var Name = data['Name'];
 
@@ -60,7 +42,7 @@ io.on('connection', (socket) => {
     };
     var Place = 0;
     try {
-      var Stat = fs.statSync('uploads/' + Name);
+      var Stat = fs.statSync('public/uploads/' + Name);
       if (Stat.isFile()) {
         console.log(Files[Name]['Downloaded']);
         Files[Name]['Downloaded'] = Stat.size;
@@ -69,7 +51,7 @@ io.on('connection', (socket) => {
     } catch (er) {
       console.log('error', er);
     } //It's a New File
-    fs.open('uploads/' + Name, 'a', function (err, fd) {
+    fs.open('public/uploads/' + Name, 'a', function (err, fd) {
       if (err) {
         console.log(err);
       } else {
@@ -81,39 +63,20 @@ io.on('connection', (socket) => {
       }
     });
   });
-  //----------------------------------------------------------------------------------------------//
+  //--------------------------------------------------------------------------------------------------------------------------//
+  //---------------------------------------Uplading Event for the file -------------------------------------------------------//
+  //-------------- this event checks the file size if its larg then it creats a hsndler a cuts te file -----------------------//
+  //------------------------------------------into chunks and then upload each cunk a lone -----------------------------------//
+  //--------------------------------------------------------------------------------------------------------------------------//
 
   socket.on('Upload', function (data) {
     console.log('uploading -----------------------');
 
     var Name = data['Name'];
-    // console.log('1111111111111111111', Name, data['Data'].length);
-
-    // if (Files.hasOwnProperty(Name)) {
-    //   console.log('hasprp');
-    //   if (Files[Name].hasOwnProperty('Downloaded')) {
-    //     console.log('hasOwnProperty - Downloaded', data['Data'].length);
-    //     Files[Name]['Downloaded'] += data['Data'].length;
-    //   } else {
-    //     console.log('do not hasOwnProperty - Downloaded');
-    //     Files[Name]['Downloaded'] = data['Data'].length;
-    //   }
-    // } else {
-    //   console.log('do not hasprp');
-    //   Files[Name] = {};
-    // }
-
     Files[Name]['Downloaded'] += data['Data'].length;
     Files[Name]['Data'] += data['Data'];
-    console.log(
-      " Files[Name]['Downloaded']",
-      Files[Name]['Downloaded'],
-      " Files[Name]['Data']",
-      Files[Name]['Data'],
-      "data['Data']",
-      data['Data'],
-      '------------------------'
-    );
+
+    //-------------------- if the Uploading Size the Same as the File Size then we are Done ------------------//
     if (Files[Name]['Downloaded'] == Files[Name]['FileSize']) {
       //If File is Fully Uploaded
       fs.write(
@@ -122,10 +85,17 @@ io.on('connection', (socket) => {
         null,
         'Binary',
         function (err, Writen) {
-          //Get Thumbnail Here
+          if (!err) {
+            console.log('uploading is completerd');
+
+            socket.emit('Done', { Image: 'public/' + Name + '.jpg' });
+          } else {
+            console.log('an Error Has Accured', err);
+          }
         }
       );
-    } else if (Files[Name]['Data'].length > 10485760) {
+    } //-------------------- if the file Size More Than 10485760 creat a handler and then cut the chunk a part ------------------//
+    else if (Files[Name]['Data'].length > 10485760) {
       //If the Data Buffer reaches 10MB
       fs.write(
         Files[Name]['Handler'],
@@ -133,57 +103,27 @@ io.on('connection', (socket) => {
         null,
         'Binary',
         function (err, Writen) {
-          Files[Name]['Data'] = ''; //Reset The Buffer
-          var Place = Files[Name]['Downloaded'] / 524288;
-          var Percent =
-            (Files[Name]['Downloaded'] / Files[Name]['FileSize']) * 100;
-          socket.emit('MoreData', { Place: Place, Percent: Percent });
+          if (err) {
+            console.log(err);
+          } else {
+            Files[Name]['Data'] = ''; //Reset The Buffer
+            var Place = Files[Name]['Downloaded'] / 524288;
+            var Percent =
+              (Files[Name]['Downloaded'] / Files[Name]['FileSize']) * 100;
+            socket.emit('MoreData', { Place: Place, Percent: Percent });
+          }
         }
       );
     } else {
-      console.log('99999999999999999999999', Name);
-
+      //-------------------- if the file Size More Than 10485760 creat a handler and then cut the chunk a part ------------------//
       var Place = Files[Name]['Downloaded'] / 524288;
       var Percent = (Files[Name]['Downloaded'] / Files[Name]['FileSize']) * 100;
-      console.log(
-        '99999999999999999999999',
-        Name,
-        Place,
-        Percent
-        // Files[Name]['Downloaded']
-      );
       socket.emit('MoreData', { Place: Place, Percent: Percent });
     }
   });
 
   //----------------------------------------------------------------------------------------------//
-
-  //-----------------------------------------------------------------------------------//
-
-  // socket.on('MoreData', function (data) {
-  //   UpdateBar(data['Percent']);
-  //   var Place = data['Place'] * 524288; //The Next Blocks Starting Position
-  //   var NewFile; //The Variable that will hold the new Block of Data
-  //   // if (SelectedFile.webkitSlice)
-  //   //   NewFile = SelectedFile.webkitSlice(
-  //   //     Place,
-  //   //     Place + Math.min(524288, SelectedFile.size - Place)
-  //   //   );
-  //   // else
-  //   //   NewFile = SelectedFile.mozSlice(
-  //   //     Place,
-  //   //     Place + Math.min(524288, SelectedFile.size - Place)
-  //   //   );
-  //   FReader.readAsBinaryString(NewFile);
-  // });
 });
-
-var d = 0;
-const getApiAndEmit = async (socket) => {
-  socket.emit('FromAPI', d++);
-};
-
-//--------------------------------//
 
 const messaging = require('./send');
 const creatChartjson = require('../db/CreatChartJSON');
