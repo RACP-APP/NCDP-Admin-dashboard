@@ -21,6 +21,7 @@ class UploadingItem extends React.Component {
       name: '',
       uploaded: 0,
       SelectedFile: null,
+      isUploading: false,
     };
   }
 
@@ -99,8 +100,12 @@ class UploadingItem extends React.Component {
       FReader.onload = function (evnt) {
         socket.emit('Upload', { Name: Name, Data: evnt.target.result });
       };
-
-      socket.emit('Start', { Name: Name, Size: that.state.SelectedFile.size });
+      that.setState({ isUploading: true }, () => {
+        socket.emit('Start', {
+          Name: Name,
+          Size: that.state.SelectedFile.size,
+        });
+      });
       // FReader.readAsArrayBuffer(this.state.file);
     } else {
       alert('Please Select A File');
@@ -122,29 +127,37 @@ class UploadingItem extends React.Component {
   }
   render() {
     return (
-      <div id="UploadBox">
-        <h2>Video Uploader</h2>
-        <span id="UploadArea">
-          <label for="FileBox">Choose A File: </label>
-          <input type="file" id="FileBox" onChange={this.onChange.bind(this)} />
-          <br />
-          <label for="NameBox">Name: </label>
-          <input
-            type="text"
-            id="NameBox"
-            onChange={this.setThName.bind(this)}
-          />
-          <br />
-          <button
-            type="button"
-            id="UploadButton"
-            class="Button"
-            onClick={this.onClick.bind(this)}
-          >
-            Upload
-          </button>
-        </span>
-        <Progress percent={this.state.uploaded} autoSuccess />
+      <div>
+        <div id="UploadBox" className="row">
+          <span id="UploadArea" style={{ maxWidth: '200px' }}>
+            <label for="FileBox">Choose A File: </label>
+            <input
+              type="file"
+              id="FileBox"
+              onChange={this.onChange.bind(this)}
+            />
+            <br />
+            <label for="NameBox">Name: </label>
+            <input
+              type="text"
+              disabled
+              id="NameBox"
+              onChange={this.setThName.bind(this)}
+            />
+            <br />
+            <button
+              type="button"
+              id="UploadButton"
+              class="Button"
+              onClick={this.onClick.bind(this)}
+            >
+              Upload
+            </button>
+          </span>
+        </div>
+        {this.state.isUploading ? (
+          <Progress percent={this.state.uploaded} autoSuccess />
+        ) : null}
       </div>
     );
   }
