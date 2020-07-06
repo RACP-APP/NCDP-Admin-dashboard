@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Resizer from 'react-image-file-resizer';
 import { Progress, Popup } from 'semantic-ui-react';
+import axios from 'axios';
+import config from '../config.json';
 
 import firebase from 'firebase';
 
@@ -63,52 +65,61 @@ class ImageUpload extends Component {
             () => {
               var ref;
               if (this.state.name !== null) {
-                ref = firebase
-                  .storage()
-                  .ref()
-                  .child(this.state.name)
-                  .child(file.name);
+                // ref = firebase
+                axios
+                  .post(config[0].server + 'UploadingImage', {
+                    name: file.name,
+                    type: file.type.substring(file.type.indexOf('/') + 1),
+                    data: uri,
+                  })
+                  .then((result) => {
+                    console.log('done');
+                  });
+                //   .storage()
+                //   .ref()
+                //   .child(this.state.name)
+                //   .child(file.name);
               } else {
-                ref = firebase.storage().ref().child(file.name);
+                // ref = firebase.storage().ref().child(file.name);
               }
 
-              var uploadTask = ref.putString(
-                uri.substring(uri.indexOf(',') + 1),
-                'base64',
-                {
-                  contentType: file.type,
-                }
-              );
+              // var uploadTask = ref.putString(
+              //   uri.substring(uri.indexOf(',') + 1),
+              //   'base64',
+              //   {
+              //     contentType: file.type,
+              //   }
+              // );
 
-              uploadTask.on('state_changed', function (snapshot) {
-                var progress =
-                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              // uploadTask.on('state_changed', function (snapshot) {
+              //   var progress =
+              //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-                console.log(that.state.statuse, 'statuse');
-                if (progress === 0) {
-                  that.onUploadStart(progress);
-                  that.setState({ statuse: progress });
-                }
-                if (progress > 0 && progress < 100) {
-                  that.onProgress(progress);
-                  that.setState({ statuse: progress });
-                }
-                if (progress) {
-                  ref.getDownloadURL().then((downlodurl) => {
-                    that.setState(
-                      {
-                        imageurl: downlodurl,
-                        statuse: 100,
-                      },
-                      () => {
-                        that.onUploadSuccess(progress);
-                        console.log(downlodurl);
-                        that.UpdateState(downlodurl);
-                      }
-                    );
-                  });
-                }
-              });
+              //   console.log(that.state.statuse, 'statuse');
+              //   if (progress === 0) {
+              //     that.onUploadStart(progress);
+              //     that.setState({ statuse: progress });
+              //   }
+              //   if (progress > 0 && progress < 100) {
+              //     that.onProgress(progress);
+              //     that.setState({ statuse: progress });
+              //   }
+              //   if (progress) {
+              //     ref.getDownloadURL().then((downlodurl) => {
+              //       that.setState(
+              //         {
+              //           imageurl: downlodurl,
+              //           statuse: 100,
+              //         },
+              //         () => {
+              //           that.onUploadSuccess(progress);
+              //           console.log(downlodurl);
+              //           that.UpdateState(downlodurl);
+              //         }
+              //       );
+              //     });
+              //   }
+              // });
               // .then((snapshot) => {
 
               // });

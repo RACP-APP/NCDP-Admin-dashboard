@@ -719,7 +719,6 @@ class ContentViwer extends React.Component {
                       <form method="post" action="#" id="#" className="border ">
                         <div className="form-group files">
                           <label>
-                            <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
                             <UploadingVedio
                               accept=".WAV, .MP4, .MP3 ,  .m4a, .3gp, .aa ,.aac, .aax , .act,.aiff ,.amr,.webm, .vox,.ra,.opus,.wma ,.mpc ,.ogg, .oga, .mogg,.raw,.sln,.voc,.vox,.8svx "
                               returnTheLink={this.returnTheLinkforAdio.bind(
