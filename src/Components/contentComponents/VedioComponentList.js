@@ -6,6 +6,14 @@ import $ from 'jquery';
 import firebase from 'firebase';
 import { Table } from 'semantic-ui-react';
 import ErrorDialog from '../../Components/ErroeDialog';
+import io from 'socket.io';
+import socketIOClient from 'socket.io-client';
+var FReader;
+var Name;
+const ENDPOINT = 'http://162.247.76.211:3000/';
+var SelectedFile;
+var socket;
+var that;
 
 class VedioConmponent extends React.Component {
   constructor(props) {
@@ -22,21 +30,9 @@ class VedioConmponent extends React.Component {
 
   DeleteMedia(e) {
     var mediaID = e.target.id;
-    var linkref = firebase.storage().refFromURL($(e.target).attr('data-link'));
+    socket.emit('delete', { mediaID });
+    // var linkref = firebase.storage().refFromURL($(e.target).attr('data-link'));
     var id = e.target.id;
-    var that = this;
-    linkref
-      .delete()
-      .then(() => {
-        console.log('don');
-      })
-      .catch((error) => {
-        this.setState({
-          ErrorMessage: error.response.data,
-          open: true,
-        });
-        console.log('none');
-      });
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {
@@ -71,6 +67,15 @@ class VedioConmponent extends React.Component {
       });
   }
 
+  componentDidMount() {
+    that = this;
+    socket = socketIOClient(ENDPOINT, {
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      reconnectionAttempts: 5,
+    });
+  }
   render() {
     return (
       <div className="row ">
@@ -86,16 +91,56 @@ class VedioConmponent extends React.Component {
                   <Table.Body>
                     <Table.Row>
                       <Table.Cell>
-                        <span> {link['MediaID']}</span>
+                        <span> {link['MediaOrder']}</span>
                       </Table.Cell>
                       <Table.Cell>
-                        <div class="embed-responsive embed-responsive-16by9">
+                        <video
+                          width="110px"
+                          height="50px"
+                          autobuffer="autobuffer"
+                          autoPlay=""
+                          loop="loop"
+                          controls="controls"
+                          poster="/_img/videostill.jpg"
+                        >
+                          <source
+                            src={link['MediaLink'].toString()}
+                            type='video/mp4; codecs="amp4v.20.8, mp4a.40.2"'
+                          />
+                          <source
+                            src={link['MediaLink'].toString()}
+                            type='video/mp4; codecs="amp4v.20.8, mp4a.40.2"'
+                          />
+                          <source
+                            src={link['MediaLink'].toString()}
+                            type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
+                          />
+                          <source
+                            src={link['MediaLink'].toString()}
+                            type='video/ogg; codecs="theora, vorbis"'
+                          />
+                          unsported vedio
+                        </video>
+                        {/* <div
+                          class="jsmpeg"
+                          style={{ width: '200px', height: '50px' }}
+                          data-url={link['MediaLink'].toString()}
+                        ></div> */}
+                        {/* <embed
+                          type="application/x-vlc-plugin"
+                          pluginspage="http://www.videolan.org"
+                          width="640"
+                          height="480"
+                          src={link['MediaLink'].toString()}
+                          id="vlc"
+                        ></embed> */}
+                        {/* <div class="embed-responsive embed-responsive-16by9">
                           <iframe
                             class="embed-responsive-item"
                             src={link['MediaLink'].toString()}
                             allowfullscreen
                           ></iframe>
-                        </div>
+                        </div> */}
                       </Table.Cell>
                       <Table.Cell>
                         <span

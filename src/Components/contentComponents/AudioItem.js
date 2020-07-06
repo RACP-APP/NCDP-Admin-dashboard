@@ -27,23 +27,23 @@ class AudioPlayerContent extends React.Component {
   }
 
   DeleteMedia(e) {
-    var linkref = firebase.storage().refFromURL($(e.target).attr('data-link'));
-    var id = e.target.id;
-    linkref
-      .delete()
-      .then(() => {
-        this.setState({
-          open: false,
-          ErrorMessage: '',
-        });
-      })
-      .catch((error) => {
-        console.log('none');
-        this.setState({
-          open: true,
-          ErrorMessage: error.response.data,
-        });
-      });
+    // var linkref = firebase.storage().refFromURL($(e.target).attr('data-link'));
+    // var id = e.target.id;
+    // linkref
+    //   .delete()
+    //   .then(() => {
+    //     this.setState({
+    //       open: false,
+    //       ErrorMessage: '',
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log('none');
+    //     this.setState({
+    //       open: true,
+    //       ErrorMessage: error.response.data,
+    //     });
+    //   });
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {
@@ -90,6 +90,9 @@ class AudioPlayerContent extends React.Component {
                       <span className="ItemIcons">{link['MediaOrder']}</span>
                     </Table.Cell>
                     <Table.Cell>
+                      {/* <audio className="audio-element">
+                        <source src={link['MediaLink']}></source>
+                      </audio> */}
                       <PlayAudio
                         url={link['MediaLink']}
                         colorScale={colorScale}

@@ -3,7 +3,8 @@ import '../../css/component.css';
 import '../../css/buttonStyles.css';
 import io from 'socket.io';
 import socketIOClient from 'socket.io-client';
-import { Progress } from 'semantic-ui-react';
+import { Button, Header, Image, Modal, Progress } from 'semantic-ui-react';
+
 var FReader;
 var Name;
 const ENDPOINT = 'http://localhost:3000/';
@@ -22,21 +23,48 @@ class UploadingItem extends React.Component {
       uploaded: 0,
       SelectedFile: null,
       isUploading: false,
+      open: false,
+      accept:
+        this.props.accept ||
+        '.WEBM,  .MPEG,  .MPV, .OGG, .MP4 ,.M4P, .M4V ,.MOV,.AVCHD  ',
     };
   }
 
+  returnTheLink(link) {
+    that.props.returnTheLink(link);
+  }
   componentDidMount() {
     that = this;
-    socket = socketIOClient(ENDPOINT);
-    var Path = 'http://localhost/public/uploads';
+    socket = socketIOClient(ENDPOINT, {
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      reconnectionAttempts: 5,
+    });
 
+    //----------------------------------------------------Socket.io on Error ----------------------------------------------------------//
+    socket.on('error', function (data) {
+      console.log('an Error Accured');
+      var Content = 'Error';
+
+      document.getElementById('UploadArea').innerHTML = Content;
+
+      // document.getElementById('Restart').addEventListener('click', Refresh);
+    });
+
+    var Path = 'http://localhost/public/uploads';
+    //-----------------------------------------------------Socket.io Disconnected from Client Side --------------------------------------//
+    socket.on('disconnect', () => {
+      console.log('disconnected from client');
+    });
     //------------------------------------------------------- Socket.io Done Event -------------------------------------------------------//
     socket.on('Done', function (data) {
-      console.log('On Done Event');
       var Content = 'Video Successfully Uploaded !!';
 
       document.getElementById('UploadArea').innerHTML = Content;
-      that.setState({ uploaded: 100 });
+      that.setState({ uploaded: 100 }, () => {
+        that.returnTheLink(that.state.SelectedFile.name);
+      });
       // document.getElementById('Restart').addEventListener('click', Refresh);
     });
 
@@ -48,7 +76,7 @@ class UploadingItem extends React.Component {
       var MBDone = Math.round(
         ((percent / 100.0) * SelectedFile.size) / 1048576
       );
-      that.setState({ uploaded: MBDone }, () => {
+      that.setState({ uploaded: Math.round(percent * 100) / 100 }, () => {
         document.getElementById('MB').innerHTML = MBDone;
       });
     };
@@ -66,9 +94,7 @@ class UploadingItem extends React.Component {
       } else if (that.state.SelectedFile.slice) {
         NewFile = SelectedFile.slice(
           Place,
-          Place +
-            Math.min(524288, that.state.SelectedFile.size - data['Place']),
-          'png'
+          Place + Math.min(524288, that.state.SelectedFile.size - data['Place'])
         );
       } else if (that.state.SelectedFile.mozSlice) {
         NewFile = that.state.SelectedFile.mozSlice(
@@ -106,7 +132,6 @@ class UploadingItem extends React.Component {
           Size: that.state.SelectedFile.size,
         });
       });
-      // FReader.readAsArrayBuffer(this.state.file);
     } else {
       alert('Please Select A File');
     }
@@ -114,8 +139,12 @@ class UploadingItem extends React.Component {
 
   setThName(e) {
     console.log(e.target.value);
-
-    // this.setState({ name: e.target.value });
+  }
+  close(e) {
+    console.log('colosing');
+    this.setState({
+      open: false,
+    });
   }
   onChange(evnt) {
     SelectedFile = evnt.target.files[0];
@@ -127,37 +156,112 @@ class UploadingItem extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div id="UploadBox" className="row">
-          <span id="UploadArea" style={{ maxWidth: '200px' }}>
-            <label for="FileBox">Choose A File: </label>
-            <input
-              type="file"
-              id="FileBox"
-              onChange={this.onChange.bind(this)}
-            />
-            <br />
-            <label for="NameBox">Name: </label>
-            <input
-              type="text"
-              disabled
-              id="NameBox"
-              onChange={this.setThName.bind(this)}
-            />
-            <br />
-            <button
-              type="button"
-              id="UploadButton"
-              class="Button"
-              onClick={this.onClick.bind(this)}
-            >
-              Upload
-            </button>
-          </span>
-        </div>
-        {this.state.isUploading ? (
-          <Progress percent={this.state.uploaded} autoSuccess />
-        ) : null}
+      <div
+        style={{
+          maxHeight: '250px',
+          left: 0,
+          right: 0,
+          margin: 'auto',
+          overflow: 'auto',
+        }}
+      >
+        <Modal
+          closeOnDimmerClick={false}
+          closeOnEscape={true}
+          style={{
+            maxHeight: '250px',
+            left: 0,
+            right: 0,
+            margin: 'auto',
+            overflow: 'auto',
+          }}
+          trigger={
+            <span
+              className="glyphicon glyphicon-upload ItemIcons
+              imageUploadingSpan"
+              onClick={() => {
+                this.setState({ open: true });
+              }}
+            ></span>
+          }
+          open={this.state.open}
+          size="mini"
+          dimmer="blurring"
+        >
+          <Modal.Content>
+            <Modal.Description>
+              <Header>تحميل فيديو جديد </Header>
+
+              <div id="UploadBox" className="row">
+                <span
+                  id="UploadArea"
+                  style={{ maxWidth: '200px', maxHeight: '300px' }}
+                >
+                  <label>
+                    <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan">
+                      <input
+                        accept={this.state.accept}
+                        hidden
+                        type="file"
+                        id="FileBox"
+                        onChange={this.onChange.bind(this)}
+                      />
+                    </span>
+                  </label>
+
+                  <label for="FileBox">Choose A File: </label>
+
+                  <br />
+                  <label for="NameBox">Name: </label>
+
+                  <input
+                    type="text"
+                    disabled
+                    id="NameBox"
+                    onChange={this.setThName.bind(this)}
+                  />
+                  <br />
+                  <div className="row">
+                    <Button
+                      type="button"
+                      id="UploadButton"
+                      class="Button"
+                      onClick={this.onClick.bind(this)}
+                    >
+                      Upload
+                    </Button>
+                    <Button
+                      type="button"
+                      id="UploadButton"
+                      class="Button"
+                      onClick={() => {
+                        this.setState({ open: false });
+                      }}
+                    >
+                      Cancle
+                    </Button>
+                  </div>
+                </span>
+              </div>
+              <div
+                style={{
+                  maxHeight: '250px',
+                  left: 0,
+                  right: 0,
+                  margin: 'auto',
+                  overflow: 'auto',
+                }}
+              >
+                {this.state.isUploading ? (
+                  <Progress percent={this.state.uploaded} autoSuccess />
+                ) : null}
+                {this.state.uploaded === 100 ? (
+                  <Button onClick={this.close.bind(this)}>حفظ</Button>
+                ) : null}
+              </div>
+            </Modal.Description>
+          </Modal.Content>
+        </Modal>
       </div>
     );
   }

@@ -101,6 +101,8 @@ class App extends React.Component {
 
   //------------------------------------------------------------------------------------------//
 
+  //------------------------------------------------------------------------------------------//
+
   UpdateNotificationCount() {
     xaios
       .get(config[0].server + 'Articles/getNotificationCount')
@@ -116,7 +118,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {/* <div className="Mainheader">
+        <div className="Mainheader">
           <TopHeader
             counter={this.state.counter}
             loggedIn={this.state.LoggetIn}
@@ -169,9 +171,8 @@ class App extends React.Component {
           </Router>
         </div>
 
-       
-        <Footer /> */}
-        <Uploading></Uploading>
+        <Footer />
+        {/* <Uploading returnTheLink={this.returnTheLink.bind(this)}></Uploading> */}
       </div>
     );
     // return <D></D>;

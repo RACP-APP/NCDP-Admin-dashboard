@@ -16,6 +16,7 @@ import ImageFileUploader from '../Components/uploadimage';
 import ErrorDialog from '../Components/ErroeDialog';
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';
+import UploadingVedio from '../Components/Uploading/Uploading';
 import { Segment, Button, Table, Grid, Responsive } from 'semantic-ui-react';
 
 class ContentViwer extends React.Component {
@@ -394,6 +395,7 @@ class ContentViwer extends React.Component {
       });
   };
   onVedioSucsessHandler = () => {
+    // var d = returnTheLink;
     var path = this.state.vedioURL;
 
     var order =
@@ -435,6 +437,61 @@ class ContentViwer extends React.Component {
     );
   }
 
+  returnTheLink(link) {
+    var vedioName = link;
+    console.log(vedioName);
+
+    var path = this.state.vedioURL;
+    var path = config[0].server + 'public/uploads/' + vedioName;
+
+    var order =
+      this.state.MediaContent.length + this.state.TextContent.length + 1;
+    axios
+      .post(config[0].server + 'Articles/InsertMedia', {
+        ContentID: this.props.data['contentID'],
+        MediaLink: path,
+        MediaOrder: order,
+        MediaType: 'vedio',
+      })
+      .then((reslt) => {
+        this.getAllMedia();
+        this.props.UpdateNotification();
+      })
+      .catch((error) => {
+        this.setState({
+          errorMessage: error.response.data,
+          loading: false,
+          open: true,
+        });
+      });
+  }
+
+  returnTheLinkforAdio(link) {
+    var audioURL = link;
+    console.log(audioURL);
+
+    var path = config[0].server + 'public/uploads/' + audioURL;
+
+    var order =
+      this.state.MediaContent.length + this.state.TextContent.length + 1;
+    axios
+      .post(config[0].server + 'Articles/InsertMedia', {
+        ContentID: this.props.data['contentID'],
+        MediaLink: path,
+        MediaOrder: order,
+        MediaType: 'audio',
+      })
+      .then((reslt) => {
+        this.getAllMedia();
+        this.props.UpdateNotification();
+      })
+      .catch((error) => {
+        this.setState({
+          open: true,
+          errorMessage: error.response.data,
+        });
+      });
+  }
   render() {
     return (
       <div style={{ minWidth: '100%' }} dir="rtl">
@@ -606,13 +663,16 @@ class ContentViwer extends React.Component {
                     data-parent="#accordionExample"
                   >
                     <div className="card-body">
-                      <form method="post" action="#" id="#" className="border ">
+                      <UploadingVedio
+                        returnTheLink={this.returnTheLink.bind(this)}
+                      ></UploadingVedio>
+                      {/* <form method="post" action="#" id="#" className="border ">
                         <div className="form-group files">
                           <label>
                             <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
                             <FileUploader
                               hidden
-                              accept=".WEBM, .MPG, .MPEG,  .MPV, .OGG, .MP4 ,.M4P, .M4V ,.MOV,.AVCHD "
+                              accept=".WEBM, .MPG, .MPEG,  .MPV, .OGG, .MP4 ,.M4P, .M4V ,.MOV,.AVCHD  ,.wmv"
                               name="image"
                               storageRef={firebase
                                 .storage()
@@ -623,7 +683,7 @@ class ContentViwer extends React.Component {
                             ></FileUploader>
                           </label>
                         </div>
-                      </form>
+                      </form> */}
                       {/* ///////////////////////////////// /vEDIO //////////////////////////////////////// */}
                       <div className="row">
                         <VedioConmponent
@@ -660,7 +720,13 @@ class ContentViwer extends React.Component {
                         <div className="form-group files">
                           <label>
                             <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
-                            <FileUploader
+                            <UploadingVedio
+                              accept=".WAV, .MP4, .MP3 ,  .m4a, .3gp, .aa ,.aac, .aax , .act,.aiff ,.amr,.webm, .vox,.ra,.opus,.wma ,.mpc ,.ogg, .oga, .mogg,.raw,.sln,.voc,.vox,.8svx "
+                              returnTheLink={this.returnTheLinkforAdio.bind(
+                                this
+                              )}
+                            ></UploadingVedio>
+                            {/* <FileUploader
                               hidden
                               accept=".WAV, .MP4, .MP3 ,  .m4a, .3gp, .aa ,.aac, .aax , .act,.aiff ,.amr,.webm, .vox,.ra,.opus,.wma ,.mpc ,.ogg, .oga, .mogg,.raw,.sln,.voc,.vox,.8svx "
                               name="image"
@@ -672,7 +738,7 @@ class ContentViwer extends React.Component {
                               onUploadSuccess={this.AudiohandelSucces.bind(
                                 this
                               )}
-                            ></FileUploader>
+                            ></FileUploader> */}
                           </label>
                         </div>
                       </form>

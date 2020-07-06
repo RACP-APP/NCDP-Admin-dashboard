@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
   var Files = [];
 
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    console.log(' disconnected from Server');
   });
 
   //----------------------------------------------------------------------------------------------//
@@ -49,11 +49,13 @@ io.on('connection', (socket) => {
         Place = Stat.size / 524288;
       }
     } catch (er) {
-      console.log('error', er);
+      // socket.emit('error', { error: er });
+      // socket.socket.reconnect();
     } //It's a New File
+
     fs.open('public/uploads/' + Name, 'a', function (err, fd) {
       if (err) {
-        console.log(err);
+        socket.emit('error', { error: er });
       } else {
         Files[Name]['Handler'] = fd; //We store the file handler so we can write to it later
         socket.emit('MoreData', {
@@ -69,6 +71,16 @@ io.on('connection', (socket) => {
   //------------------------------------------into chunks and then upload each cunk a lone -----------------------------------//
   //--------------------------------------------------------------------------------------------------------------------------//
 
+  socket.on('delete', (data) => {
+    console.log('deleting');
+    fs.unlink('public/uploads/HarvardXCS50W-V000100_DTH.mp4', function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('dooooooooooooon deleteing');
+      }
+    });
+  });
   socket.on('Upload', function (data) {
     console.log('uploading -----------------------');
 
@@ -90,7 +102,7 @@ io.on('connection', (socket) => {
 
             socket.emit('Done', { Image: 'public/' + Name + '.jpg' });
           } else {
-            console.log('an Error Has Accured', err);
+            socket.emit('error', { error: er });
           }
         }
       );
@@ -104,7 +116,7 @@ io.on('connection', (socket) => {
         'Binary',
         function (err, Writen) {
           if (err) {
-            console.log(err);
+            socket.emit('error', { error: er });
           } else {
             Files[Name]['Data'] = ''; //Reset The Buffer
             var Place = Files[Name]['Downloaded'] / 524288;
@@ -115,7 +127,7 @@ io.on('connection', (socket) => {
         }
       );
     } else {
-      //-------------------- if the file Size More Than 10485760 creat a handler and then cut the chunk a part ------------------//
+      //-------------------- if the file Size smaller Than 10485760 creat a handler and then cut the file into chunks ------------------//
       var Place = Files[Name]['Downloaded'] / 524288;
       var Percent = (Files[Name]['Downloaded'] / Files[Name]['FileSize']) * 100;
       socket.emit('MoreData', { Place: Place, Percent: Percent });
@@ -135,6 +147,7 @@ app.use('/public', express.static(cssPath));
 app.use(express.static(path.join(__dirname, '../build')));
 app.use(favicon(__dirname + '../build/favicon.ico'));
 var multer = require('multer');
+const { thatReturns } = require('react-simple-audio-player');
 var upload = multer({ dest: 'uploads/' });
 
 // app.get('/contactus', (req, res) => {
