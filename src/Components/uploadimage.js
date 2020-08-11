@@ -3,17 +3,19 @@ import Resizer from 'react-image-file-resizer';
 import { Progress, Popup } from 'semantic-ui-react';
 import axios from 'axios';
 import config from '../config.json';
-
-import firebase from 'firebase';
+import ErroeDialog from './ErroeDialog';
 
 class ImageUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      size: this.props.size || 150,
       imageurl: '',
       accept: this.props.accept,
       name: this.props.name || null,
       statuse: 0,
+      ErrorMessage: '',
+      open: false,
     };
     this.fileChangedHandler = this.fileChangedHandler.bind(this);
     this.onUploadStart = this.onUploadStart.bind(this);
@@ -21,22 +23,18 @@ class ImageUpload extends Component {
     this.onProgress = this.onProgress.bind(this);
   }
 
-  UpdateState(url) {
-    // this.props.UpdateState(url);
-  }
   onUploadStart(e) {
     this.props.onUploadStart(e);
-    console.log(e, 'start');
   }
 
   onUploadSuccess(e) {
+    console.log(this.state.imageurl);
+
     this.props.onUploadSuccess(this.state.imageurl);
-    console.log(e, 'seussed');
   }
 
   onProgress(e) {
     this.props.onProgress(e);
-    console.log(e, 'onPrograss');
   }
 
   fileChangedHandler(event) {
@@ -46,14 +44,12 @@ class ImageUpload extends Component {
     if (event.target.files[0]) {
       fileInput = true;
       file = event.target.files[0];
-      console.log(file);
     }
     if (fileInput) {
-      console.log(file);
       Resizer.imageFileResizer(
         event.target.files[0],
-        150,
-        150,
+        that.state.size,
+        that.state.size,
         file.type.substring(file.type.indexOf('/') + 1),
         100,
         0,
@@ -73,59 +69,33 @@ class ImageUpload extends Component {
                     data: uri,
                   })
                   .then((result) => {
-                    console.log('done');
+                    that.setState(
+                      {
+                        imageurl:
+                          config[0].server +
+                          'public/uploads/Images/' +
+                          file.name,
+                        statuse: 100,
+                      },
+                      () => {
+                        that.onUploadSuccess(100);
+                      }
+                    );
+                  })
+                  .catch((error) => {
+                    this.setState({
+                      open: true,
+                      ErrorMessage: error.response.data,
+                    });
                   });
-                //   .storage()
-                //   .ref()
-                //   .child(this.state.name)
-                //   .child(file.name);
               } else {
-                // ref = firebase.storage().ref().child(file.name);
+                this.setState({
+                  open: true,
+                  ErrorMessage: 'الرجاء اخيار صورة ',
+                });
               }
-
-              // var uploadTask = ref.putString(
-              //   uri.substring(uri.indexOf(',') + 1),
-              //   'base64',
-              //   {
-              //     contentType: file.type,
-              //   }
-              // );
-
-              // uploadTask.on('state_changed', function (snapshot) {
-              //   var progress =
-              //     (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-              //   console.log(that.state.statuse, 'statuse');
-              //   if (progress === 0) {
-              //     that.onUploadStart(progress);
-              //     that.setState({ statuse: progress });
-              //   }
-              //   if (progress > 0 && progress < 100) {
-              //     that.onProgress(progress);
-              //     that.setState({ statuse: progress });
-              //   }
-              //   if (progress) {
-              //     ref.getDownloadURL().then((downlodurl) => {
-              //       that.setState(
-              //         {
-              //           imageurl: downlodurl,
-              //           statuse: 100,
-              //         },
-              //         () => {
-              //           that.onUploadSuccess(progress);
-              //           console.log(downlodurl);
-              //           that.UpdateState(downlodurl);
-              //         }
-              //       );
-              //     });
-              //   }
-              // });
-              // .then((snapshot) => {
-
-              // });
             }
           );
-          console.log(uri);
         },
         'base64'
       );
@@ -135,13 +105,22 @@ class ImageUpload extends Component {
   render() {
     return (
       <div>
+        <ErroeDialog
+          open={this.state.open}
+          ErrorMessage={this.state.errorMessage}
+        ></ErroeDialog>
         <Popup
           content="click to Upload your Photo"
           trigger={
             <label>
               <span className="glyphicon glyphicon-upload  ItemIcons imageUploadingSpan"></span>
 
-              <input hidden type="file" onChange={this.fileChangedHandler} />
+              <input
+                hidden
+                type="file"
+                accept={this.props.sccept}
+                onChange={this.fileChangedHandler}
+              />
               {!this.state.statuse ? null : (
                 <Progress percent={this.state.statuse} autoSuccess />
               )}

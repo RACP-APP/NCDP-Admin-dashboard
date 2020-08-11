@@ -3,7 +3,7 @@ import '../css/component.css';
 import '../css/buttonStyles.css';
 import config from '../config.json';
 import axios from 'axios';
-import UploadResources from './Upload';
+import UploadResources from './uploadimage';
 class AddArticales extends React.Component {
   constructor(props) {
     super(props);
@@ -85,7 +85,13 @@ class AddArticales extends React.Component {
 
           <div className="col-sm-2">
             <div className="row">
-              <UploadResources restricts={'images'}></UploadResources>
+              {/* <UploadResources
+                accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
+                name="images"
+                size={80}
+                onUploadStart={this.handelloadStart.bind(this)}
+                onUploadSuccess={this.handelSucces.bind(this)}
+              ></UploadResources> */}
             </div>
           </div>
           <div className="col-sm-2 ">

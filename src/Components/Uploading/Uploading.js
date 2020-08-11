@@ -16,6 +16,7 @@ class UploadingItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: null,
       io: io.conn,
       response: 'rrrrrrrrrr',
       file: null,
@@ -30,18 +31,35 @@ class UploadingItem extends React.Component {
     };
   }
 
+  
   returnTheLink(link) {
-    that.props.returnTheLink(link);
+    console.log(that.props.type);
+    if (that.props.type === 'v') {
+      that.props.returnTheLink(link);
+    } else {
+      that.props.returnTheLinkforAdio(link);
+    }
   }
   componentDidMount() {
+    console.log(
+      this.props.returnTheLink,
+      '000000000000000000000000000000000000000000'
+    );
     that = this;
     socket = socketIOClient(ENDPOINT, {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
       reconnectionAttempts: 5,
+      transports: ['websocket'],
     });
 
+    // on reconnection, reset the transports option, as the Websocket
+    // connection may have failed (caused by proxy, firewall, browser, ...)
+    socket.on('reconnect_attempt', () => {
+      // socket.io.opts.transports = ['polling', 'websocket'];
+      socket.emit('reconnect', that.state.data);
+    });
     //----------------------------------------------------Socket.io on Error ----------------------------------------------------------//
     socket.on('error', function (data) {
       console.log('an Error Accured');
@@ -52,7 +70,7 @@ class UploadingItem extends React.Component {
       // document.getElementById('Restart').addEventListener('click', Refresh);
     });
 
-    var Path = 'http://localhost/public/uploads';
+    var Path = 'http://localhost:3000//public/uploads';
     //-----------------------------------------------------Socket.io Disconnected from Client Side --------------------------------------//
     socket.on('disconnect', () => {
       console.log('disconnected from client');
@@ -60,7 +78,6 @@ class UploadingItem extends React.Component {
     //------------------------------------------------------- Socket.io Done Event -------------------------------------------------------//
     socket.on('Done', function (data) {
       var Content = 'Video Successfully Uploaded !!';
-
       document.getElementById('UploadArea').innerHTML = Content;
       that.setState({ uploaded: 100 }, () => {
         that.returnTheLink(that.state.SelectedFile.name);
@@ -83,6 +100,7 @@ class UploadingItem extends React.Component {
 
     //----------------------- An io.soket Event to Create Block of Date from the Large file if the file is big ---------------------------//
     socket.on('MoreData', function (data) {
+      this.setState({ data: data });
       UpdateBar(data['Percent']);
       var Place = data['Place'] * 524288; //The Next Blocks Starting Position
       var NewFile = Blob; //The Variable that will hold the new Block of Data
@@ -127,10 +145,16 @@ class UploadingItem extends React.Component {
         socket.emit('Upload', { Name: Name, Data: evnt.target.result });
       };
       that.setState({ isUploading: true }, () => {
-        socket.emit('Start', {
-          Name: Name,
-          Size: that.state.SelectedFile.size,
-        });
+        socket.emit(
+          'Start',
+          {
+            Name: Name,
+            Size: that.state.SelectedFile.size,
+          },
+          () => {
+            console.log(that.state.isUploading, 'start Uploading');
+          }
+        );
       });
     } else {
       alert('Please Select A File');
@@ -149,10 +173,16 @@ class UploadingItem extends React.Component {
   onChange(evnt) {
     SelectedFile = evnt.target.files[0];
     document.getElementById('NameBox').value = SelectedFile.name;
-    this.setState({
-      name: SelectedFile.name,
-      SelectedFile: SelectedFile,
-    });
+    console.log(SelectedFile.name);
+    that.setState(
+      {
+        name: SelectedFile.name,
+        SelectedFile: SelectedFile,
+      },
+      () => {
+        console.log(that.state.name);
+      }
+    );
   }
   render() {
     return (
@@ -216,7 +246,6 @@ class UploadingItem extends React.Component {
 
                   <input
                     type="text"
-                    disabled
                     id="NameBox"
                     onChange={this.setThName.bind(this)}
                   />

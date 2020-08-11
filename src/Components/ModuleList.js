@@ -5,7 +5,7 @@ import axios from 'axios';
 import config from '../config.json';
 import ImageFileUploader from '../Components/uploadimage';
 import ErrorDialog from '../Components/ErroeDialog';
-import { Button, Card, Image, Progress } from 'semantic-ui-react';
+import { Button, Card, Image, Popup, Grid } from 'semantic-ui-react';
 
 import $ from 'jquery';
 
@@ -45,7 +45,9 @@ class ModuleList extends React.Component {
     this.setState({ url: e });
   }
   UpdateNavegation(e) {
+    console.log('onClick');
     var id =
+      this.props.model['ModelID'] ||
       parseInt(e.currentTarget.id) ||
       parseInt($(e.currentTarget).attr('data-id'));
 
@@ -56,6 +58,7 @@ class ModuleList extends React.Component {
   //--------------------------------------------------------------------------//
 
   goToTopics(e) {
+    console.log('555555555555555555555555555555555');
     this.UpdateNavegation(e);
 
     var id =
@@ -157,73 +160,97 @@ class ModuleList extends React.Component {
   render() {
     if (!this.state.editMod) {
       return (
-        <Card
-          style={{ maxWidth: '210px' }}
-          color="blue"
-          key="ModelID"
-          data-name={this.props.model['Title']}
-          id={this.props.model['ModelID']}
-          className="ModuleCrd "
-          onDoubleClick={this.goToTopics.bind(this)}
-          onClick={this.UpdateNavegation.bind(this)}
-        >
-          <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              rounded
-              src={this.props.model['Icon']}
-            />
-            <Card.Header> {this.props.model['Title']}</Card.Header>
-            <Card.Meta> انشأ من قبل : {this.props.model['USERS']}</Card.Meta>
-          </Card.Content>
-
-          <Card.Content extra>
-            <Button.Group basic size="small">
-              <Button
-                icon="folder open"
-                data-id={this.state.modelData['ModelID']}
-                onClick={this.goToTopics.bind(this)}
-              />
-              <Button
-                icon="delete"
-                onClick={(e) => {
-                  this.setState({ Wrnining: !this.state.Wrnining });
-                }}
-              />
-              <Button icon="edit" onClick={this.editModel.bind(this)} />
-            </Button.Group>
-          </Card.Content>
-          <Card.Content extra>
-            {this.state.Wrnining ? (
-              <div>
-                <div className=" row">
-                  <div className="ItemParagraph">
-                    ستؤدي هذه العملية إلى حذف كل مرجع للوحدة النمطية.
-                    <br></br> هل أنت متأكد أنك تريد حذف ذلك ؟
+        <Popup
+          trigger={
+            <Card
+              style={{ maxWidth: '210px' }}
+              color="blue"
+              key="ModelID"
+              data-name={this.props.model['Title']}
+              id={this.props.model['ModelID']}
+              className="ModuleCrd "
+              onDoubleClick={this.goToTopics.bind(this)}
+              onClick={this.UpdateNavegation.bind(this)}
+            >
+              <Card.Content>
+                <Image
+                  floated="right"
+                  size="mini"
+                  rounded
+                  src={this.props.model['Icon']}
+                />
+                <Card.Header> {this.props.model['Title']}</Card.Header>
+                <Card.Meta>
+                  <div>
+                    <div className="row">
+                      <span> انشأ من قبل : {this.props.model['USERS']}</span>
+                    </div>
+                    <div className="row">
+                      <span> رقم :{this.props.model['ModelOrder']}</span>
+                    </div>
                   </div>
-                </div>
+                </Card.Meta>
+              </Card.Content>
 
-                <div className=" row ">
-                  <button
-                    class="btn btn-outline-danger btn-sm btn-sm-cust "
-                    onClick={this.deletMode.bind(this)}
+              <Card.Content extra>
+                <Button.Group basic size="small">
+                  <Popup
+                    trigger={
+                      <Button
+                        icon="folder open"
+                        data-id={this.state.modelData['ModelID']}
+                        onClick={this.UpdateNavegation.bind(this)}
+                        onDoubleClick={this.goToTopics.bind(this)}
+                      />
+                    }
                   >
-                    تأكيد
-                  </button>
-                  <button
-                    class="btn btn-outline-primary btn-sm btn-sm-cust"
+                    <Popup.Content>
+                      DobleClick الرجاء الضغط مرتين لفتح الالموذج
+                    </Popup.Content>
+                  </Popup>
+
+                  <Button
+                    icon="delete"
                     onClick={(e) => {
                       this.setState({ Wrnining: !this.state.Wrnining });
                     }}
-                  >
-                    تراجع
-                  </button>
-                </div>
-              </div>
-            ) : null}
-          </Card.Content>
-        </Card>
+                  />
+                  <Button icon="edit" onClick={this.editModel.bind(this)} />
+                </Button.Group>
+              </Card.Content>
+              <Card.Content extra>
+                {this.state.Wrnining ? (
+                  <div>
+                    <div className=" row">
+                      <div className="ItemParagraph">
+                        ستؤدي هذه العملية إلى حذف كل مرجع للوحدة النمطية.
+                        <br></br> هل أنت متأكد أنك تريد حذف ذلك ؟
+                      </div>
+                    </div>
+
+                    <div className=" row ">
+                      <button
+                        class="btn btn-outline-danger btn-sm btn-sm-cust "
+                        onClick={this.deletMode.bind(this)}
+                      >
+                        تأكيد
+                      </button>
+                      <button
+                        class="btn btn-outline-primary btn-sm btn-sm-cust"
+                        onClick={(e) => {
+                          this.setState({ Wrnining: !this.state.Wrnining });
+                        }}
+                      >
+                        تراجع
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
+              </Card.Content>
+            </Card>
+          }
+          content={'DobleClick الرجاء الضغط مرتين لفتح الالموذج '}
+        ></Popup>
       );
     } else {
       return (
@@ -249,7 +276,9 @@ class ModuleList extends React.Component {
               <div>
                 <ImageFileUploader
                   accept="image/*"
+                  accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
                   name="images"
+                  size={80}
                   onUploadStart={this.handelloadStart.bind(this)}
                   onUploadSuccess={this.handelSucces.bind(this)}
                   onProgress={this.inPrograss.bind(this)}

@@ -36,7 +36,7 @@ var GetUserByUserName = (Email, cb) => {
 //----------------------------------------------------------------------------------------//
 var getAllModules = (cb) => {
   db.query(
-    'SELECT  MODELS.* ,USERS.userName USERS FROM MODELS INNER JOIN USERS ON MODELS.CreatedBy =USERS.userID ',
+    'SELECT  MODELS.* ,USERS.userName USERS FROM MODELS INNER JOIN USERS ON MODELS.CreatedBy =USERS.userID  ORDER BY ModelOrder ',
     (error, result, fields) => {
       if (error) {
         cb(error, null);
@@ -46,6 +46,21 @@ var getAllModules = (cb) => {
   );
 };
 
+//----------------------------------------------------------------------------------------//
+//------------------------ a Function to get all Modules ---------------------------------//
+//----------------------------------------------------------------------------------------//
+var getAllModulesSpasificFields = (cb) => {
+  db.query(
+    'SELECT  Title,ModelOrder, ModelID  FROM  MODELS  ORDER BY ModelOrder ',
+    (error, result, fields) => {
+      if (error) {
+        console.log(error);
+        cb(error, null);
+      }
+      cb(null, result);
+    }
+  );
+};
 //----------------------------------------------------------------------------------------//
 //------------------------ a Function to get a user By ID---------------------------------//
 //----------------------------------------------------------------------------------------//
@@ -394,56 +409,72 @@ var addArticle = (data, cb) => {
 //--------------------------------------------------------------------------------//
 var addModule = (Title, Icon, CreatedBy, cb) => {
   //------------------- Try to Insert the values of the Modules ----------------//
+  var OrderNumber = 0;
   db.query(
-    'INSERT INTO MODELS  (  Title ,Icon ,CreatedBy ) VALUES  ( "' +
-      Title +
-      '","' +
-      Icon +
-      '",' +
-      CreatedBy +
-      '  ) ',
-    (error, result, fields) => {
-      if (error) {
-        cb(error, null);
+    'SELECT COUNT(ModelID) AS NumberOfProducts FROM MODELS ;',
+    (error1, result1, fields1) => {
+      if (error1) {
       } else {
-        //-------------------- get the module ID that is recently addede -------------//
-        db.query('SELECT MAX(ModelID) FROM MODELS', (error, result, fields) => {
-          if (error) {
-            cb(error, null);
-          } else {
-            //--------------------- inset a new Tpic to this module ------------------//
-            var ModuleID = result[0]['MAX(ModelID)'];
-            db.query(
-              'INSERT INTO Topics  (  ModelID ,Icon ,Title ) VALUES  ( ' +
-                ModuleID +
-                ",'" +
-                ' https://cdn.onlinewebfonts.com/svg/img_370232.png' +
-                "','" +
-                Date.now() +
-                '-New Topic - ' +
-                ModuleID +
-                "')",
-              (error, result) => {
-                if (error) {
-                  //-------- if the imsertion of the Topic didnt go will the we delete the module ----------//
-                  db.query(
-                    'DELETE FROM MODELS WHERE ModelID =  ' + ModelID,
-                    (error, result, fields) => {
-                      if (error) {
-                        cb(error, null);
-                      } else {
-                        cb(null, result);
+        OrderNumber = parseInt(result1[0]['NumberOfProducts']) + 1;
+        console.log(result1[0]['NumberOfProducts']);
+        db.query(
+          'INSERT INTO MODELS  (  Title ,Icon ,CreatedBy, ModelOrder ) VALUES  ( "' +
+            Title +
+            '","' +
+            Icon +
+            '",' +
+            CreatedBy +
+            ' , ' +
+            OrderNumber +
+            '  ) ',
+          (error, result, fields) => {
+            if (error) {
+              cb(error, null);
+            } else {
+              //-------------------- get the module ID that is recently addede -------------//
+              db.query(
+                'SELECT MAX(ModelID) FROM MODELS',
+                (error, result, fields) => {
+                  if (error) {
+                    cb(error, null);
+                  } else {
+                    //--------------------- inset a new Tpic to this module ------------------//
+                    var ModuleID = result[0]['MAX(ModelID)'];
+                    db.query(
+                      'INSERT INTO Topics  (  ModelID ,Icon ,Title ) VALUES  ( ' +
+                        ModuleID +
+                        ",'" +
+                        ' https://cdn.onlinewebfonts.com/svg/img_370232.png' +
+                        "','" +
+                        Date.now() +
+                        '-New Topic - ' +
+                        ModuleID +
+                        "')",
+                      (error, result) => {
+                        if (error) {
+                          //-------- if the imsertion of the Topic didnt go will the we delete the module ----------//
+                          db.query(
+                            'DELETE FROM MODELS WHERE ModelID =  ' + ModelID,
+                            (error, result, fields) => {
+                              if (error) {
+                                cb(error, null);
+                              } else {
+                                cb(null, result);
+                              }
+                            }
+                          );
+                        } else {
+                          //------------------------------ return the module id to the response ------------------//
+                          cb(null, { ModuleID: ModuleID });
+                        }
                       }
-                    }
-                  );
-                } else {
-                  //------------------------------ return the module id to the response ------------------//
-                  cb(null, { ModuleID: ModuleID });
+                    );
+                  }
                 }
-              }
-            );
+              );
+            }
           }
-        });
+        );
       }
     }
   );
@@ -965,4 +996,5 @@ module.exports = {
   deleteArticle,
   addArticle,
   addModule,
+  getAllModulesSpasificFields,
 };

@@ -158,7 +158,9 @@ class ArticlesList extends React.Component {
 
                 <FileUploader
                   accept="image/*"
+                  accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
                   name="images"
+                  size={80}
                   onUploadStart={this.handelloadStart.bind(this)}
                   onUploadSuccess={this.handelSucces.bind(this)}
                   onProgress={this.inPrograss.bind(this)}

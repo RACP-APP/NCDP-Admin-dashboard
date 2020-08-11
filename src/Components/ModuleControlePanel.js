@@ -14,7 +14,11 @@ import {
   Modal,
   Label,
   Input,
+  Popup,
+  TransitionablePortal,
 } from 'semantic-ui-react';
+
+import OrderModule from './OrderModoules';
 
 class ModuleControlPanel extends React.Component {
   constructor(props) {
@@ -30,6 +34,9 @@ class ModuleControlPanel extends React.Component {
       loading: 0,
       url: '',
       open: false,
+      animation: 'browse',
+      duration: 500,
+      openOrder: false,
     };
     this.addNewModule = this.addNewModule.bind(this);
   }
@@ -140,14 +147,67 @@ class ModuleControlPanel extends React.Component {
       <Segment raised inverted>
         <div className="row">
           {/* --------------------- Showing plus ------------------ */}
+          <Popup
+            trigger={
+              <Button
+                inverted
+                circular
+                icon="add circle"
+                onClick={this.show.bind(this)}
+              ></Button>
+            }
+            content={' إضافة عنصر جيد   '}
+          ></Popup>
+          <Popup
+            trigger={
+              <Button
+                inverted
+                circular
+                icon="ordered list"
+                onClick={() => {
+                  this.setState({
+                    openOrder: true,
+                  });
+                }}
+              ></Button>
+            }
+            content={' ترتيب العناصر  '}
+          ></Popup>
 
-          <Button
-            inverted
-            circular
-            icon="add circle"
-            onClick={this.show.bind(this)}
-          ></Button>
-
+          <TransitionablePortal
+            transition={{
+              animation: this.state.animation,
+              duration: this.state.duration,
+            }}
+            // onClose={this.handleClose}
+            open={this.state.openOrder}
+            style={{ left: 0 }}
+          >
+            <Segment
+              style={{
+                left: '1%',
+                position: 'fixed',
+                top: '2%',
+                width: '14%',
+                zIndex: 1000,
+                height: window.innerHeight - 30,
+                minWidth: '160px',
+                overflow: 'auto',
+              }}
+            >
+              <OrderModule
+                data={this.state.module}
+                Update={this.state.Update}
+                // closePortal={this.closePortal.bind(this)}
+                // getAllContent={this.getAllContent.bind(this)}
+              />
+              <Button
+                content="خفظ "
+                negative
+                // onClick={this.handleClose.bind(this)}
+              />
+            </Segment>
+          </TransitionablePortal>
           <Modal
             closeOnDimmerClick={false}
             closeOnEscape={true}

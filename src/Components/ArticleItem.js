@@ -3,10 +3,8 @@ import '../css/component.css';
 import '../css/buttonStyles.css';
 import axios from 'axios';
 import axios2 from 'axios';
-
+import ImageUplad from './uploadimage';
 import config from '../config.json';
-import FileUploader from '../Components/uploadimage';
-import firebase from 'firebase';
 import { Button } from 'semantic-ui-react';
 
 class ArticlesItem extends React.Component {
@@ -30,8 +28,11 @@ class ArticlesItem extends React.Component {
   }
   //-----------------------function to handel uploading to firbase ----------------//
 
-  handelloadStart(e) {}
+  handelloadStart(e) {
+    console.log('start');
+  }
   handelSucces(e) {
+    console.log(e, 'eeeeeeeeeeeeeeeeeeee');
     this.setState({ url: e });
   }
 
@@ -165,13 +166,19 @@ class ArticlesItem extends React.Component {
                 src={this.state.url || this.props.data.Icon}
                 className=" img-thumbnail ItemImage"
               ></img>
-
-              <FileUploader
+              <ImageUplad
+                accept=".TIFF  , .TIF, .JPEG , .JPG, .GIF, .png, .RAW  "
+                name="images"
+                size={80}
+                onUploadStart={this.handelloadStart.bind(this)}
+                onUploadSuccess={this.handelSucces.bind(this)}
+              ></ImageUplad>
+              {/* <FileUploader
                 accept="image/*"
                 name="images"
                 onUploadStart={this.handelloadStart.bind(this)}
                 onUploadSuccess={this.handelSucces.bind(this)}
-              ></FileUploader>
+              ></FileUploader> */}
             </div>
 
             <div className="col-7 rowCenter">

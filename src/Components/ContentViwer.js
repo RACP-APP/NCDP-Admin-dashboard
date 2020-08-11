@@ -11,12 +11,13 @@ import LoadingScreen from 'react-loading-screen';
 import AudioPlayerContent from './contentComponents/AudioItem';
 import ImageConten from './contentComponents/imageContent';
 import Wordconverter from './contentComponents/ConvertWord';
-import FileUploader from 'react-firebase-file-uploader';
+// import FileUploader from 'react-firebase-file-uploader';
 import ImageFileUploader from '../Components/uploadimage';
 import ErrorDialog from '../Components/ErroeDialog';
 import firebase from 'firebase';
 import ContentViweing from './contentComponents/ContentViweing';
 import UploadingVedio from '../Components/Uploading/Uploading';
+import UploadingAudio from '../Components/Uploading/AudioUpload';
 import { Segment, Button, Table, Grid, Responsive } from 'semantic-ui-react';
 
 class ContentViwer extends React.Component {
@@ -439,7 +440,7 @@ class ContentViwer extends React.Component {
 
   returnTheLink(link) {
     var vedioName = link;
-    console.log(vedioName);
+    console.log(vedioName, '--------------------------------------------');
 
     var path = this.state.vedioURL;
     var path = config[0].server + 'public/uploads/' + vedioName;
@@ -664,6 +665,8 @@ class ContentViwer extends React.Component {
                   >
                     <div className="card-body">
                       <UploadingVedio
+                        accept=".WEBM, .MPG, .MPEG,  .MPV, .OGG, .MP4 ,.M4P, .M4V ,.MOV,.AVCHD  ,.wmv"
+                        type="v"
                         returnTheLink={this.returnTheLink.bind(this)}
                       ></UploadingVedio>
                       {/* <form method="post" action="#" id="#" className="border ">
@@ -687,6 +690,7 @@ class ContentViwer extends React.Component {
                       {/* ///////////////////////////////// /vEDIO //////////////////////////////////////// */}
                       <div className="row">
                         <VedioConmponent
+                          name="vedio"
                           getAllMedia={this.getAllMedia.bind(this)}
                           link={this.state.MediaContent}
                         ></VedioConmponent>
@@ -719,12 +723,13 @@ class ContentViwer extends React.Component {
                       <form method="post" action="#" id="#" className="border ">
                         <div className="form-group files">
                           <label>
-                            <UploadingVedio
+                            <UploadingAudio
                               accept=".WAV, .MP4, .MP3 ,  .m4a, .3gp, .aa ,.aac, .aax , .act,.aiff ,.amr,.webm, .vox,.ra,.opus,.wma ,.mpc ,.ogg, .oga, .mogg,.raw,.sln,.voc,.vox,.8svx "
-                              returnTheLink={this.returnTheLinkforAdio.bind(
+                              type="a"
+                              returnTheLinkforAdio={this.returnTheLinkforAdio.bind(
                                 this
                               )}
-                            ></UploadingVedio>
+                            ></UploadingAudio>
                             {/* <FileUploader
                               hidden
                               accept=".WAV, .MP4, .MP3 ,  .m4a, .3gp, .aa ,.aac, .aax , .act,.aiff ,.amr,.webm, .vox,.ra,.opus,.wma ,.mpc ,.ogg, .oga, .mogg,.raw,.sln,.voc,.vox,.8svx "

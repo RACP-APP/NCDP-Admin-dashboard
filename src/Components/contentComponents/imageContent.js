@@ -20,28 +20,28 @@ class ImageConten extends React.Component {
   DeleteMedia(e) {
     var mediaID = e.target.id;
     console.log(e.target.id, $(e.target).attr('data-link'));
-    try {
-      firebase
-        .storage()
-        .refFromURL($(e.target).attr('data-link'))
-        .delete()
-        .then(() => {
-          console.log('deleted');
-        })
-        .catch((error) => {
-          this.setState({
-            ErrorMessage: error.response.data,
-            open: true,
-          });
-        });
-    } catch {
-      this.setState({
-        ErrorMessage:
-          'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
+    // try {
+    //   firebase
+    //     .storage()
+    //     .refFromURL($(e.target).attr('data-link'))
+    //     .delete()
+    //     .then(() => {
+    //       console.log('deleted');
+    //     })
+    //     .catch((error) => {
+    //       this.setState({
+    //         ErrorMessage: error.response.data,
+    //         open: true,
+    //       });
+    //     });
+    // } catch {
+    //   this.setState({
+    //     ErrorMessage:
+    //       'لا يمكن حذف هذا العنصر الآن يرجى المحاولة مرة أخرى في وقت لاحق ..',
 
-        open: true,
-      });
-    }
+    //     open: true,
+    //   });
+    // }
 
     axios
       .post(config[0].server + 'Articles/DeleteMedia', {

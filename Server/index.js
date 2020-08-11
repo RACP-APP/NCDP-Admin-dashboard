@@ -20,7 +20,7 @@ const io = socketIo(server); // < Interesting!
 var Files = {};
 //------------------- Connectining the Scoket ---------------------//
 
-io.on('connection', (socket) => {
+var soket2 = io.on('connection', (socket) => {
   console.log('New client connected');
   var Files = [];
 
@@ -81,6 +81,16 @@ io.on('connection', (socket) => {
       }
     });
   });
+
+  socket.on('reconnect', (data) => {
+    var Name = data['Name'];
+    Files[Name]['Downloaded'] += data['Data'].length;
+    Files[Name]['Data'] += data['Data'];
+    var Place = Files[Name]['Downloaded'] / 524288;
+    var Percent = (Files[Name]['Downloaded'] / Files[Name]['FileSize']) * 100;
+    socket.emit('MoreData', { Place: Place, Percent: Percent });
+  });
+
   socket.on('Upload', function (data) {
     console.log('uploading -----------------------');
 
@@ -136,7 +146,6 @@ io.on('connection', (socket) => {
 
   //----------------------------------------------------------------------------------------------//
 });
-
 const messaging = require('./send');
 const creatChartjson = require('../db/CreatChartJSON');
 const cssPath = path.join(__dirname, '../public');
@@ -168,14 +177,23 @@ app.post('/UploadingImage', (req, res) => {
   var name = req.body.name;
   var type = req.body.type;
   var data = req.body.data;
-  console.log('type', type, 'name', name, data);
+  // var reExpr = new RegExp('/^data:image' + '\\' + '/' + type + ';base64,/');
+  console.log(data.indexOf(','));
+  // console.log('type', type, 'name', name, data);
 
   fs.writeFile(
-    'public/uploads/' + name,
-    data.replace(/^data:image\/png;base64,/, ''),
+    'public/uploads/Images/' + name,
+    data.substr(data.indexOf(',') + 1),
     'base64',
     (err) => {
-      console.log('err');
+      if (err) {
+        res
+          .status(500)
+          .send('خصل خطأ أثناء التحميل الرجاء المحاولة مرة أخرى ')
+          .end();
+      } else {
+        res.status(200).send('تم تحميل الملف بنجاخ ').end();
+      }
     }
   );
 });

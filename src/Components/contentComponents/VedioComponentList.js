@@ -91,7 +91,7 @@ class VedioConmponent extends React.Component {
                   <Table.Body>
                     <Table.Row>
                       <Table.Cell>
-                        <span> {link['MediaOrder']}</span>
+                        <span> {link['MediaID']}</span>
                       </Table.Cell>
                       <Table.Cell>
                         <video

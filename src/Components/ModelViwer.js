@@ -13,12 +13,11 @@ import ContentViwer from './ContentViwer';
 import ModuleControlPanel from './ModuleControlePanel';
 import {
   List,
-  Step,
   Card,
   Menu,
   Segment,
   Grid,
-  Icon,
+  Button,
   Breadcrumb,
 } from 'semantic-ui-react';
 

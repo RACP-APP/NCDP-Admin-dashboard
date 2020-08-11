@@ -53,6 +53,47 @@ Dashbord.get('/Dashbord/getAllModules', (req, res) => {
   //----------------------------------------------------------//
 });
 
+//------------------------------------------------------------------------------------------//
+Dashbord.get('/Dashbord/getAllModulesSpasificFields', (req, res) => {
+  console.log('from getAllModulesSpasificFields');
+  //---------------------------read all imges in the directory ---------------------//
+
+  //--------------------------------------------------------------------------------//
+  //------------------------------------------------------//
+  //------------- remove cors Origin Error ---------------//
+  //------------------------------------------------------//
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // Request methods you wish to allow
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization'
+  );
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+
+  // ---------------------------------------------------------//
+  // ------ Connect To DataBase And Retrive all Modules-------//
+  // ----------------------------------------------------------//
+  dbModel.getAllModulesSpasificFields((err, result) => {
+    if (err) {
+      res.status(500).send('خطأ بعملية إسترجلع المعلومات').end();
+    } else {
+      res.status(200).send(result).end();
+    }
+  });
+
+  //----------------------------------------------------------//
+  //------------- Update A module by its ID -- ---------------//
+  //----------------------------------------------------------//
+});
+
 Dashbord.post('/Dashbord/UpdateModule', (req, res) => {
   dbModel.UpdateModule(
     req.body.ID,
