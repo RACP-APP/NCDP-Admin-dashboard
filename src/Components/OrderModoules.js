@@ -33,10 +33,10 @@ const CreaContent = (data) => {
         <Table.Row>
           <Table.Cell>
             <Icon name={'grab'} />
-            <span className="ItemIcons">{data['ModelOrder']}</span>
+            <span className="ItemIconsDragable">{data['ModelOrder']}</span>
           </Table.Cell>
           <Table.Cell>
-            <span className="ItemIcons">{data['Title']}</span>
+            <span className="ItemIconsDragable">{data['Title']}</span>
           </Table.Cell>
         </Table.Row>
       </Table.Body>

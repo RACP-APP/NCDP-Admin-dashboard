@@ -18,7 +18,7 @@ async function writeotfile(object) {
 async function getData(cb) {
   await db
     .query(
-      'SELECT MODELS.* ,users.userName from  MODELS , `USERS` users Where CreatedBy = users.userID ',
+      'SELECT MODELS.* ,users.userName from  MODELS , `USERS` users Where CreatedBy = users.userID ORDER BY ModelOrder',
       async function (err, result) {
         object = [];
         if (result) {

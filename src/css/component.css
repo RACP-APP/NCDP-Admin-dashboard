@@ -560,6 +560,18 @@ ul {
 .ItemIcons span::after {
   height: 10%;
 }
+
+.ItemIconsDragable {
+  color: #6a9cc9;
+  font-size: small;
+  align-content: center;
+  text-align: center;
+  margin: 10px;
+  pointer-events: visibleFill;
+}
+.ItemIconsDragable span::after {
+  height: 10%;
+}
 .shangpassword {
   background-color: rgba(233, 233, 233, 0.432);
 }
