@@ -5,8 +5,6 @@ import config from '../config.json';
 import axios from 'axios';
 import ModuleList from './ModuleList';
 import ArticlesList from './TopicList';
-import AddArticales from './AddArtile';
-import ArticlesItem from './ArticleItem';
 import MyList from './mylist';
 import TopicControlPanel from './TopicControlPanel';
 import ContentViwer from './ContentViwer';

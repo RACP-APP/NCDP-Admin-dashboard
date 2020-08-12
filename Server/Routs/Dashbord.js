@@ -234,4 +234,23 @@ Dashbord.post('/Dashbord/addTopicToAmodel', (req, res) => {
   );
 });
 
+//---------------------------------- ReOrder All Contents ----------------------------------------//
+Dashbord.post('/Dashbord/ReOrder', (req, res) => {
+  // console.log('data ', req.body.data);
+  /// ---------------------------------loop throw our Object to Update Order-------------------------//
+  // console.log(req.body.data.length, '11111111111111111111111111');
+
+  // console.log(req.body.data[i]['data'], '11111111111111111111111111');
+  //----------------------------------- if the Content is An Image ----------------------------------//
+  dbModel.ReorderModules(req.body.data, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send(error).end();
+    } else {
+      // UpdateCount(res.result);
+      res.status(200).send('تم ').end();
+    }
+  });
+});
+
 module.exports = Dashbord;

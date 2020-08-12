@@ -816,6 +816,34 @@ var getAllUsers = (cb) => {
   );
 };
 
+//-------------------------------------------------ReOrder Modules --------------------------------------------------//
+
+var ReorderModules = (data, cb) => {
+  async
+    .forEachOf(data, (element, i, callback) => {
+      db.query(
+        'UPDATE MODELS set ModelOrder =' +
+          (i + 1) +
+          '  WHERE ModelID=' +
+          element['data']['ModelID'],
+        (error, result) => {
+          if (error) {
+            callback(error);
+            return;
+          } else {
+            callback();
+          }
+        }
+      );
+    })
+    .then((result) => {
+      cb(null, 'done');
+    })
+    .catch((error) => {
+      cb(error, null);
+    });
+};
+
 //-------------------------------------------------- Update Order -------------------------------------------------//
 var ReorderContent = (data, cb) => {
   let count = 0;
@@ -983,6 +1011,7 @@ module.exports = {
   getOneTopic,
   UpdateTopic,
   deleteTopic,
+  ReorderModules,
   GetUserByUserName,
   GetUsers,
   getAllModules,

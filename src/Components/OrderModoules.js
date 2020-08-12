@@ -114,23 +114,25 @@ class OrderModels extends Component {
         this.onDragEnd = this.onDragEnd.bind(this);
       });
   }
-  // componentWillReceiveProps(nextprop) {
-  //   if (nextprop.Update) {
-  //     axios
-  //       .post(config[0].server + 'Articles/ReOrder', {
-  //         data: this.state.items,
-  //       })
-  //       .then((result) => {
-  //         console.log('done');
-  //         this.props.getAllContent();
-  //         this.props.closePortal();
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         this.props.closePortal();
-  //       });
-  //   }
-  // }
+  componentWillReceiveProps(nextprop) {
+    if (nextprop.Update) {
+      console.log(this.state.items);
+      axios
+        .post(config[0].server + 'Dashbord/ReOrder', {
+          data: this.state.items,
+        })
+        .then((result) => {
+          console.log('done');
+          this.props.UpdateParent();
+          this.props.closePortal();
+        })
+        .catch((error) => {
+          console.log(error);
+          // this.props.closePortal();
+        });
+    }
+    console.log(nextprop);
+  }
   // -------------------------Normally you would want to split things out into separate components.---------------------------//
   //-------------------------- But in this example everything is just done in one place for simplicity------------------------//
   render() {

@@ -33,10 +33,11 @@ class ModuleControlPanel extends React.Component {
       disabled: true,
       loading: 0,
       url: '',
-      open: false,
+
       animation: 'browse',
       duration: 500,
       openOrder: false,
+      Update: false,
     };
     this.addNewModule = this.addNewModule.bind(this);
   }
@@ -99,7 +100,7 @@ class ModuleControlPanel extends React.Component {
             addtionMode: false,
             warinig: false,
             warningMessage: '',
-            open: false,
+            openOrder: false,
             url:
               'https://firebasestorage.googleapis.com/v0/b/ncdp-270519.appspot.com/o/images%2Fcircle-png-circle-icon-1600.png?alt=media&token=1b9d90e2-f5ce-4e08-9bb7-ccd0ce79786c',
           },
@@ -142,6 +143,18 @@ class ModuleControlPanel extends React.Component {
   show = () => this.setState({ open: true });
   close = () => this.setState({ open: false });
 
+  handleClose() {
+    this.setState({ Update: true });
+  }
+  closePortal(e) {
+    this.setState({
+      openOrder: false,
+      Update: false,
+    });
+  }
+  UpdateParent() {
+    this.props.mapModels();
+  }
   render() {
     return (
       <Segment raised inverted>
@@ -198,13 +211,13 @@ class ModuleControlPanel extends React.Component {
               <OrderModule
                 data={this.state.module}
                 Update={this.state.Update}
-                // closePortal={this.closePortal.bind(this)}
-                // getAllContent={this.getAllContent.bind(this)}
+                closePortal={this.closePortal.bind(this)}
+                UpdateParent={this.UpdateParent.bind(this)}
               />
               <Button
                 content="خفظ "
                 negative
-                // onClick={this.handleClose.bind(this)}
+                onClick={this.handleClose.bind(this)}
               />
             </Segment>
           </TransitionablePortal>
